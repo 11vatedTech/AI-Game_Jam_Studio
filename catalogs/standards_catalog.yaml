@@ -1,0 +1,47 @@
+version: 1
+standards:
+  - id: OpenUSD
+    domain: 3d_scene_composition
+    canonical_url: https://openusd.org/release/index.html
+    use: Layered scene description, references, variants and composition
+    validation: Schema/version, resolver, units, transforms, supported prim/property round-trip
+  - id: glTF-2
+    domain: runtime_3d
+    canonical_url: https://registry.khronos.org/glTF/
+    use: Runtime-oriented 3D asset interchange
+    validation: Structural validator, extension support, material/animation/camera import
+  - id: FBX
+    domain: dcc_engine_compatibility
+    canonical_url: https://www.autodesk.com/developer-network/platform-technologies/fbx-sdk-2020-0
+    use: DCC/engine compatibility bridge
+    validation: Skeleton, animation, units, axis, transforms, material mapping
+  - id: MaterialX
+    domain: materials
+    canonical_url: https://materialx.org/Specification.html
+    use: Material/shader graph interchange
+    validation: Node support, renderer parity and color-space checks
+  - id: OpenColorIO
+    domain: color_management
+    canonical_url: https://opencolorio.org/
+    use: Color management and consistent transforms
+    validation: Config/version and visual reference checks
+  - id: ACES
+    domain: color_pipeline
+    canonical_url: https://acescentral.com/
+    use: Professional color workflow reference
+    validation: Config and delivery transform verification
+  - id: OpenTimelineIO
+    domain: editorial_timeline
+    canonical_url: https://opentimeline.io/
+    use: Timeline/EDL interchange and editing automation
+    validation: Timing, tracks, transitions, metadata and media path round-trip
+  - id: OpenAPI
+    domain: api_contracts
+    canonical_url: https://spec.openapis.org/oas/latest.html
+    use: HTTP contract documentation and client generation
+    validation: Schema validation and compatibility test
+  - id: MCP
+    domain: tool_protocol
+    canonical_url: https://modelcontextprotocol.io/specification/2026-07-28
+    use: Standardized context/tool integration
+    validation: Protocol negotiation, transport, schemas, authorization and lifecycle tests

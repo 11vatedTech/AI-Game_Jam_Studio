@@ -1,0 +1,52 @@
+version: 1
+benchmarks:
+  - id: B-001
+    name: Intent expansion
+    domain: planning
+    mandatory: true
+    acceptance_doc: docs/11-validation/BENCHMARK_SCENARIOS.md
+  - id: B-002
+    name: Real 3D asset
+    domain: 3d
+    mandatory: true
+    acceptance_doc: docs/11-validation/BENCHMARK_SCENARIOS.md
+  - id: B-003
+    name: ComfyUI production workflow
+    domain: image_generation
+    mandatory: true
+    acceptance_doc: docs/11-validation/BENCHMARK_SCENARIOS.md
+  - id: B-004
+    name: Game engine vertical slice
+    domain: game_development
+    mandatory: true
+    acceptance_doc: docs/11-validation/BENCHMARK_SCENARIOS.md
+  - id: B-005
+    name: Cross-app round trip
+    domain: interoperability
+    mandatory: true
+    acceptance_doc: docs/11-validation/BENCHMARK_SCENARIOS.md
+  - id: B-006
+    name: Long-running job recovery
+    domain: reliability
+    mandatory: true
+    acceptance_doc: docs/11-validation/BENCHMARK_SCENARIOS.md
+  - id: B-007
+    name: Visual defect detection and repair
+    domain: quality
+    mandatory: true
+    acceptance_doc: docs/11-validation/BENCHMARK_SCENARIOS.md
+  - id: B-008
+    name: Security abuse
+    domain: security
+    mandatory: true
+    acceptance_doc: docs/11-validation/BENCHMARK_SCENARIOS.md
+  - id: B-009
+    name: Resource contention
+    domain: operations
+    mandatory: true
+    acceptance_doc: docs/11-validation/BENCHMARK_SCENARIOS.md
+  - id: B-010
+    name: Design-to-software deliverable
+    domain: product_engineering
+    mandatory: true
+    acceptance_doc: docs/11-validation/BENCHMARK_SCENARIOS.md

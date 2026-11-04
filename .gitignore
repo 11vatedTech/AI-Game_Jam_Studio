@@ -1,0 +1,37 @@
+# Local authoring and operating artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+*.bak
+*.log
+.env
+.env.*
+!.env.example
+
+# Runtime/build artifacts (future implementation)
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+build/
+dist/
+out/
+coverage/
+
+# Large models, generated assets, user projects and caches
+models/
+checkpoints/
+loras/
+vae/
+embeddings/
+ComfyUI/models/
+ComfyUI/custom_nodes/
+cache/
+caches/
+artifacts/local/
+projects/local/

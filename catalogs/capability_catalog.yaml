@@ -1,0 +1,363 @@
+version: 1
+catalog_id: 11vt-capabilities
+status: proposed_taxonomy_not_implemented
+maturity_levels:
+  L0: listed
+  L1: discovered
+  L2: smoke_tested
+  L3: workflow_validated
+  L4: production_qualified
+  L5: certified
+capabilities:
+- id: intent.requirements.expand
+  domain: studio_core
+  outcome: Expand incomplete user intent into a traceable production brief and acceptance
+    matrix
+  inputs:
+  - name: natural_language_brief
+    schema:
+      type: object
+  - name: references
+    schema:
+      type: object
+  - name: project_context
+    schema:
+      type: object
+  - name: constraints
+    schema:
+      type: object
+  outputs:
+  - name: production_brief
+    schema:
+      type: object
+  - name: assumption_register
+    schema:
+      type: object
+  - name: acceptance_matrix
+    schema:
+      type: object
+  permissions:
+  - project.read
+  maturity: L0
+  version: 0.1.0
+  acceptance_tests:
+  - B-001
+  support_matrix: []
+  resource_profile: {}
+  known_limitations: []
+  owner: studio-core (proposed)
+  side_effect_class: CREATE
+- id: tools.capability.discover
+  domain: studio_core
+  outcome: Discover tools and capabilities with versions, health, permissions, and
+    support metadata
+  inputs:
+  - name: task_intent
+    schema:
+      type: object
+  - name: target_environment
+    schema:
+      type: object
+  outputs:
+  - name: ranked_capabilities
+    schema:
+      type: object
+  - name: support_matrix
+    schema:
+      type: object
+  permissions:
+  - app.inspect
+  maturity: L0
+  version: 0.1.0
+  acceptance_tests:
+  - CAPABILITY-SMOKE-001
+  support_matrix: []
+  resource_profile: {}
+  known_limitations: []
+  owner: studio-core (proposed)
+  side_effect_class: READ
+- id: workflow.job.execute
+  domain: orchestration
+  outcome: Execute durable, checkpointed production workflows with cancellation and
+    evidence
+  inputs:
+  - name: workflow_definition
+    schema:
+      type: object
+  - name: artifact_refs
+    schema:
+      type: object
+  - name: resource_profile
+    schema:
+      type: object
+  outputs:
+  - name: job_state
+    schema:
+      type: object
+  - name: output_artifacts
+    schema:
+      type: object
+  - name: execution_trace
+    schema:
+      type: object
+  permissions:
+  - project.read
+  - project.write
+  - app.execute_script
+  maturity: L0
+  version: 0.1.0
+  acceptance_tests:
+  - CAPABILITY-SMOKE-001
+  support_matrix: []
+  resource_profile: {}
+  known_limitations: []
+  owner: studio-core (proposed)
+  side_effect_class: EXECUTE
+- id: asset.artifact.manifest
+  domain: artifact_management
+  outcome: Create an artifact manifest with hash, lineage, license and validation
+    state
+  inputs:
+  - name: artifact_files
+    schema:
+      type: object
+  - name: provenance
+    schema:
+      type: object
+  - name: validation_results
+    schema:
+      type: object
+  outputs:
+  - name: artifact_manifest
+    schema:
+      type: object
+  permissions:
+  - project.read
+  - project.write
+  maturity: L0
+  version: 0.1.0
+  acceptance_tests:
+  - CAPABILITY-SMOKE-001
+  support_matrix: []
+  resource_profile: {}
+  known_limitations: []
+  owner: studio-core (proposed)
+  side_effect_class: CREATE
+- id: image.workflow.comfyui
+  domain: image_generation
+  outcome: Submit a pinned ComfyUI workflow, monitor execution, retrieve outputs,
+    and validate them
+  inputs:
+  - name: workflow_json
+    schema:
+      type: object
+  - name: input_assets
+    schema:
+      type: object
+  - name: generation_parameters
+    schema:
+      type: object
+  outputs:
+  - name: image_assets
+    schema:
+      type: object
+  - name: run_metadata
+    schema:
+      type: object
+  - name: validation_report
+    schema:
+      type: object
+  permissions:
+  - app.inspect
+  - app.execute_script
+  - project.write
+  maturity: L0
+  version: 0.1.0
+  acceptance_tests:
+  - B-003
+  support_matrix: []
+  resource_profile: {}
+  known_limitations: []
+  owner: studio-core (proposed)
+  side_effect_class: EXECUTE
+- id: dcc.blender.asset_produce
+  domain: 3d
+  outcome: Create or modify editable Blender assets and export target artifacts
+  inputs:
+  - name: asset_brief
+    schema:
+      type: object
+  - name: references
+    schema:
+      type: object
+  - name: source_project
+    schema:
+      type: object
+  outputs:
+  - name: blend_source
+    schema:
+      type: object
+  - name: exports
+    schema:
+      type: object
+  - name: screenshots
+    schema:
+      type: object
+  - name: manifest
+    schema:
+      type: object
+  permissions:
+  - app.inspect
+  - app.modify
+  - app.execute_script
+  maturity: L0
+  version: 0.1.0
+  acceptance_tests:
+  - B-002
+  - B-005
+  support_matrix: []
+  resource_profile: {}
+  known_limitations: []
+  owner: studio-core (proposed)
+  side_effect_class: EXECUTE
+- id: engine.game.vertical_slice
+  domain: game_development
+  outcome: Build a coherent playable vertical slice in a supported engine
+  inputs:
+  - name: game_brief
+    schema:
+      type: object
+  - name: asset_manifest
+    schema:
+      type: object
+  - name: engine_project
+    schema:
+      type: object
+  outputs:
+  - name: engine_project
+    schema:
+      type: object
+  - name: build
+    schema:
+      type: object
+  - name: test_report
+    schema:
+      type: object
+  - name: capture_set
+    schema:
+      type: object
+  permissions:
+  - app.inspect
+  - app.modify
+  - app.execute_script
+  - artifact.export
+  maturity: L0
+  version: 0.1.0
+  acceptance_tests:
+  - B-004
+  support_matrix: []
+  resource_profile: {}
+  known_limitations: []
+  owner: studio-core (proposed)
+  side_effect_class: EXECUTE
+- id: quality.visual.review
+  domain: quality
+  outcome: Review visual artifacts in context against approved rubric and identify
+    defects
+  inputs:
+  - name: artifact_refs
+    schema:
+      type: object
+  - name: art_direction
+    schema:
+      type: object
+  - name: capture_set
+    schema:
+      type: object
+  - name: rubric
+    schema:
+      type: object
+  outputs:
+  - name: review_report
+    schema:
+      type: object
+  - name: defect_records
+    schema:
+      type: object
+  permissions:
+  - project.read
+  maturity: L0
+  version: 0.1.0
+  acceptance_tests:
+  - B-007
+  support_matrix: []
+  resource_profile: {}
+  known_limitations: []
+  owner: studio-core (proposed)
+  side_effect_class: READ
+- id: quality.audio.review
+  domain: quality
+  outcome: Validate audio technical properties and conduct craft review
+  inputs:
+  - name: audio_assets
+    schema:
+      type: object
+  - name: target_spec
+    schema:
+      type: object
+  - name: project_context
+    schema:
+      type: object
+  outputs:
+  - name: audio_validation
+    schema:
+      type: object
+  - name: listening_review
+    schema:
+      type: object
+  permissions:
+  - project.read
+  maturity: L0
+  version: 0.1.0
+  acceptance_tests:
+  - CAPABILITY-SMOKE-001
+  support_matrix: []
+  resource_profile: {}
+  known_limitations: []
+  owner: studio-core (proposed)
+  side_effect_class: READ
+- id: release.package.verify
+  domain: delivery
+  outcome: Package deliverables and verify reproducible clean-room delivery
+  inputs:
+  - name: approved_artifacts
+    schema:
+      type: object
+  - name: release_config
+    schema:
+      type: object
+  - name: support_matrix
+    schema:
+      type: object
+  outputs:
+  - name: release_package
+    schema:
+      type: object
+  - name: checksums
+    schema:
+      type: object
+  - name: release_report
+    schema:
+      type: object
+  permissions:
+  - project.read
+  - artifact.export
+  maturity: L0
+  version: 0.1.0
+  acceptance_tests:
+  - CAPABILITY-SMOKE-001
+  support_matrix: []
+  resource_profile: {}
+  known_limitations: []
+  owner: studio-core (proposed)
+  side_effect_class: CREATE

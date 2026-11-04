@@ -1,0 +1,93 @@
+version: 1
+catalog_id: 11vt-reference-ecosystem
+status: research_candidates_only
+references:
+  - id: benchmark.ai_game_dev
+    name: AI Game Dev
+    url: https://ai-game.dev/
+    category: integrated_engine_agent_platform
+    posture: benchmark_and_selective_adoption
+    research_status: researched
+    confidence: medium
+    note: Official docs snapshot observed 2026-11-04 describes 241 engine capabilities; catalog count is not quality proof.
+  - id: integration.dcc_mcp_core
+    name: DCC-MCP Core
+    url: https://github.com/dcc-mcp/dcc-mcp-core
+    docs: https://dcc-mcp.github.io/dcc-mcp-core/guide/architecture
+    category: cross_application_control_plane
+    posture: priority_1_evaluation
+    research_status: researched
+    confidence: medium
+    note: Published 48-entry host catalog; README explicitly includes experimental discovery-only entries. Latest release observed 2026-11-04 was v0.20.53. Exact per-adapter maturity requires pinned-source audit and local conformance tests.
+  - id: integration.unity_mcp
+    name: Unity-MCP
+    url: https://github.com/IvanMurzak/Unity-MCP
+    category: engine_adapter
+    posture: evaluate
+    research_status: discovered
+    confidence: low
+  - id: integration.godot_mcp
+    name: Godot-MCP
+    url: https://github.com/IvanMurzak/Godot-MCP
+    category: engine_adapter
+    posture: evaluate
+    research_status: researched
+    confidence: medium
+  - id: integration.unreal_mcp
+    name: Unreal-MCP community bridge
+    url: https://github.com/aadeshrao123/Unreal-MCP
+    category: engine_adapter
+    posture: evaluate
+    research_status: discovered
+    confidence: low
+  - id: dcc.blender
+    name: Blender
+    url: https://www.blender.org/
+    docs: https://docs.blender.org/api/5.0/
+    category: dcc_3d
+    posture: preferred_local_candidate
+    research_status: researched
+    confidence: high
+  - id: image.comfyui
+    name: ComfyUI
+    url: https://github.com/comfyanonymous/ComfyUI
+    docs: https://github.com/Comfy-Org/docs/blob/main/development/comfyui-server/comms_routes.mdx
+    category: generative_media_workflow
+    posture: preferred_local_candidate
+    research_status: researched
+    confidence: high
+  - id: workflow.langgraph
+    name: LangGraph
+    url: https://docs.langchain.com/oss/python/langgraph/overview
+    category: agent_workflow
+    posture: evaluate
+    research_status: researched
+    confidence: medium
+  - id: workflow.temporal
+    name: Temporal
+    url: https://docs.temporal.io/
+    category: durable_workflow
+    posture: evaluate_when_needed
+    research_status: researched
+    confidence: high
+  - id: inference.llama_cpp
+    name: llama.cpp
+    url: https://github.com/ggml-org/llama.cpp
+    category: local_inference
+    posture: evaluate
+    research_status: discovered
+    confidence: medium
+  - id: standard.openusd
+    name: OpenUSD
+    url: https://openusd.org/release/index.html
+    category: scene_interchange
+    posture: adopt_where_valuable
+    research_status: researched
+    confidence: high
+  - id: standard.gltf
+    name: glTF
+    url: https://registry.khronos.org/glTF/
+    category: runtime_3d_interchange
+    posture: adopt_where_appropriate
+    research_status: researched
+    confidence: high
