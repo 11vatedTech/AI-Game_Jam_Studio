@@ -1,0 +1,20 @@
+{
+  "name": "Studio foundation smoke test",
+  "description": "Creates a text asset in the workspace and verifies its registered SHA-256 manifest.",
+  "tasks": [
+    {
+      "id": "create-brief",
+      "capability": "workspace.write_text",
+      "inputs": {
+        "path": "smoke/production-brief.txt",
+        "content": "11vatedTech AI Game Jam Studio runtime smoke test.\nThis is a machine-verifiable test artifact, not finished game content.\n"
+      }
+    },
+    {
+      "id": "verify-brief",
+      "capability": "artifact.verify",
+      "depends_on": ["create-brief"],
+      "inputs": {"artifact_id": {"$ref": "create-brief.artifact_id"}}
+    }
+  ]
+}

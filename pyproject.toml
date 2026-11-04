@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "elevenvt-ai-game-jam-studio"
+version = "0.2.0"
+description = "Provider-neutral, evidence-first local production runtime for 11vatedTech AI Game Jam Studio"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Proprietary project specification; see LICENSE_POLICY.md" }
+authors = [{ name = "11vatedTech" }]
+dependencies = []
+
+[project.optional-dependencies]
+monitoring = ["psutil>=5.9"]
+mcp = ["mcp>=2,<3"]
+test = ["pytest>=8.0", "jsonschema>=4.22"]
+
+[project.scripts]
+studio = "elevenvt_studio.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.setuptools.package-data]
+elevenvt_studio = ["data/*.json"]

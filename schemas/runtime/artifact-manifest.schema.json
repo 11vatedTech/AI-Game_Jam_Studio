@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"Runtime Artifact Manifest",
+  "type":"object",
+  "required":["id","name","relative_path","sha256","size_bytes","provenance","license","validation","created_at"],
+  "properties":{
+    "id":{"type":"string"},"job_id":{"type":["string","null"]},"task_id":{"type":["string","null"]},
+    "name":{"type":"string"},"relative_path":{"type":"string"},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "size_bytes":{"type":"integer","minimum":0},"media_type":{"type":["string","null"]},
+    "provenance":{"type":"object"},"license":{"type":"object","required":["status"],"properties":{"status":{"enum":["cleared","restricted","unknown","blocked"]},"identifier":{"type":"string"},"source_url":{"type":"string"},"review_required":{"type":"boolean"}}},
+    "validation":{"type":"object"},"created_at":{"type":"string"},"manifest_path":{"type":"string"}
+  },"additionalProperties":true
+}

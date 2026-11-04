@@ -1,0 +1,225 @@
+{
+  "catalog_id": "11vt-runtime-capabilities",
+  "version": 1,
+  "capabilities": [
+    {
+      "id": "studio.status",
+      "domain": "studio_core",
+      "description": "Report runtime identity, paths, database and registered capabilities.",
+      "side_effect": "READ",
+      "scope": "studio.status",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [],
+      "evidence": "runtime status payload"
+    },
+    {
+      "id": "capability.list",
+      "domain": "studio_core",
+      "description": "List registered runtime capability contracts and maturity status.",
+      "side_effect": "READ",
+      "scope": "capability.list",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [],
+      "evidence": "capability registry response"
+    },
+    {
+      "id": "resource.profile",
+      "domain": "operations",
+      "description": "Inspect host OS, CPU, RAM, disk, GPU and optional runtime modules.",
+      "side_effect": "READ",
+      "scope": "resource.inspect",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [],
+      "evidence": "timestamped hardware profile"
+    },
+    {
+      "id": "workspace.write_text",
+      "domain": "workspace",
+      "description": "Create a new UTF-8 text artifact inside the managed workspace without overwriting existing files.",
+      "side_effect": "CREATE",
+      "scope": "workspace.create",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "workspace.create"
+      ],
+      "evidence": "SHA-256 artifact manifest"
+    },
+    {
+      "id": "workspace.read_text",
+      "domain": "workspace",
+      "description": "Read a bounded UTF-8 text file inside the managed workspace.",
+      "side_effect": "READ",
+      "scope": "workspace.read",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "workspace.read"
+      ],
+      "evidence": "read result with byte count"
+    },
+    {
+      "id": "artifact.list",
+      "domain": "artifact_management",
+      "description": "List registered artifacts and their provenance/validation metadata.",
+      "side_effect": "READ",
+      "scope": "artifact.read",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "artifact.read"
+      ],
+      "evidence": "artifact registry"
+    },
+    {
+      "id": "artifact.verify",
+      "domain": "artifact_management",
+      "description": "Recompute SHA-256 and verify the artifact still matches its manifest.",
+      "side_effect": "READ",
+      "scope": "artifact.read",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "artifact.read"
+      ],
+      "evidence": "integrity verification result"
+    },
+    {
+      "id": "comfyui.health",
+      "domain": "image_generation",
+      "description": "Query ComfyUI system statistics and queue state through its native HTTP API.",
+      "side_effect": "READ",
+      "scope": "comfyui.inspect",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "network.loopback.read"
+      ],
+      "evidence": "system_stats and queue response"
+    },
+    {
+      "id": "comfyui.queue_prompt",
+      "domain": "image_generation",
+      "description": "Submit an API-format ComfyUI workflow. Queue acceptance is not proof of completed generation.",
+      "side_effect": "NETWORK",
+      "scope": "comfyui.queue",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "network.loopback.write",
+        "app.execute"
+      ],
+      "evidence": "prompt_id and subsequent history required"
+    },
+    {
+      "id": "comfyui.queue_status",
+      "domain": "image_generation",
+      "description": "Inspect ComfyUI queue and history for a previously submitted prompt.",
+      "side_effect": "READ",
+      "scope": "comfyui.inspect",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "network.loopback.read"
+      ],
+      "evidence": "queue and prompt history"
+    },
+    {
+      "id": "blender.health",
+      "domain": "3d",
+      "description": "Verify Blender executable availability and report version output.",
+      "side_effect": "READ",
+      "scope": "blender.inspect",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "process.launch.readonly"
+      ],
+      "evidence": "Blender --version output"
+    },
+    {
+      "id": "blender.execute_script",
+      "domain": "3d",
+      "description": "Run an existing Python script through Blender background mode from within the managed workspace.",
+      "side_effect": "EXECUTE",
+      "scope": "blender.execute",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "process.launch",
+        "app.execute_script"
+      ],
+      "evidence": "stdout/stderr/exit code; native asset review still required"
+    },
+    {
+      "id": "godot.health",
+      "domain": "game_development",
+      "description": "Verify Godot executable availability and version output.",
+      "side_effect": "READ",
+      "scope": "godot.inspect",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "process.launch.readonly"
+      ],
+      "evidence": "Godot --version output"
+    },
+    {
+      "id": "godot.validate_project",
+      "domain": "game_development",
+      "description": "Run a bounded headless Godot editor import/parse validation for a project in the managed workspace.",
+      "side_effect": "EXECUTE",
+      "scope": "godot.execute",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "process.launch",
+        "project.modify"
+      ],
+      "evidence": "headless logs and exit code; packaged runtime validation still required"
+    },
+    {
+      "id": "comfyui.inventory",
+      "domain": "image_generation",
+      "description": "Inspect installed ComfyUI node classes and available model categories through local native HTTP endpoints.",
+      "side_effect": "READ",
+      "scope": "comfyui.inspect",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "network.loopback.read"
+      ],
+      "evidence": "node type inventory and model lists; individual nodes/models remain unqualified"
+    },
+    {
+      "id": "comfyui.await_completion",
+      "domain": "image_generation",
+      "description": "Poll native ComfyUI history until a prompt completes or fails; a timeout is an explicit failed task.",
+      "side_effect": "READ",
+      "scope": "comfyui.inspect",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "network.loopback.read"
+      ],
+      "evidence": "prompt history status and output node count"
+    },
+    {
+      "id": "comfyui.retrieve_outputs",
+      "domain": "image_generation",
+      "description": "Download completed workflow outputs into the managed workspace and register them with SHA-256 manifests and provenance.",
+      "side_effect": "CREATE",
+      "scope": "workspace.create",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "network.loopback.read",
+        "workspace.create"
+      ],
+      "evidence": "managed output files, artifact manifests, SHA-256 hashes; semantic and rights status remain NOT_RUN/UNKNOWN"
+    }
+  ]
+}

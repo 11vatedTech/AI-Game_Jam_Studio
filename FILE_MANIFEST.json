@@ -1,489 +1,879 @@
 {
-  "spec_version": "0.1.0",
-  "repository": "11vatedTech/AI-Game_Jam_Studio",
-  "generated_at_utc": "2026-11-04",
-  "manifest_scope": "All specification source files except this manifest and Git metadata.",
-  "file_count_including_manifest": 97,
+  "file_count_excluding_manifest": 174,
+  "file_count_including_manifest": 175,
   "files": [
     {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "d3db3b5e38e9bcd6cb0f89b2cc665d77fdc437a2641158bb61f0cde158198423",
+      "size_bytes": 801
+    },
+    {
       "path": ".gitignore",
-      "size_bytes": 469,
-      "sha256": "01a5a617fca9edc4d8359ad61ae04124a8b92bf1486a064b6506996dadcb5602"
+      "sha256": "001a15c801c83f55fa897883d47004cc25dbe3b18af08680f2b79a11a05f83a0",
+      "size_bytes": 423
+    },
+    {
+      "path": ".python-version",
+      "sha256": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+      "size_bytes": 5
     },
     {
       "path": "AGENTS.md",
-      "size_bytes": 1952,
-      "sha256": "d62c8aab61e5165229a2ebf35dcae6667f4b71223eff0e8b71ba453e99be0c70"
+      "sha256": "8857bd8c08e9cd605474c2f3a71926851cbdc073d8127103d057c9fd89389e4c",
+      "size_bytes": 4451
     },
     {
       "path": "CHANGELOG.md",
-      "size_bytes": 1108,
-      "sha256": "7d0490b6d48a25ecf48093435f8dd68bdab22b92c4cf9ba26ba964c0db78241a"
+      "sha256": "7cb4dc13f5b3c012a06659dd5ae66eafe29e50400caf0949cfdd0b6ce5707082",
+      "size_bytes": 2044
     },
     {
       "path": "CONTRIBUTING.md",
-      "size_bytes": 1159,
-      "sha256": "5403cc38d0ebb797763e9d23ef58fcb891f1c36a47f54d806045555782ac75b6"
+      "sha256": "5403cc38d0ebb797763e9d23ef58fcb891f1c36a47f54d806045555782ac75b6",
+      "size_bytes": 1159
     },
     {
       "path": "FREEBUFF_START_HERE.md",
-      "size_bytes": 9138,
-      "sha256": "037ae82648fafa9ef23b7d87b024a5a63aab0c8ac07f082e462d2c9b73d6adcb"
+      "sha256": "9757b61b96dc5a06b94c4bd4cac2404e95a73273e09a0f1d04c80dd20842df7b",
+      "size_bytes": 14713
     },
     {
       "path": "LICENSE_POLICY.md",
-      "size_bytes": 1230,
-      "sha256": "c0ebc129c3e247ac96cc1c2f1218ab28f3f991e574dd97c615818f5428ffcf73"
+      "sha256": "c0ebc129c3e247ac96cc1c2f1218ab28f3f991e574dd97c615818f5428ffcf73",
+      "size_bytes": 1230
     },
     {
       "path": "PROJECT_STATUS.md",
-      "size_bytes": 2478,
-      "sha256": "9c6a442a183bbb1abaf1df095cafa20ba25f835f91b2ce1aac1cedf593703885"
+      "sha256": "cb11ec147f25abc9068c191b88a06c6bb2a2f1ba7b14c621ff2398500833b71f",
+      "size_bytes": 6487
     },
     {
       "path": "PUSH_TO_GITHUB.md",
-      "size_bytes": 887,
-      "sha256": "b816e54158a1df602fb136deb9442bdd284382468be032889b2115bb3133e687"
+      "sha256": "b816e54158a1df602fb136deb9442bdd284382468be032889b2115bb3133e687",
+      "size_bytes": 887
     },
     {
       "path": "README.md",
-      "size_bytes": 6959,
-      "sha256": "7e32670d6667628d8f47cea5084d4a365669cd4b4b0ba4eb325ab6ded56288c9"
+      "sha256": "a46a3878e99fdac3595b00c25c35f04017e39e8c01cdb483cf3ea7fb29ddf548",
+      "size_bytes": 6182
     },
     {
       "path": "VERSION",
-      "size_bytes": 6,
-      "sha256": "e9dd8507f4bf0c6f42458e41aea833ad0bd3f6127272335eee9bf4d58541ed67"
+      "sha256": "1f930dd1f133c1f97a94fe3acb8db34372cf4c01ffdb2b3ff4ca72f9494121e9",
+      "size_bytes": 6
     },
     {
       "path": "catalogs/benchmark_catalog.yaml",
-      "size_bytes": 1560,
-      "sha256": "99eb2c98603e7fb3d986c85d23a8ff90ba95c83d74bc7b8fc34510c430489bf1"
+      "sha256": "99eb2c98603e7fb3d986c85d23a8ff90ba95c83d74bc7b8fc34510c430489bf1",
+      "size_bytes": 1560
     },
     {
       "path": "catalogs/capability_catalog.yaml",
-      "size_bytes": 7589,
-      "sha256": "f485017d1725471209e3ce079fcdaac2dc045f30dcf1c85cbe3a954260ef53b4"
+      "sha256": "f485017d1725471209e3ce079fcdaac2dc045f30dcf1c85cbe3a954260ef53b4",
+      "size_bytes": 7589
     },
     {
       "path": "catalogs/reference_catalog.yaml",
-      "size_bytes": 3215,
-      "sha256": "0be85e8c0d36fc76c6fca95745d34ee34b35f07f26d3e2c02d1c7408adf99b1b"
+      "sha256": "0be85e8c0d36fc76c6fca95745d34ee34b35f07f26d3e2c02d1c7408adf99b1b",
+      "size_bytes": 3215
+    },
+    {
+      "path": "catalogs/runtime/capabilities.json",
+      "sha256": "ddc6c0e3d67ea9a25ef364030aaf57f29dd0b71e401eb83515a2c9949a5e96df",
+      "size_bytes": 7355
     },
     {
       "path": "catalogs/standards_catalog.yaml",
-      "size_bytes": 2108,
-      "sha256": "b857fa56b3e11d5207cdfc19c6fc1064e521a48c058996322739941f9ff473bd"
+      "sha256": "b857fa56b3e11d5207cdfc19c6fc1064e521a48c058996322739941f9ff473bd",
+      "size_bytes": 2108
     },
     {
       "path": "docs/00-foundation/MASTER_SYSTEM_CONTRACT.md",
-      "size_bytes": 2059,
-      "sha256": "711a0174f950f64e3c396362f04756a75d95e990e91b9ae91bf0a445ae717550"
+      "sha256": "711a0174f950f64e3c396362f04756a75d95e990e91b9ae91bf0a445ae717550",
+      "size_bytes": 2059
     },
     {
       "path": "docs/00-foundation/PRODUCTION_MOAT.md",
-      "size_bytes": 1853,
-      "sha256": "71a6728ac2e7bce56e95d1bf35141cf0361bcb9212d83c29068e12d16a7b18a8"
+      "sha256": "71a6728ac2e7bce56e95d1bf35141cf0361bcb9212d83c29068e12d16a7b18a8",
+      "size_bytes": 1853
     },
     {
       "path": "docs/00-foundation/PRODUCT_MISSION.md",
-      "size_bytes": 3458,
-      "sha256": "65ec87bab0e40670d6f94243d9320f5e22f03b0fa09edea4fa46b9f71f8b998b"
+      "sha256": "65ec87bab0e40670d6f94243d9320f5e22f03b0fa09edea4fa46b9f71f8b998b",
+      "size_bytes": 3458
     },
     {
       "path": "docs/00-foundation/QUALITY_BAR.md",
-      "size_bytes": 4352,
-      "sha256": "9b9929730d6e5763cfad774a6757cfab385113bf2c6d595d0961586eb9c7c3ed"
+      "sha256": "9b9929730d6e5763cfad774a6757cfab385113bf2c6d595d0961586eb9c7c3ed",
+      "size_bytes": 4352
     },
     {
       "path": "docs/00-foundation/TERMINOLOGY.md",
-      "size_bytes": 1980,
-      "sha256": "60cb5bdb4b57f3543ee4c89f0051bcd4ae14971dde81cc1ff10d6f90b94794ff"
+      "sha256": "60cb5bdb4b57f3543ee4c89f0051bcd4ae14971dde81cc1ff10d6f90b94794ff",
+      "size_bytes": 1980
     },
     {
       "path": "docs/00-foundation/VISUAL_MOAT.md",
-      "size_bytes": 5488,
-      "sha256": "4a00d809c65ad088c40c731510bd526535ffaf7891170d935f497c69ef0d41ed"
+      "sha256": "4a00d809c65ad088c40c731510bd526535ffaf7891170d935f497c69ef0d41ed",
+      "size_bytes": 5488
     },
     {
       "path": "docs/01-requirements/CAPABILITY_UNIVERSE.md",
-      "size_bytes": 4665,
-      "sha256": "aa1c9f562999e8c95898383727294a9885ba17b9cb925b0179ea9926f536d003"
+      "sha256": "aa1c9f562999e8c95898383727294a9885ba17b9cb925b0179ea9926f536d003",
+      "size_bytes": 4665
     },
     {
       "path": "docs/01-requirements/INTENT_ROUTING.md",
-      "size_bytes": 2117,
-      "sha256": "84776ce10b5d7e83b6328bb01b21731944ae5fabe4d33262a7448c6a22e1e83b"
+      "sha256": "84776ce10b5d7e83b6328bb01b21731944ae5fabe4d33262a7448c6a22e1e83b",
+      "size_bytes": 2117
     },
     {
       "path": "docs/01-requirements/NON_FUNCTIONAL_REQUIREMENTS.md",
-      "size_bytes": 2359,
-      "sha256": "337a1bf19fa4a084744989ceef4a9369739ba177e02dd043c1ed9140cee0b191"
+      "sha256": "337a1bf19fa4a084744989ceef4a9369739ba177e02dd043c1ed9140cee0b191",
+      "size_bytes": 2359
     },
     {
       "path": "docs/01-requirements/PRODUCT_REQUIREMENTS.md",
-      "size_bytes": 3523,
-      "sha256": "4630851dddb5f60a395d51158c075a13ddbb8d6417886fb839e9695e93d028cb"
+      "sha256": "4630851dddb5f60a395d51158c075a13ddbb8d6417886fb839e9695e93d028cb",
+      "size_bytes": 3523
     },
     {
       "path": "docs/02-research/AGENT_AND_WORKFLOW_FRAMEWORKS.md",
-      "size_bytes": 2970,
-      "sha256": "2e789a2ad98b61de7830fc0f556722ae9882d1fd3f2ba10a4f4520044e4f8c00"
+      "sha256": "2e789a2ad98b61de7830fc0f556722ae9882d1fd3f2ba10a4f4520044e4f8c00",
+      "size_bytes": 2970
     },
     {
       "path": "docs/02-research/AI_GAME_DEV_BENCHMARK.md",
-      "size_bytes": 4801,
-      "sha256": "f95fcc027ea28e8ef9374bb24a87dd78f2eff2f18bfa00c0033b7724f769c73f"
+      "sha256": "f95fcc027ea28e8ef9374bb24a87dd78f2eff2f18bfa00c0033b7724f769c73f",
+      "size_bytes": 4801
     },
     {
       "path": "docs/02-research/DCC_MCP_CORE_EVALUATION.md",
-      "size_bytes": 5656,
-      "sha256": "3de769d9ca9169cccde55a5d351037b3ca8902fe8d62f5f35c7889cc8c0b858d"
+      "sha256": "3de769d9ca9169cccde55a5d351037b3ca8902fe8d62f5f35c7889cc8c0b858d",
+      "size_bytes": 5656
     },
     {
       "path": "docs/02-research/PRIMARY_SOURCES.md",
-      "size_bytes": 4792,
-      "sha256": "081858a7adccc4b5a2fce33eced0b22e112cbf2bc7b4125cde16e4bede23d8f6"
+      "sha256": "081858a7adccc4b5a2fce33eced0b22e112cbf2bc7b4125cde16e4bede23d8f6",
+      "size_bytes": 4792
     },
     {
       "path": "docs/02-research/REFERENCE_ECOSYSTEM.md",
-      "size_bytes": 5981,
-      "sha256": "06aec4c3431b689cbcc3c174737f72a2a5bdab149ed7a70b70b01381dec9adce"
+      "sha256": "06aec4c3431b689cbcc3c174737f72a2a5bdab149ed7a70b70b01381dec9adce",
+      "size_bytes": 5981
     },
     {
       "path": "docs/02-research/RESEARCH_METHOD.md",
-      "size_bytes": 3725,
-      "sha256": "554ef5f9713ff0636157c8db747ac9ceb3771b60757baa3b01b3f7a4e0e21ab0"
+      "sha256": "554ef5f9713ff0636157c8db747ac9ceb3771b60757baa3b01b3f7a4e0e21ab0",
+      "size_bytes": 3725
     },
     {
       "path": "docs/02-research/STANDARDS_AND_INTERCHANGE.md",
-      "size_bytes": 2846,
-      "sha256": "eea77e73bdd2ea9fd1f4f6011fcdc759d727eb89a9b9c365c4665d7f6963aeec"
+      "sha256": "eea77e73bdd2ea9fd1f4f6011fcdc759d727eb89a9b9c365c4665d7f6963aeec",
+      "size_bytes": 2846
     },
     {
       "path": "docs/03-architecture/ADAPTER_CONFORMANCE.md",
-      "size_bytes": 1469,
-      "sha256": "91af64301e8a54008f2b45dae0fde2442c5a521988a2b85191a3b105c3bef298"
+      "sha256": "91af64301e8a54008f2b45dae0fde2442c5a521988a2b85191a3b105c3bef298",
+      "size_bytes": 1469
     },
     {
       "path": "docs/03-architecture/AGENT_RUNTIME_AND_SKILLS.md",
-      "size_bytes": 3089,
-      "sha256": "631cd34c0b1928330bf3e289e19d0a40f8b44e8b069046e10aca4277c997adc8"
+      "sha256": "631cd34c0b1928330bf3e289e19d0a40f8b44e8b069046e10aca4277c997adc8",
+      "size_bytes": 3089
     },
     {
       "path": "docs/03-architecture/ARTIFACTS_AND_PROVENANCE.md",
-      "size_bytes": 2044,
-      "sha256": "46fe1d30c6c88bca881045676faafe7f1160ae598038f473baf590a81aebef2a"
+      "sha256": "46fe1d30c6c88bca881045676faafe7f1160ae598038f473baf590a81aebef2a",
+      "size_bytes": 2044
     },
     {
       "path": "docs/03-architecture/EXTENSIBILITY_AND_PLUGINS.md",
-      "size_bytes": 1699,
-      "sha256": "41a86c40820c52a8bbab3ac3a94c6c37a3d7e864f518abe7a0b9784fc71ec108"
+      "sha256": "41a86c40820c52a8bbab3ac3a94c6c37a3d7e864f518abe7a0b9784fc71ec108",
+      "size_bytes": 1699
     },
     {
       "path": "docs/03-architecture/INTEGRATION_CONTRACTS.md",
-      "size_bytes": 2696,
-      "sha256": "00d338ec103f6e0a86642989876a9f56a2edf9959d5bb92a4d1a4c98d57cb584"
+      "sha256": "00d338ec103f6e0a86642989876a9f56a2edf9959d5bb92a4d1a4c98d57cb584",
+      "size_bytes": 2696
     },
     {
       "path": "docs/03-architecture/MODELS_AND_RESOURCE_RUNTIME.md",
-      "size_bytes": 2810,
-      "sha256": "2ef0d177862d1bd085b916fc77e4d69d1d815ecbce03020bffeea5c1dd5d91aa"
+      "sha256": "2ef0d177862d1bd085b916fc77e4d69d1d815ecbce03020bffeea5c1dd5d91aa",
+      "size_bytes": 2810
     },
     {
       "path": "docs/03-architecture/PRODUCTION_ORCHESTRATION.md",
-      "size_bytes": 2500,
-      "sha256": "06bab847c5560227050f49a45874b69fe1b609015ca5edaf50a6aa73ec9b2682"
+      "sha256": "06bab847c5560227050f49a45874b69fe1b609015ca5edaf50a6aa73ec9b2682",
+      "size_bytes": 2500
     },
     {
       "path": "docs/03-architecture/PROJECT_CONTEXT_AND_MEMORY.md",
-      "size_bytes": 2223,
-      "sha256": "867f38b1f2dd6bd054fd0a7d522cdc702c4f729448e307e20138d556702cdccd"
+      "sha256": "867f38b1f2dd6bd054fd0a7d522cdc702c4f729448e307e20138d556702cdccd",
+      "size_bytes": 2223
     },
     {
       "path": "docs/03-architecture/REFERENCE_ARCHITECTURE.md",
-      "size_bytes": 5436,
-      "sha256": "4743dd07a7f1bcf81a60dc6e5859b50798707f0ba19304d7aded1b1eed2bdafc"
+      "sha256": "4743dd07a7f1bcf81a60dc6e5859b50798707f0ba19304d7aded1b1eed2bdafc",
+      "size_bytes": 5436
     },
     {
       "path": "docs/03-architecture/TOOL_ROUTING_AND_POLICY.md",
-      "size_bytes": 1585,
-      "sha256": "682611a98c48fddbecefaf58d6592f03387544581e96234c5d3bf3a7b9115e5e"
+      "sha256": "682611a98c48fddbecefaf58d6592f03387544581e96234c5d3bf3a7b9115e5e",
+      "size_bytes": 1585
     },
     {
       "path": "docs/04-disciplines/2D_ART_AND_DESIGN.md",
-      "size_bytes": 1944,
-      "sha256": "83de11620c5173bd09bde4ec323c1536ab51d999abc18ae26146ff9b14957037"
+      "sha256": "83de11620c5173bd09bde4ec323c1536ab51d999abc18ae26146ff9b14957037",
+      "size_bytes": 1944
     },
     {
       "path": "docs/04-disciplines/3D_DCC_AND_CAD.md",
-      "size_bytes": 2157,
-      "sha256": "ac70e32fcfaf08ac49dc92347b5db8ba56462e67c5f26bb1760ad3e7383fb1c0"
+      "sha256": "ac70e32fcfaf08ac49dc92347b5db8ba56462e67c5f26bb1760ad3e7383fb1c0",
+      "size_bytes": 2157
     },
     {
       "path": "docs/04-disciplines/ARCHITECTURE_SPATIAL_INDUSTRIAL.md",
-      "size_bytes": 1802,
-      "sha256": "ed8f57acac7a0d02d099b33a321a2216207e6dc8bc07e02845210edc741bc542"
+      "sha256": "ed8f57acac7a0d02d099b33a321a2216207e6dc8bc07e02845210edc741bc542",
+      "size_bytes": 1802
     },
     {
       "path": "docs/04-disciplines/AUDIO_MUSIC_VOICE.md",
-      "size_bytes": 1547,
-      "sha256": "bec089a776b51876c43d8ebbcde645f1a27418c7492f7e6a915ba070e9faa23e"
+      "sha256": "bec089a776b51876c43d8ebbcde645f1a27418c7492f7e6a915ba070e9faa23e",
+      "size_bytes": 1547
     },
     {
       "path": "docs/04-disciplines/ENGINEERING_SIMULATION_DATA.md",
-      "size_bytes": 1836,
-      "sha256": "6669eb0acc5cf8a0c6ef798b98a86febf78a9af62509118dd562b36cf0e5930e"
+      "sha256": "6669eb0acc5cf8a0c6ef798b98a86febf78a9af62509118dd562b36cf0e5930e",
+      "size_bytes": 1836
     },
     {
       "path": "docs/04-disciplines/GAME_DEVELOPMENT.md",
-      "size_bytes": 3121,
-      "sha256": "e2e7fc7af0ee5fbd982df25ee28fcc495f9c291388974bf6a890c772f36fd123"
+      "sha256": "e2e7fc7af0ee5fbd982df25ee28fcc495f9c291388974bf6a890c772f36fd123",
+      "size_bytes": 3121
     },
     {
       "path": "docs/04-disciplines/MATERIALS_LOOKDEV_RENDERING.md",
-      "size_bytes": 1579,
-      "sha256": "268b6d8fa537f1dd1bcb5c1a072e26b7a61cf7702b2f17dceff3f57febb26472"
+      "sha256": "268b6d8fa537f1dd1bcb5c1a072e26b7a61cf7702b2f17dceff3f57febb26472",
+      "size_bytes": 1579
     },
     {
       "path": "docs/04-disciplines/PUBLISHING_DELIVERY.md",
-      "size_bytes": 1239,
-      "sha256": "7cedfa0d0cd8529b9a97972b93af42023be7c60c9a33f870b519d9b0822b813e"
+      "sha256": "7cedfa0d0cd8529b9a97972b93af42023be7c60c9a33f870b519d9b0822b813e",
+      "size_bytes": 1239
     },
     {
       "path": "docs/04-disciplines/RESEARCH_DATA_ANALYTICS.md",
-      "size_bytes": 1391,
-      "sha256": "7e1cd5ff8a3f0c3ff0bf24dc93d546dfa1519b68e95eecb58b2dcfebbf790afe"
+      "sha256": "7e1cd5ff8a3f0c3ff0bf24dc93d546dfa1519b68e95eecb58b2dcfebbf790afe",
+      "size_bytes": 1391
     },
     {
       "path": "docs/04-disciplines/RIGGING_ANIMATION_MOTION.md",
-      "size_bytes": 1789,
-      "sha256": "3764d8355119d9814d5f043bcd005259cf1977078cc5221b34951dbb2767919d"
+      "sha256": "3764d8355119d9814d5f043bcd005259cf1977078cc5221b34951dbb2767919d",
+      "size_bytes": 1789
     },
     {
       "path": "docs/04-disciplines/UI_UX_WEB_APPS.md",
-      "size_bytes": 2141,
-      "sha256": "a2c46dca14e7e9668549b473eb83b43e4237264c06c8cbbe503e87c2568681c9"
+      "sha256": "a2c46dca14e7e9668549b473eb83b43e4237264c06c8cbbe503e87c2568681c9",
+      "size_bytes": 2141
     },
     {
       "path": "docs/04-disciplines/VFX_SIMULATION_COMPOSITING.md",
-      "size_bytes": 1285,
-      "sha256": "477350dfd8d31e842fdbbd5b5b6be4f05d80f869914680a55736194c2c6362c9"
+      "sha256": "477350dfd8d31e842fdbbd5b5b6be4f05d80f869914680a55736194c2c6362c9",
+      "size_bytes": 1285
     },
     {
       "path": "docs/04-disciplines/VIDEO_CINEMATOGRAPHY.md",
-      "size_bytes": 1662,
-      "sha256": "76a433ffe899fbe467ff3c2d7f0572314f2c76e0d377feb928f7635244654589"
+      "sha256": "76a433ffe899fbe467ff3c2d7f0572314f2c76e0d377feb928f7635244654589",
+      "size_bytes": 1662
     },
     {
       "path": "docs/04-disciplines/WRITING_NARRATIVE_BRAND.md",
-      "size_bytes": 1517,
-      "sha256": "4ae4b2aabb32e5360bfba05b4781c008600e979c31d2d558391c5c302a80e6e9"
+      "sha256": "4ae4b2aabb32e5360bfba05b4781c008600e979c31d2d558391c5c302a80e6e9",
+      "size_bytes": 1517
     },
     {
       "path": "docs/05-pipelines/ASSET_LIFECYCLE.md",
-      "size_bytes": 1966,
-      "sha256": "4d6e8cf216c29867ea4f411ad21e6dd467b4e674511815e08f75934d7739ee91"
+      "sha256": "4d6e8cf216c29867ea4f411ad21e6dd467b4e674511815e08f75934d7739ee91",
+      "size_bytes": 1966
     },
     {
       "path": "docs/05-pipelines/CHARACTER_PIPELINE.md",
-      "size_bytes": 2361,
-      "sha256": "8634a18fef42179d2cdc12e692cbb4e0e424fe79a8823d2e598a5355e42f8783"
+      "sha256": "8634a18fef42179d2cdc12e692cbb4e0e424fe79a8823d2e598a5355e42f8783",
+      "size_bytes": 2361
     },
     {
       "path": "docs/05-pipelines/ENVIRONMENT_PIPELINE.md",
-      "size_bytes": 1886,
-      "sha256": "26c68b753d651db16875dd5cfe22ca0bef68f148f1847808bd2e5bb580b6bc5c"
+      "sha256": "26c68b753d651db16875dd5cfe22ca0bef68f148f1847808bd2e5bb580b6bc5c",
+      "size_bytes": 1886
     },
     {
       "path": "docs/05-pipelines/GAME_VERTICAL_SLICE.md",
-      "size_bytes": 2257,
-      "sha256": "c6e520711581261f21e65e24b665337b1513a3926d72ab7b673ef17e15423968"
+      "sha256": "c6e520711581261f21e65e24b665337b1513a3926d72ab7b673ef17e15423968",
+      "size_bytes": 2257
     },
     {
       "path": "docs/06-quality/ACCESSIBILITY_AND_USABILITY.md",
-      "size_bytes": 1103,
-      "sha256": "d1c948dcb49826fc4e71f5bb1a9dde83ac437900c1ecc6fb047ae1a4b93b02e3"
+      "sha256": "d1c948dcb49826fc4e71f5bb1a9dde83ac437900c1ecc6fb047ae1a4b93b02e3",
+      "size_bytes": 1103
     },
     {
       "path": "docs/06-quality/BENCHMARK_SUITE.md",
-      "size_bytes": 2699,
-      "sha256": "7b341cc9d607d9026291fccedfbacb764208052b9dae08388a272ef7b9c23598"
+      "sha256": "7b341cc9d607d9026291fccedfbacb764208052b9dae08388a272ef7b9c23598",
+      "size_bytes": 2699
     },
     {
       "path": "docs/06-quality/ENGINEERING_QA.md",
-      "size_bytes": 1863,
-      "sha256": "d7819ec6898b6f6eb7b51e55000dfde05ea848cdfc68427ce197e17866378f86"
+      "sha256": "d7819ec6898b6f6eb7b51e55000dfde05ea848cdfc68427ce197e17866378f86",
+      "size_bytes": 1863
     },
     {
       "path": "docs/06-quality/EVIDENCE_AND_RELEASE_REPORTS.md",
-      "size_bytes": 1525,
-      "sha256": "4bfc9bf5a4174410c26049c58cdabdfe67472d28e5c9e28ae97c20faa3956680"
+      "sha256": "4bfc9bf5a4174410c26049c58cdabdfe67472d28e5c9e28ae97c20faa3956680",
+      "size_bytes": 1525
     },
     {
       "path": "docs/06-quality/QUALITY_SYSTEM.md",
-      "size_bytes": 2483,
-      "sha256": "b6d2b0019befe49c310581b0153280909e70bb65bf01c7e87a957d3fa8c9cd14"
+      "sha256": "b6d2b0019befe49c310581b0153280909e70bb65bf01c7e87a957d3fa8c9cd14",
+      "size_bytes": 2483
     },
     {
       "path": "docs/06-quality/VISUAL_AUDIO_REVIEW.md",
-      "size_bytes": 2005,
-      "sha256": "862a5222b7a185a312641fe765e4ae6e4d35d0eff5679e3df551807102ea42b0"
+      "sha256": "862a5222b7a185a312641fe765e4ae6e4d35d0eff5679e3df551807102ea42b0",
+      "size_bytes": 2005
     },
     {
       "path": "docs/07-security/LICENSES_AND_PROVENANCE.md",
-      "size_bytes": 1619,
-      "sha256": "61f54db8ac7957f41b204d625e1a75b87374c9b5c704abecd85802bceb633bf6"
+      "sha256": "61f54db8ac7957f41b204d625e1a75b87374c9b5c704abecd85802bceb633bf6",
+      "size_bytes": 1619
     },
     {
       "path": "docs/07-security/PERMISSIONS_AND_APPROVALS.md",
-      "size_bytes": 1553,
-      "sha256": "fffdfaa78b3f3b1f120e04a754b8f1e7ab675685ab693c01e94ee863ba58f10d"
+      "sha256": "fffdfaa78b3f3b1f120e04a754b8f1e7ab675685ab693c01e94ee863ba58f10d",
+      "size_bytes": 1553
     },
     {
       "path": "docs/07-security/SUPPLY_CHAIN.md",
-      "size_bytes": 1617,
-      "sha256": "e6927ea7750fce710e5ff03d3015a27999d0ff6d42fb76497da4a2c51d3115aa"
+      "sha256": "e6927ea7750fce710e5ff03d3015a27999d0ff6d42fb76497da4a2c51d3115aa",
+      "size_bytes": 1617
     },
     {
       "path": "docs/07-security/THREAT_MODEL.md",
-      "size_bytes": 3323,
-      "sha256": "ac5a28f35ad233b48adab908750bcfd4ca36a40476cf7ef79cc4b0944d839a5e"
+      "sha256": "ac5a28f35ad233b48adab908750bcfd4ca36a40476cf7ef79cc4b0944d839a5e",
+      "size_bytes": 3323
     },
     {
       "path": "docs/08-operations/INSTALLATION_AND_OPERATIONS.md",
-      "size_bytes": 1348,
-      "sha256": "445810fa941ec90209419787abeafc9947ae5a059f71a7a1fbcaa786a95170f9"
+      "sha256": "445810fa941ec90209419787abeafc9947ae5a059f71a7a1fbcaa786a95170f9",
+      "size_bytes": 1348
     },
     {
       "path": "docs/08-operations/OBSERVABILITY.md",
-      "size_bytes": 1575,
-      "sha256": "b73ea8e780555dec76ca83f3b57eb0cda0edf39b943bd2b06d29dbf37b3fa499"
+      "sha256": "b73ea8e780555dec76ca83f3b57eb0cda0edf39b943bd2b06d29dbf37b3fa499",
+      "size_bytes": 1575
     },
     {
       "path": "docs/08-operations/OPERATING_MODES_AND_COST.md",
-      "size_bytes": 1612,
-      "sha256": "3ccb8115b09469773ced8ad5a55808f17834bea149c037ba0de7a671c12ab78f"
+      "sha256": "3ccb8115b09469773ced8ad5a55808f17834bea149c037ba0de7a671c12ab78f",
+      "size_bytes": 1612
     },
     {
       "path": "docs/08-operations/WORKSTATION_PROFILE.md",
-      "size_bytes": 2266,
-      "sha256": "810cc7e2f27b28af531ab624f27feaf71fe67baf034809771cb15c60989c78e6"
+      "sha256": "810cc7e2f27b28af531ab624f27feaf71fe67baf034809771cb15c60989c78e6",
+      "size_bytes": 2266
     },
     {
       "path": "docs/09-roadmap/CONTRIBUTION_AND_GOVERNANCE.md",
-      "size_bytes": 1145,
-      "sha256": "2ea9a57676fe3edb89cc71be03edfda75e5099fb3f3bb295e0a4e3c052505376"
+      "sha256": "2ea9a57676fe3edb89cc71be03edfda75e5099fb3f3bb295e0a4e3c052505376",
+      "size_bytes": 1145
     },
     {
       "path": "docs/09-roadmap/DECISION_GATES.md",
-      "size_bytes": 1662,
-      "sha256": "016dcf18c7893485d3e8629663f8d0e47ae79bca7ae3e907c4e8bf3911ddb376"
+      "sha256": "016dcf18c7893485d3e8629663f8d0e47ae79bca7ae3e907c4e8bf3911ddb376",
+      "size_bytes": 1662
     },
     {
       "path": "docs/09-roadmap/MASTER_ROADMAP.md",
-      "size_bytes": 4791,
-      "sha256": "61c31bbfa1dcd8ee9a1afdc3f25d0a08897768c2c44948cb2901aeddac678934"
+      "sha256": "61c31bbfa1dcd8ee9a1afdc3f25d0a08897768c2c44948cb2901aeddac678934",
+      "size_bytes": 4791
     },
     {
       "path": "docs/10-adoption/ADOPTION_DECISIONS.md",
-      "size_bytes": 3904,
-      "sha256": "69e5fde9a4eba35ebe8a42b69b118d03ed590c6e4c9d5e16d341e527ea150652"
+      "sha256": "69e5fde9a4eba35ebe8a42b69b118d03ed590c6e4c9d5e16d341e527ea150652",
+      "size_bytes": 3904
     },
     {
       "path": "docs/10-adoption/CAPABILITY_CERTIFICATION_POLICY.md",
-      "size_bytes": 1139,
-      "sha256": "02db07bc2cfaee4458ec411788023321380ff55ff9360498210c36419b8b24f6"
+      "sha256": "02db07bc2cfaee4458ec411788023321380ff55ff9360498210c36419b8b24f6",
+      "size_bytes": 1139
     },
     {
       "path": "docs/10-adoption/RESEARCH_GAP_MATRIX.md",
-      "size_bytes": 2651,
-      "sha256": "a7effab604f240cdd317098e2a76087bebde5cd5939c85720552d8a687976a84"
+      "sha256": "a7effab604f240cdd317098e2a76087bebde5cd5939c85720552d8a687976a84",
+      "size_bytes": 2651
     },
     {
       "path": "docs/11-validation/ACCEPTANCE_PROTOCOL.md",
-      "size_bytes": 1688,
-      "sha256": "32fd53a462157000faabe27b7741c17662df4a80a98f349dcd7703d74be6af6e"
+      "sha256": "32fd53a462157000faabe27b7741c17662df4a80a98f349dcd7703d74be6af6e",
+      "size_bytes": 1688
     },
     {
       "path": "docs/11-validation/BENCHMARK_SCENARIOS.md",
-      "size_bytes": 2902,
-      "sha256": "f4996f5e8d5616e928f561dd369f6895a54fca73d336a089d473c4031b1a48c5"
+      "sha256": "f4996f5e8d5616e928f561dd369f6895a54fca73d336a089d473c4031b1a48c5",
+      "size_bytes": 2902
     },
     {
       "path": "docs/11-validation/QUALITY_RUBRIC_CALIBRATION.md",
-      "size_bytes": 1339,
-      "sha256": "573a890df12f303cb49678ae42e6786aaf47ccef9c4126420d0c0c5442a31b14"
+      "sha256": "573a890df12f303cb49678ae42e6786aaf47ccef9c4126420d0c0c5442a31b14",
+      "size_bytes": 1339
     },
     {
       "path": "docs/11-validation/SUCCESS_METRICS.md",
-      "size_bytes": 1464,
-      "sha256": "89cff8109df87efb943e6fa948b54c8ae2791bceb309a2c40a8af23c0c2b8bd7"
+      "sha256": "89cff8109df87efb943e6fa948b54c8ae2791bceb309a2c40a8af23c0c2b8bd7",
+      "size_bytes": 1464
     },
     {
       "path": "docs/11-validation/SUPPORT_MATRIX_TEMPLATE.md",
-      "size_bytes": 428,
-      "sha256": "0039e9320a018584e9089c77ec733888dbd57a55204260de6a930629cf424248"
+      "sha256": "0039e9320a018584e9089c77ec733888dbd57a55204260de6a930629cf424248",
+      "size_bytes": 428
+    },
+    {
+      "path": "docs/12-runtime/LOCAL_MCP_INTERFACE.md",
+      "sha256": "e90806cc618a25bced105306471edbb59ac169d7ae729cac45c6f8e3a4a4c8da",
+      "size_bytes": 4506
+    },
+    {
+      "path": "docs/12-runtime/RUNTIME_FOUNDATION.md",
+      "sha256": "9fd88cb8e7f311a4095b867aeeddd03289ff6ac6d166544943c3697ab3c2c69f",
+      "size_bytes": 7607
+    },
+    {
+      "path": "docs/12-runtime/SECURITY_BOUNDARIES.md",
+      "sha256": "6c1da969685dae4ef0bf4933b9100f2ad41d5f20d2df248ff8fba6b5dcb2a7c0",
+      "size_bytes": 3956
+    },
+    {
+      "path": "docs/13-execution/END_TO_END_VERTICAL_SLICE.md",
+      "sha256": "aec68518d84243aa8f32e5b9e8e8edd1fa9e2e9f343d84792910c5ae1a86e68f",
+      "size_bytes": 2082
+    },
+    {
+      "path": "docs/13-execution/FREEBUFF_EXECUTION_LOOP.md",
+      "sha256": "c405569f53fe423bef11b768602db9ae0175ceb8f27e22ce30efd30dfc8a7cec",
+      "size_bytes": 4280
+    },
+    {
+      "path": "docs/13-execution/P0_ACCEPTANCE.md",
+      "sha256": "72d21dab265315c2c6f2f965cf3f9abf61ad47afef90069bed2084d8d37cd81c",
+      "size_bytes": 2378
+    },
+    {
+      "path": "docs/14-adapters/ADAPTER_SUPPORT_MATRIX.md",
+      "sha256": "366ff454c830d2f341d5aa2a154ad90a2c9011c8dd6ed8afc22c3f52512de543",
+      "size_bytes": 3523
+    },
+    {
+      "path": "docs/14-adapters/BLENDER_ADAPTER.md",
+      "sha256": "8a558597948ce57efbba70ed9fbf4765ed6da23f22c77d85e7454336f2baf18e",
+      "size_bytes": 1796
+    },
+    {
+      "path": "docs/14-adapters/COMFYUI_ADAPTER.md",
+      "sha256": "d7ad08d88cc7f3dd5a026b8ec8b6dd77961bd2e432a70e7ce1278cf6798cd132",
+      "size_bytes": 3690
+    },
+    {
+      "path": "docs/14-adapters/EXTERNAL_MCP_ECOSYSTEM.md",
+      "sha256": "ebe5a7b5184b6fcd60f710aa8c0d00cea21c1aa88951b72ff7fcd2ac12403e5d",
+      "size_bytes": 1760
+    },
+    {
+      "path": "docs/14-adapters/GODOT_ADAPTER.md",
+      "sha256": "cfdb3aae63ce868bd6cb71eba9694ea5c0f524cbb59fe6886109ff2c82e72125",
+      "size_bytes": 1174
+    },
+    {
+      "path": "docs/14-adapters/UNREAL_UNITY_ADAPTER_STRATEGY.md",
+      "sha256": "eb3b7cd378b392625981afbb3a3eda8d0e6a05e6e7c1804b144fb7d4d5c598c8",
+      "size_bytes": 1998
+    },
+    {
+      "path": "docs/15-productization/COMMERCIAL_READINESS.md",
+      "sha256": "2fa84c193b37359a1ad56d326ed222fed41fbedb632809da729bebd998b64238",
+      "size_bytes": 2528
+    },
+    {
+      "path": "docs/15-productization/OPERATIONS_AND_SUPPORT.md",
+      "sha256": "39e407f23ce8f0ab8c140e8c5ff18129306fa20b155e03558ed66a7ef369757f",
+      "size_bytes": 1256
+    },
+    {
+      "path": "docs/15-productization/QUALITY_EVALUATION_AND_CALIBRATION.md",
+      "sha256": "2a87995c409f057989a49f6d8804179aeb0eabf5916c741683ec8440b8f15e9f",
+      "size_bytes": 1751
+    },
+    {
+      "path": "docs/decisions/0001-local-runtime-foundation.md",
+      "sha256": "270f73099750e91ac22b10a42297dd4c9d99570ad9f054c989eef40fafd7a2f7",
+      "size_bytes": 1904
+    },
+    {
+      "path": "docs/decisions/0002-mature-application-integration-first.md",
+      "sha256": "21a7baa5aee57c39db797d532117ff934fde9849d102810f1f325fc06c60cc98",
+      "size_bytes": 1125
+    },
+    {
+      "path": "docs/decisions/0003-human-approval-for-risky-side-effects.md",
+      "sha256": "53bd004de8622cae31dde33996e7cf7e3878753ba1a22313cd14d2246e602aea",
+      "size_bytes": 719
+    },
+    {
+      "path": "docs/decisions/0004-acceptance-is-not-certification.md",
+      "sha256": "9b3fa8b4e9b9c3733c20b528ec95093ca5db822da12675fc8b7ee538526b9123",
+      "size_bytes": 476
     },
     {
       "path": "examples/EXAMPLE_EVIDENCE_PACKAGE.md",
-      "size_bytes": 840,
-      "sha256": "ec8ba0bd4c5667934a93c7ba476ffee2a688c986f653eb731fe171483867a7c1"
+      "sha256": "ec8ba0bd4c5667934a93c7ba476ffee2a688c986f653eb731fe171483867a7c1",
+      "size_bytes": 840
     },
     {
       "path": "examples/EXAMPLE_PROJECT_BRIEF.md",
-      "size_bytes": 1897,
-      "sha256": "1892d9c78f20aaebaad04a628e91a8c708b73f8f83a7cedd125e48d295f85d69"
+      "sha256": "1892d9c78f20aaebaad04a628e91a8c708b73f8f83a7cedd125e48d295f85d69",
+      "size_bytes": 1897
+    },
+    {
+      "path": "examples/workflows/foundation-smoke.json",
+      "sha256": "e4fd4630adc1c4fa4ab2fb62806fda57f03ce6c0597e2224370d7a80cc3be7fd",
+      "size_bytes": 657
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "fb86b55f351f9647726d384ca874d94a3ab1039723e0366d9a5ab17be9f40c77",
+      "size_bytes": 880
+    },
+    {
+      "path": "reports/validation/BUILD-VALIDATION-2026-11-04.json",
+      "sha256": "cc4202ad0e2cd5f579ff181bc2ef448103387593325e7178f0474eb754bcbd7a",
+      "size_bytes": 2875
+    },
+    {
+      "path": "requirements-dev.txt",
+      "sha256": "fa9392277a2a8f38ef39687b3cefc5c1441dd8b339be58953ca28027fefd6653",
+      "size_bytes": 61
     },
     {
       "path": "schemas/artifact-manifest.schema.json",
-      "size_bytes": 1622,
-      "sha256": "95d89848039b1deb3ade05c8982897d17f31463e9e032be8656b5a1646aea244"
+      "sha256": "95d89848039b1deb3ade05c8982897d17f31463e9e032be8656b5a1646aea244",
+      "size_bytes": 1622
     },
     {
       "path": "schemas/capability.schema.json",
-      "size_bytes": 1520,
-      "sha256": "f49b5bbd667f9af435636c6312912b390e9a2bb75fb718392b006bb44a156127"
+      "sha256": "f49b5bbd667f9af435636c6312912b390e9a2bb75fb718392b006bb44a156127",
+      "size_bytes": 1520
     },
     {
       "path": "schemas/job.schema.json",
-      "size_bytes": 1193,
-      "sha256": "deab92c4a54a8143c736a44bdd5748a4736d473f5ccb4b38b8ed53b816a64dda"
+      "sha256": "deab92c4a54a8143c736a44bdd5748a4736d473f5ccb4b38b8ed53b816a64dda",
+      "size_bytes": 1193
     },
     {
       "path": "schemas/quality-report.schema.json",
-      "size_bytes": 1248,
-      "sha256": "9a897793ae3b2876bfea6fc45171d01dea940ac1b4c5750cbc8c574035288589"
+      "sha256": "9a897793ae3b2876bfea6fc45171d01dea940ac1b4c5750cbc8c574035288589",
+      "size_bytes": 1248
+    },
+    {
+      "path": "schemas/runtime/approval.schema.json",
+      "sha256": "5ebbb47621de1ed9f17c8d2c370386062c5165935eb203a3ef9602c1f52ea10b",
+      "size_bytes": 452
+    },
+    {
+      "path": "schemas/runtime/artifact-manifest.schema.json",
+      "sha256": "a520146fdc2da735051f1dfbda5e5992ef915afbab80c6a552832497f8c24f55",
+      "size_bytes": 957
+    },
+    {
+      "path": "schemas/runtime/capability.schema.json",
+      "sha256": "05bda61f182b1a3d196a3365972d52deec2cf4d87ba70714e59669438440ba71",
+      "size_bytes": 650
+    },
+    {
+      "path": "schemas/runtime/evidence-record.schema.json",
+      "sha256": "03f2168486ae0fce71c0167aff16847cbeb17e1ff96db271def3311fa1260c8d",
+      "size_bytes": 493
+    },
+    {
+      "path": "schemas/runtime/job-definition.schema.json",
+      "sha256": "c91680ab956cc80eb570540e1c10814a01335e6555bf5e84e04e662b1b3f838d",
+      "size_bytes": 1250
+    },
+    {
+      "path": "scripts/generate_manifest.py",
+      "sha256": "82e63b14fb195dfd3d1ed8ca4c18328d0f127a1252a506d347edf36ce2370a13",
+      "size_bytes": 1768
+    },
+    {
+      "path": "scripts/linux/bootstrap.sh",
+      "sha256": "712f5cf744ebe4aed0f6ae3ea72c06db2390e5b10383daae7b934b1e6da8d0d9",
+      "size_bytes": 422
+    },
+    {
+      "path": "scripts/verify_repo.py",
+      "sha256": "ff1163db111edfcf8dc9ff8cf58bceb28f23565ebd4effb025e2ceded6a2023b",
+      "size_bytes": 2138
+    },
+    {
+      "path": "scripts/windows/bootstrap.ps1",
+      "sha256": "c32ad3c4255ddc334ac4925bdf6a2b62f0a2d876830b50b1de3a8c826b0fd594",
+      "size_bytes": 1059
+    },
+    {
+      "path": "scripts/windows/mcp-config.example.json",
+      "sha256": "d20ee0d11af4c4b4abfdaa9004d937848ac8efce57e9d08c5068f93b6d0efb9f",
+      "size_bytes": 379
+    },
+    {
+      "path": "scripts/windows/run-tests.ps1",
+      "sha256": "d0a04accfd33c42dc3fb603cf6a08f43a06acc262b9d2e3e2f48c4a040ae0e66",
+      "size_bytes": 303
+    },
+    {
+      "path": "skills/README.md",
+      "sha256": "e0735ed4e490d8f7421ef91472c6a697bf5ab7ad93e92830a48f414f0a74da99",
+      "size_bytes": 1227
+    },
+    {
+      "path": "skills/adapter-integration/SKILL.md",
+      "sha256": "033e3688723f6ca58cc609431ea95edc595384aab20abfba46df9521e6ac6c99",
+      "size_bytes": 1068
+    },
+    {
+      "path": "skills/asset-manufacturing/SKILL.md",
+      "sha256": "f61c92eabd29eb2e09456105b4bb825fcd3e428ee6c1224f4e9c3a1613aff8e5",
+      "size_bytes": 1279
+    },
+    {
+      "path": "skills/creative-director/SKILL.md",
+      "sha256": "464c19d8ec76c2295afabdaaebc318b76117fe5f6f9b9f3cd6d622bd49f6fbb1",
+      "size_bytes": 1355
+    },
+    {
+      "path": "skills/production-architect/SKILL.md",
+      "sha256": "d3af3f05132c1679b688ab271e78defdbb6690e8cf6811f91cccad307a3b6b9e",
+      "size_bytes": 1070
+    },
+    {
+      "path": "skills/quality-assurance/SKILL.md",
+      "sha256": "d3e26a44c74a4ffb5326d79ad1e96b6f377e152835608ed7ecd861fd3ac10488",
+      "size_bytes": 1077
+    },
+    {
+      "path": "skills/release-engineer/SKILL.md",
+      "sha256": "b83bbe144416a83cb6d30ae1ec5f44b44e7e735cea7490cb86689e0df8a21941",
+      "size_bytes": 744
+    },
+    {
+      "path": "skills/technical-research/SKILL.md",
+      "sha256": "31bc40e08afa7dd0b6214f5e4c23e172ed77a39f4f86b98ee32d1f9c666313fc",
+      "size_bytes": 1068
+    },
+    {
+      "path": "skills/visual-art-director/SKILL.md",
+      "sha256": "49f4a821cd33ff61574fe22c0348e57e90dad759ed2a87846038c98ce8eef937",
+      "size_bytes": 1261
+    },
+    {
+      "path": "src/elevenvt_studio/__init__.py",
+      "sha256": "30c1c4205a8b6649e0e3fe74d73e7f3b7d47bcb633e90a40453ca17c06b62994",
+      "size_bytes": 79
+    },
+    {
+      "path": "src/elevenvt_studio/__main__.py",
+      "sha256": "84a7e4f8687d47e7fb81a80a5cea84d179c973fec45daf90f3c5d860e9f3ae69",
+      "size_bytes": 78
+    },
+    {
+      "path": "src/elevenvt_studio/adapters/__init__.py",
+      "sha256": "7716ec83cf20125445c74819d6b879fe66d84bcbdffb53905bfa860f3fff0576",
+      "size_bytes": 120
+    },
+    {
+      "path": "src/elevenvt_studio/adapters/base.py",
+      "sha256": "3f1e57d7d0b6ac0fde36c66d2fe02d76991f980dd9862d551134cdfd87ed2bb6",
+      "size_bytes": 256
+    },
+    {
+      "path": "src/elevenvt_studio/adapters/comfyui.py",
+      "sha256": "5454a50e9d934ccb4d8d9fbbbeb0c0ac50642bc7b21d4cf82c42b7da60bc0938",
+      "size_bytes": 7474
+    },
+    {
+      "path": "src/elevenvt_studio/adapters/process.py",
+      "sha256": "13c28982cf62ed2181e6aa6e4eb5b87ba174be47b29b27978b7cd6d3df002683",
+      "size_bytes": 2406
+    },
+    {
+      "path": "src/elevenvt_studio/agent/provider.py",
+      "sha256": "ab34e8e34f508572eb1af5536753bfac3be56f698312cb3240867333df8992fd",
+      "size_bytes": 1390
+    },
+    {
+      "path": "src/elevenvt_studio/artifacts.py",
+      "sha256": "9f85ad7122a9d834924d9a8874e2ae479b56147a720959be4104988549271be4",
+      "size_bytes": 6690
+    },
+    {
+      "path": "src/elevenvt_studio/cli.py",
+      "sha256": "78893aaa5c4078875d8b97f7acc969848aee0d1f11a3a394dda50ff54cb95773",
+      "size_bytes": 9501
+    },
+    {
+      "path": "src/elevenvt_studio/config.py",
+      "sha256": "8e78ad1d9f944ba47579c3377cbaa7424255adb6f9e5db36c7f7618d897cc817",
+      "size_bytes": 3712
+    },
+    {
+      "path": "src/elevenvt_studio/data/capabilities.json",
+      "sha256": "ddc6c0e3d67ea9a25ef364030aaf57f29dd0b71e401eb83515a2c9949a5e96df",
+      "size_bytes": 7355
+    },
+    {
+      "path": "src/elevenvt_studio/db.py",
+      "sha256": "0d6a2e2bea6dffb5f142cf8d180c909338e522f7f8a2b09589159bc75dce9c41",
+      "size_bytes": 5482
+    },
+    {
+      "path": "src/elevenvt_studio/errors.py",
+      "sha256": "cf216d483f3cb44c31a61da55d303b2fdd1bb465e886fc7da9f245653dfc686f",
+      "size_bytes": 763
+    },
+    {
+      "path": "src/elevenvt_studio/jobs.py",
+      "sha256": "57db72329e5d67c7ffdcfec12b9891a32c676f8b8e3e08b202ae1e28b9568569",
+      "size_bytes": 15459
+    },
+    {
+      "path": "src/elevenvt_studio/locking.py",
+      "sha256": "37698267ba73c29ee74119a0abf63fe6405bbee711c252c73cd9eca54b68cf5c",
+      "size_bytes": 1394
+    },
+    {
+      "path": "src/elevenvt_studio/mcp/__init__.py",
+      "sha256": "014fc53228602290b7a9627004f6b1444b98d8c9b1751a3fb1460b9fed78b31d",
+      "size_bytes": 913
+    },
+    {
+      "path": "src/elevenvt_studio/mcp/sdk_server.py",
+      "sha256": "1aedbd4db405c05c4dbcba2f46445cc40dbd063c14442b1628abf43cc6035bc2",
+      "size_bytes": 6323
+    },
+    {
+      "path": "src/elevenvt_studio/mcp/server.py",
+      "sha256": "16d07329f2aa297f310c65dd888490b628f5f693c789152643920a275e4a5aa2",
+      "size_bytes": 7007
+    },
+    {
+      "path": "src/elevenvt_studio/observability.py",
+      "sha256": "4013083c467a0a896c8e7a6420003c62b026e0acad1c9fd7b233bc1a8669351b",
+      "size_bytes": 1321
+    },
+    {
+      "path": "src/elevenvt_studio/paths.py",
+      "sha256": "d7333d3840fc4c04c7fb4cd3a5f7a9b1a016600e30aaafb6602976f271231222",
+      "size_bytes": 1920
+    },
+    {
+      "path": "src/elevenvt_studio/policy.py",
+      "sha256": "e171fb5003e1cf6a2bd4ab485e3bbbd85e42dc0a290185ad80dbc510757a6c0e",
+      "size_bytes": 5594
+    },
+    {
+      "path": "src/elevenvt_studio/registry.py",
+      "sha256": "b5bda15e3a710cd3f53fa3a86dd4ecc2167cd02d836f676a004408c99ecfc4f7",
+      "size_bytes": 1452
+    },
+    {
+      "path": "src/elevenvt_studio/resources.py",
+      "sha256": "0cfd1f009fe23c61c9054b2db47bdd0ff8d72b8a859449df093e3e226d1dcac8",
+      "size_bytes": 2900
+    },
+    {
+      "path": "src/elevenvt_studio/service.py",
+      "sha256": "e15ac7d56422d92672a7fbf4d871c97a90572a408edfcd587d8a54ad40581a9c",
+      "size_bytes": 21646
     },
     {
       "path": "templates/ACCEPTANCE_TEST_TEMPLATE.md",
-      "size_bytes": 429,
-      "sha256": "f3043dda01b05b9d4eb24af0c220d306c866d667e5fc18eac2634011b2c394b9"
+      "sha256": "f3043dda01b05b9d4eb24af0c220d306c866d667e5fc18eac2634011b2c394b9",
+      "size_bytes": 429
     },
     {
       "path": "templates/ADAPTER_CANDIDATE_TEMPLATE.md",
-      "size_bytes": 1274,
-      "sha256": "94aa6ef2f51acd50b269e3c235afe459b6ed4bc9c3081d2bf5ba1688bf3b9253"
+      "sha256": "94aa6ef2f51acd50b269e3c235afe459b6ed4bc9c3081d2bf5ba1688bf3b9253",
+      "size_bytes": 1274
     },
     {
       "path": "templates/ADR_TEMPLATE.md",
-      "size_bytes": 827,
-      "sha256": "7187809f5ff063a9eed2a7df700d2f58c586e34f41b3925703d313bc6aacd158"
+      "sha256": "7187809f5ff063a9eed2a7df700d2f58c586e34f41b3925703d313bc6aacd158",
+      "size_bytes": 827
     },
     {
       "path": "templates/INCIDENT_TEMPLATE.md",
-      "size_bytes": 411,
-      "sha256": "4616f81bb44ed9a536288bea4a0af2afe7484d6ee21a297ad17cedf26dfa35b9"
+      "sha256": "4616f81bb44ed9a536288bea4a0af2afe7484d6ee21a297ad17cedf26dfa35b9",
+      "size_bytes": 411
     },
     {
       "path": "templates/PRODUCTION_PLAN_TEMPLATE.md",
-      "size_bytes": 536,
-      "sha256": "cd9262162b9f0cce8d740584afb966aabf310c3831b463be9c3da173e9647760"
+      "sha256": "cd9262162b9f0cce8d740584afb966aabf310c3831b463be9c3da173e9647760",
+      "size_bytes": 536
     },
     {
       "path": "templates/SKILL_TEMPLATE.md",
-      "size_bytes": 609,
-      "sha256": "ba15b67a63656b2310c2271d5cd014d442963db8b1b51d609eaa03a01323db32"
+      "sha256": "ba15b67a63656b2310c2271d5cd014d442963db8b1b51d609eaa03a01323db32",
+      "size_bytes": 609
+    },
+    {
+      "path": "tests/conftest.py",
+      "sha256": "d472499f53af6caa9fefeec4643b877df36104e71f8869eb583868fd07fcc957",
+      "size_bytes": 318
+    },
+    {
+      "path": "tests/test_adapters.py",
+      "sha256": "7ce40b60610961fb5f34024d59be1f426777733b9931da31bd031396880badb3",
+      "size_bytes": 7767
+    },
+    {
+      "path": "tests/test_mcp.py",
+      "sha256": "fbdee80d7cd5a8d202970cd261af13b1b189878c9fbe14ecb9b15b82c8bc3157",
+      "size_bytes": 1048
+    },
+    {
+      "path": "tests/test_mcp_sdk.py",
+      "sha256": "7340177726a42c099c520f88f7cb6b37bda990b561d94cea4057be1bcf3f66c6",
+      "size_bytes": 980
+    },
+    {
+      "path": "tests/test_mcp_transport.py",
+      "sha256": "963267da1cb86a1b8d9f5a7a5d2f502daca46e3aff7cfa7aaf9ff22650c4d702",
+      "size_bytes": 1136
+    },
+    {
+      "path": "tests/test_paths.py",
+      "sha256": "15ffc35787c1f4d2b224f0bdd188ddd32bea4a8322006142990be5e65b8776eb",
+      "size_bytes": 923
+    },
+    {
+      "path": "tests/test_recovery.py",
+      "sha256": "7efd874dd67f453e91dff3a6e72e73dae1f69a88fcfac833ac6987f897a2c75a",
+      "size_bytes": 4032
+    },
+    {
+      "path": "tests/test_runtime.py",
+      "sha256": "01adc792deee835e2c230a5241b734a2ffb149dab43ed8c1b0ce1c0b33aef6ac",
+      "size_bytes": 6526
     }
-  ]
+  ],
+  "generated_for": "source and handoff integrity; excludes Git metadata, caches, virtual environments and itself",
+  "release": "0.2.0",
+  "repository": "11vatedTech/AI-Game_Jam_Studio"
 }

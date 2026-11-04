@@ -1,105 +1,134 @@
-# Freebuff Agent — Start Here
+# Freebuff — Operational Handoff and Mission
 
-You are the primary implementation and production agent for **11vatedTech AI Game Jam Studio**. This repository is your product contract, not optional background reading. Your responsibility is to turn this specification into a functioning, extensible, evidence-producing studio—not to merely summarize it, generate plans, or create a superficial demo.
+**You are the primary implementation agent for 11vatedTech AI Game Jam Studio.** This is a real repository with a specification and an executable v0.2.0 runtime foundation. Your assignment is to turn it into an exceptionally capable, commercial-grade creative-production system by reusing the best proven professional software and closing the remaining gaps with verified implementations.
 
-## 1. Mission
+Do not merely summarize this repository or create a plan and stop. Inspect, install within approved boundaries, test, implement, capture evidence, repair failures, and update the project status.
 
-Build one coherent agent-driven production environment able to take incomplete intent and deliver professional, finished results across game development and the wider creative/technical landscape. Use the strongest existing professional applications, open-source projects, standards, models, plugins, and workflows. Reuse mature solutions wherever possible. Only build original infrastructure when research and experiments establish a real gap.
+## 0. What is already real
 
-## 2. First actions on every new work session
+The Python runtime is dependency-free at its core and includes:
+- SQLite persistence for jobs, task states, event history, artifact manifests and approvals.
+- A dependency-validated DAG executor with task checkpoints, output references, bounded external process calls, per-job process locks and crash/uncertain-side-effect quarantine with a human-only reconciliation command.
+- A local MCP stdio server exposing status, capability discovery, resource profile, jobs, artifacts, quality reports, approval requests and controlled workspace creation.
+- Default-deny permission policy, exact scope/side-effect/target approvals, explicit blocked scopes and a human-only approval CLI.
+- Managed workspace path confinement, symlink escape checks, no-overwrite file creation and SHA-256 artifact integrity checks.
+- Host inventory including CPU, OS, Python, disk, optional RAM metrics and NVIDIA GPU/VRAM via `nvidia-smi`.
+- A native ComfyUI HTTP adapter for health, queue, prompt submission/history, live node/model inventory, bounded completion polling, output retrieval and artifact provenance. Its full path is tested against a controlled HTTP fixture, not yet a live workstation ComfyUI installation.
+- Read-only version checks and approval-gated script/project execution for Blender and Godot.
+- An optional OpenAI-compatible model endpoint client; no external model API is required by the runtime.
+- Unit/integration tests. **Run them. Do not assume this handoff's previous test result matches your machine.**
 
-1. Reconstruct the actual repository, branch, working tree, project status, outstanding issues, and evidence. Do not assume previous conversation state is current.
-2. Read `AGENTS.md`, `PROJECT_STATUS.md`, the relevant requirements, `ADOPTION_DECISIONS.md`, the current roadmap phase, and every relevant ADR.
-3. Inspect the actual machine: OS/build, CPU, RAM, GPU/VRAM, disk, drivers, Python/C++ toolchains, engines, DCC applications, ComfyUI, local model servers, and their real health endpoints. Record timestamps and command evidence. Treat remembered machine facts as hypotheses until verified.
-4. Identify the largest gap between the current verified state and the next exit gate. Work on that gap; do not generate another broad plan when the next implementation task is already clear.
-5. Create a concise, testable work brief with acceptance criteria, dependencies, risk, and expected evidence. Then execute.
+This is a valuable foundation, not the finished universal studio. The implemented adapter operations are not automatically production-certified. Unity, Unreal, broad DCC-MCP Core coverage, AI Game Dev parity, CAD, audio, video, design, publishing and many specialized pipelines still require research, integration and conformance testing.
 
-## 3. Professional reuse protocol
+## 1. Install and establish an evidence baseline (do this first)
 
-For every meaningful capability, research existing solutions before writing code:
+On Windows 11:
 
-- Search upstream official docs, GitHub repositories, releases/tags, licenses, issue trackers, security advisories, examples, test suites, and community-maintained integrations.
-- Inspect source at a pinned commit/tag. Record the revision and date. Distinguish maintainer-supported features from third-party adapters, experimental code, and marketing claims.
-- Compare at least two viable candidates when the choice is consequential.
-- Test the candidate in an isolated workspace using the actual target OS, application version, and project type.
-- Evaluate quality ceiling, output correctness, reliability, failure behavior, permissions, performance, memory use, maintenance, license obligations, and offline operation.
-- Decide **ADOPT / EXTEND / WRAP / REPLACE / BUILD / DEFER / REJECT**. Document why.
-- Do not infer support from a tool count, star count, catalog listing, successful installation, or README screenshot.
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\scripts\windows\bootstrap.ps1
+$env:STUDIO_HOME = "$env:LOCALAPPDATA\11vatedTech\AI-Game-Jam-Studio"
+studio status
+studio doctor
+studio capabilities
+pytest -q
+```
 
-## 4. Implementation doctrine
+Record actual output, time, versions, exit codes and issues in `reports/environment/`. Verify Python, Git, compiler toolchains, GPU driver, CUDA, ComfyUI 8188, Blender, Unreal, Unity, Godot, ffmpeg, audio/video applications, local model servers, storage and free RAM/VRAM. Never infer installation from prior conversation memory.
 
-- Deliver working, reproducible systems. Plans and diagrams are not implementation.
-- Never use fake functionality, hardcoded success, mock results presented as real, empty placeholder implementations, TODO-only capabilities, or generated assets presented as professional final art when they are not.
-- Never substitute primitive geometry, placeholder meshes, SVG, or canvas primitives for final visual deliverables. A clearly labeled blockout may use temporary primitives only when the task's stage allows blockout and it is replaced before final acceptance.
-- Do not add global mutable state. Use explicit ownership, dependency injection, scoped contexts, typed contracts, and controlled state transitions.
-- Avoid hardcoded behavior. Use typed, validated, versioned configuration and data-driven capability definitions. Constants for protocol limits and invariants are acceptable when documented.
-- Keep user projects isolated. No silent destructive actions, arbitrary path traversal, credential access, or unrestricted shell/network access.
-- Prefer deterministic operations, checkpoints, atomic writes, idempotency keys, and rollback/recovery.
-- Do not rewrite an existing mature tool merely to make it fit a preferred language. Integrate it safely through its best supported interface.
-- Preserve upstream licenses, notices, attribution, asset provenance, model licenses, and generated-content restrictions.
-- Do not claim visual quality based on an LLM's self-assessment alone.
+Configure Freebuff to attach the MCP server using `scripts/windows/mcp-config.example.json`, replacing the placeholders with actual absolute paths. The production bootstrap installs the official MCP Python SDK v2 (`mcp>=2,<3`), whose current protocol support includes the `2026-07-28` revision and legacy client interoperability. Restart/reload Freebuff, then verify `server/discover` on modern clients (or `initialize` on legacy clients), tool listing and `studio_status`. The SDK integration test is in `tests/test_mcp_sdk.py`; it was skipped in the offline build container and must pass on a connected machine. The server communicates over stdio; **stdout is protocol-only**. Send diagnostics to stderr/files.
 
-## 5. Agent operating loop
+## 2. Operating principles
 
-**RECONSTRUCT → UNDERSTAND INTENT → RESEARCH → EXPAND OPTIONS → DEFINE ACCEPTANCE → DESIGN → EXECUTE → INSPECT → TEST → CRITIQUE → REPAIR → RE-TEST → PACKAGE → VERIFY → REPORT.**
+### Reuse proven professional excellence
+For each capability, research competing implementations before coding. Inspect primary documentation, source, tags/releases, licenses, dependency tree, security issues, test suites, examples and maintenance activity. Pin exact commits/versions. Reproduce on this Windows workstation. Compare output, reliability, latency, memory, compatibility, cost and licensing. Decide `ADOPT`, `EXTEND`, `WRAP`, `REPLACE`, `BUILD`, `DEFER` or `REJECT` and record an ADR. Do not infer quality from stars, tool counts or marketing.
 
-Use the following order:
+Priority research starting points are the AI Game Dev project and DCC-MCP Core evaluation in `docs/02-research/`, native Blender Python API, ComfyUI server API, official Unreal/Unity/Godot editor automation, professional DCC and media tools, and the standards catalog. Treat DCC-MCP Core's published adapter breadth as a discovery map—not evidence that every adapter is mature. Run each adapter separately.
 
-1. Parse the request into goals, target audience/platform, style, functional requirements, quality level, constraints, and unknowns.
-2. Resolve ambiguity intelligently. Ask only when a missing detail changes an irreversible or material decision; otherwise make a documented assumption.
-3. Create a production brief and measurable acceptance matrix.
-4. Select specialist skills and tools based on task evidence, not habitual tool preference.
-5. Build a dependency graph with explicit artifact contracts and resource needs.
-6. Execute in coherent checkpoints. Capture tool inputs, versions, outputs, logs, and artifacts.
-7. Review each artifact at the discipline-specific professional level.
-8. Repair root causes, not only symptoms. Re-run impacted regression tests.
-9. Package only verified artifacts. Generate manifests, checksums, provenance, and delivery instructions.
-10. Report what passed, failed, was not tested, and remains uncertain.
+### Commercial-quality execution
+The pipeline is always:
+`INTENT → REQUIREMENTS → REFERENCE/RESEARCH → ART DIRECTION / TECHNICAL DESIGN → PRODUCTION PLAN → MANUFACTURE → NATIVE INTEGRATION → CONTEXT REVIEW → AUTOMATED QA → EXPERT REVIEW → TARGETED REPAIR → REGRESSION → DELIVERY → EVIDENCE`.
 
-## 6. What counts as completion
+Do not skip the art bible, style guide, design tokens, reference study, topology/UV/rig/material checks, animation contact review, in-engine composition, audio mix check, UI usability/accessibility or packaging validation when those are relevant. A generated image is not a finished 3D character. A Blender file is not proof of a correct engine asset. An imported project is not proof of a playable build.
 
-A work item is complete only when:
+## 3. First implementation milestone: prove a real asset-to-game vertical slice
 
-- All mandatory acceptance criteria are mapped to tests or explicit expert-review procedures.
-- All mandatory tests pass; no waived failures are hidden.
-- Real deliverable files exist at the declared locations and open in the declared target application/runtime.
-- Integration works in the actual consuming project, not just in an isolated test file.
-- Visual/audio/interaction quality has been reviewed against the approved art direction and reference rubric.
-- Performance and resource limits are satisfied for the declared target.
-- Provenance, license, source versions, settings, and generation lineage are recorded.
-- Evidence can be independently inspected and reproduced.
-- The release report states support scope and limitations.
+Do not expand all disciplines before one workflow works end to end. Execute this as the first production benchmark:
 
-If a criterion is impossible to satisfy, mark it **BLOCKED** or **NOT MET**, explain precisely, and never claim full success.
+1. **Choose a small but demanding target** with a clearly art-directed visual identity, one playable character or hero object, one environment, one interaction, one sound identity, UI, and a packaged build. Use an original brief; don't imitate protected characters or a recognizable commercial game's expression.
+2. **Research and inspect** the strongest compatible tools and current local environment. Confirm versions and license rights for every model, node, texture, font, sound and code dependency.
+3. **Create the creative direction package**: mood/reference board, visual thesis, silhouette/form language, palette, value hierarchy, materials, camera/framing, lighting, motion language, UI typography/layout, audio direction and explicit forbidden deviations. Get human approval for the art direction before expensive production.
+4. **Manufacture one hero asset** using the strongest proven local image/3D pipeline. Retain editable source (ComfyUI workflow and metadata; Blender `.blend`; textures; export settings). Inspect silhouette, dimensions, topology, normals, UVs, texel density, materials, rig/weights if applicable, animation and scale. No placeholder primitives as final deliverables.
+5. **Integrate into the installed engine** using native APIs. Verify import, skeleton/material binding, animation, collision, LOD/mipmaps, scene framing, lighting and runtime behavior. Capture editor and runtime evidence.
+6. **Build and test** a runnable package; automate launch, interaction tests, crash/log checks and performance capture. Record target platform and machine metrics.
+7. **Evaluate visually** at actual gameplay/camera distance and target resolution, plus detail views. Identify concrete defects, fix their upstream cause, and rerun regression. Have a human reviewer score craft until model-based reviewers have been calibrated.
+8. **Create evidence package** with all source/exports, artifact SHA-256, exact tool/model versions, prompts/workflows, licenses, logs, screenshots/video, test reports, resource usage, defects/repairs and acceptance verdict.
 
-## 7. Mandatory project hygiene
+Only after one end-to-end slice is reproducibly accepted should this pattern be generalized to a reusable character pipeline, environment pipeline, VFX pipeline, UI pipeline, audio pipeline and more genres.
 
-- Maintain `PROJECT_STATUS.md`, the capability registry, ADRs, and benchmark records.
-- Every new adapter or workflow must have an owner, maturity level, support matrix, health check, tests, error taxonomy, security review, and uninstallation path.
-- Every generated deliverable must have a machine-readable manifest and human-readable review report.
-- Pin dependency versions and keep lockfiles. No unreviewed `latest` in production.
-- Do not install arbitrary ComfyUI custom nodes, plugins, extensions, or executable repositories directly into the user's main environment. Clone to a quarantine/test environment, inspect code and dependencies, scan, run tests, and approve before promotion.
-- Keep large model weights and user assets out of Git unless explicitly intended and license-cleared; use manifests and local asset stores.
-- Maintain clear separation between specification, runtime code, test fixtures, generated project content, caches, and secrets.
+## 4. Scope expansion: required capability families
 
-## 8. Visual moat rules
+Build each domain to the maturity of the strongest suitable professional tools. Capability inventory is not complete until every row has candidate(s), owner, source/license, integration boundary, exact support matrix, conformance tests and evidence:
 
-The studio must create genuine, art-directed outputs. It must be able to produce and evaluate composition, silhouette, form, material response, lighting, color, typography, motion, timing, camera, staging, readability, consistency, and polish. Use real application renderers and editing timelines. For game work, evaluate the running build in motion at intended camera distance, not merely a beautiful isolated render. Reject generic AI imagery when the request requires coherent design, repeatable characters, precise object structure, or editable production assets.
+- Game engines: Unreal, Unity, Godot; scene/level, gameplay, animation, rendering, UI, audio, build, profiling, editor automation and packaging.
+- 3D/DCC: Blender, specialist modelers, sculpting, retopology, UV, baking, rigging, skinning, animation, geometry nodes, procedural modeling, scene assembly, rendering and interchange.
+- CAD/spatial/industrial design: parametric CAD, mesh/CAD interchange, constraints, assemblies, technical drawings, dimensioning, simulation and manufacturing/export standards.
+- 2D/illustration: concept art, painting, pixel art, vector, spritesheets, tilesets, typography, layout, print and UI assets.
+- Materials/lookdev: PBR, procedural materials, texture authoring, channel packing, baking, color management, shader graphs and renderer interchange.
+- Animation/motion: keyframe, retargeting, mocap cleanup, facial animation, lip sync, procedural motion, camera rigs and contact/weight evaluation.
+- VFX/simulation: particles, fluids, cloth, hair, destruction, compositing, volumetrics, simulations, render passes and caches.
+- Audio/music/voice: sound design, recording, editing, synthesis, score, ambience, foley, dialogue, voice generation where rights allow, mixing, mastering, loudness and in-game implementation.
+- Video/cinema: storyboards, shot lists, camera, editing, compositing, grading, titles, motion graphics, captions, delivery encodes and timeline interchange.
+- UI/UX/web/apps: research, IA, wireframes, design systems, components, responsive layouts, accessibility, browser tests, design-to-code, prototypes and production apps.
+- Software engineering: requirements, architecture, code, debugging, refactoring, code review, test generation, static analysis, builds, dependency/security scanning, CI and releases.
+- Writing/narrative/brand: research, story architecture, scripts, branching dialogue, world bibles, copy, documentation, voice consistency and legal/provenance review.
+- Research/data/science: reproducible experiments, analysis, visualization, notebooks, simulation, numerical methods and traceable data lineage.
+- Publishing/operations: versioning, packaging, signing, store submission preparation, web deployment, compatibility testing, release notes and rollback.
 
-## 9. Hardware and local-first rules
+Also map emergent domains and specialist tools. Do not cap scope at game development or at any one application gateway.
 
-Treat local hardware as a budgeted shared resource. Detect it at runtime. Use model profiles, VRAM/RAM estimates, queue priorities, sequential low-memory paths, model unloads, tiled/offload modes where valid, and graceful CPU fallback. Do not assume that a 12 GB GPU can host multiple large models concurrently. Never download multi-gigabyte models without checking disk, license, expected usefulness, and user policy. Hosted APIs and subscription-only services are optional integrations, not mandatory dependencies.
+## 5. Required roadmap and exit gates
 
-## 10. Communication format for engineering work
+### P0 — workstation baseline and runtime hardening
+- Execute bootstrap/tests; configure MCP; inspect Windows hardware and app installations.
+- Validate crash quarantine/reconciliation on a real interrupted process and complete database restore drills.
+- Close Windows-specific path/launch, cancellation, cross-project/application/artifact locking, output lineage and security gaps.
+- Add structured logs and trace IDs; sanitize secrets; add backup/restore and DB migrations.
+- Ensure policy decisions are persisted with exact scope/target/reviewer/evidence and cannot be agent-self-approved.
+- Exit: clean install, MCP smoke, unit tests, security tests, database restart/recovery, and no unbounded command path.
 
-For every substantial task report:
+### P1 — integration benchmark and cross-app gateway
+- Inspect/pin AI Game Dev and DCC-MCP Core; test official/native integrations and alternatives.
+- Integrate one application operation at a time. Each adapter includes typed schemas, side effects, health, version support, timeout/cancel, postconditions and test fixtures.
+- Exit: per-adapter smoke suite, one real read/write workflow in a duplicate project, exact version support matrix, provenance and security review.
 
-- Objective and acceptance criteria.
-- What was inspected and what was actually changed.
-- Files/commit IDs/artifacts produced.
-- Commands and exact test results.
-- Visual/audio/functional evidence links or paths.
-- Known failures, unverified items, risks, and decisions needed.
-- Next highest-impact task.
+### P2 — image/asset manufacturing
+- Connect ComfyUI: workflow validation, model/node inventory, queue events, progress, cancel, history, output download, file hashing, metadata, failure diagnosis, rerun and visual review.
+- Connect Blender: native semantic operations, scene read-back, asset generation from approved source scripts, save/reopen, renders, exports and import validation.
+- Exit: at least one genuine editable, art-directed asset set; repeatable from pinned workflow; no placeholder art; passed file/native/runtime/visual tests; human approval.
 
-Never report “done” when only planning, scaffolding, or tool discovery occurred.
+### P3 — first game-engine vertical slice
+- Select engine using actual installed version/toolchain, not assumptions.
+- Integrate native project/scene/script/resource APIs, build/test, runtime capture, logs, profiling and packaging.
+- Exit: clean import, playable packaged project, no release-blocking issues, deterministic acceptance run and full evidence bundle.
+
+### P4 — reusable professional pipelines
+- Character, environment, props, materials, UI, audio, VFX, animation, cinematic, level design and gameplay pipelines.
+- Each pipeline is a versioned workflow definition plus skills, application adapters, acceptance tests, recovery behavior and examples.
+- Exit: repeated successful execution across at least three materially different briefs within the declared support matrix.
+
+### P5 — cross-discipline expansion
+- Add video, sound/music, CAD, product design, web/app, writing, research/science and publishing systems using best existing professional solutions.
+- Exit: independent domain certification; no false claim of universal capability.
+
+### P6 — autonomy and optimization
+- Durable approvals, safe replanning, defect root-cause analysis, automated repair, model routing, memory, resource-aware queues, cost/latency quality tradeoffs, audit and benchmarks.
+- Exit: reproducible benchmark improvement over baseline without regressions or unsafe permission expansion.
+
+## 6. Mandatory release gates
+
+A feature is not done because a tool was called. It must produce the declared artifact, application read-back, objective tests, context capture, quality review, provenance and reproducibility evidence. `PASS_PENDING_SUBJECTIVE_REVIEW` is not `CERTIFIED`. Never report 100% success if any mandatory test is missing, skipped, blocked or failed.
+
+## 7. Handoff reporting format
+
+After each meaningful work unit report: exact changes, actual commands, test results, outputs/evidence locations, newly certified capability versions, unresolved defects, blockers, resource measurements, license/security decisions, and the single largest remaining gap. Update `PROJECT_STATUS.md`, capability records, decision logs and roadmap checkboxes. Do not duplicate this entire handoff in chat.

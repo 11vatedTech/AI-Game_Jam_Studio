@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://11vatedtech.local/schemas/job-definition.schema.json",
+  "title": "Studio Job Definition",
+  "type": "object",
+  "required": ["name", "tasks"],
+  "properties": {
+    "id": {"type": "string"},
+    "name": {"type": "string", "minLength": 1},
+    "description": {"type": "string"},
+    "workspace": {"type": "string"},
+    "required_reviews": {"type": "array", "items": {"enum": ["technical", "creative", "rights", "performance", "accessibility", "release"]}, "uniqueItems": true},
+    "tasks": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/task"}}
+  },
+  "$defs": {
+    "task": {
+      "type": "object",
+      "required": ["id", "capability"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$"},
+        "capability": {"type": "string"},
+        "inputs": {"type": "object"},
+        "depends_on": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "resources": {"type": "object"},
+        "timeout_seconds": {"type": "integer", "minimum": 1},
+        "completion_predicate": {"type": "object"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

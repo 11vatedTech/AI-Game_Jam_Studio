@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "11vatedtech-studio": {
+      "command": "C:\\PATH\\TO\\AI-Game_Jam_Studio\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "elevenvt_studio", "mcp", "serve"],
+      "env": {
+        "STUDIO_HOME": "C:\\Users\\YOUR_USER\\AppData\\Local\\11vatedTech\\AI-Game-Jam-Studio",
+        "PYTHONPATH": "C:\\PATH\\TO\\AI-Game_Jam_Studio\\src"
+      }
+    }
+  }
+}

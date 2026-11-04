@@ -1,0 +1,85 @@
+{
+  "report_id": "BUILD-VALIDATION-2026-11-04",
+  "created_utc": "2026-11-04T20:37:55Z",
+  "repository_version": "0.2.0",
+  "environment": {
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "system": "Linux",
+    "machine": "x86_64",
+    "python": "3.13.5",
+    "target_windows_workstation_verified": false,
+    "live_comfyui_verified": false,
+    "blender_verified": false,
+    "godot_verified": false,
+    "freebuff_mcp_host_verified": false
+  },
+  "results": {
+    "pytest": {
+      "status": "PASS_WITH_SKIPPED_OPTIONAL_INTEGRATION",
+      "passed": 37,
+      "failed": 0,
+      "skipped": 1,
+      "skipped_reason": "Official MCP SDK v2 integration test requires optional mcp package; the build environment was offline and could not install it."
+    },
+    "repository_integrity": {
+      "status": "PASS",
+      "json_files": 15,
+      "markdown_files": 115,
+      "local_markdown_links": 10,
+      "runtime_capabilities": 17
+    },
+    "json_schemas": {
+      "status": "PASS",
+      "valid_schema_files": 9,
+      "validated_runtime_capability_records": 17
+    },
+    "cli_smoke": {
+      "status": "PASS",
+      "job": "SUCCEEDED",
+      "tasks": {
+        "succeeded": 2,
+        "failed": 0
+      },
+      "artifact_sha256": "fd01eb16a24c04c09589b42e496631ada62dde2e5078d252a1ec10dc2be95350",
+      "quality_report": "PASS_PENDING_REVIEW",
+      "certified": false,
+      "database_integrity": "PASS",
+      "backup_integrity": "PASS"
+    },
+    "comfyui_e2e": {
+      "status": "PASS_IN_CONTROLLED_TEST_FIXTURE_ONLY",
+      "operations": [
+        "workflow queue",
+        "completion polling",
+        "output retrieval",
+        "artifact registration",
+        "sha256 verification"
+      ],
+      "production_artifact_quality": "NOT_ASSESSED"
+    },
+    "mcp_transport_security": {
+      "status": "PASS",
+      "checks": [
+        "production MCP launch failed closed because optional SDK was absent",
+        "failure produced actionable SDK install instructions",
+        "legacy fallback is not used unless STUDIO_ALLOW_LEGACY_MCP=1"
+      ]
+    }
+  },
+  "release_verdict": "DEVELOPER_PREVIEW_FOUNDATION_ONLY",
+  "non_claims": [
+    "No Windows workstation execution has been performed.",
+    "No real local creative application or local model output has been certified.",
+    "No complete universal creative production system has been implemented.",
+    "No commercial valuation is asserted."
+  ],
+  "next_required_evidence": [
+    "Windows bootstrap log and pytest output",
+    "official MCP SDK v2 client/server discovery and tool-call test",
+    "real ComfyUI workflow output with node/model hashes and human visual review",
+    "Blender semantic operation and reopen/read-back test",
+    "Godot or selected engine playable packaged vertical slice",
+    "backup restore comparison",
+    "on-device crash/restart reconciliation drill"
+  ]
+}
