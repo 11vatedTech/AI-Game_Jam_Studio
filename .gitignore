@@ -48,7 +48,10 @@ reports/evidence/_staging/
 # Raw generation outputs are hash-addressed, not committed (reports/evidence/ARTIFACTS.sha256).
 # Release evidence under reports/evidence/productions/ stays tracked.
 reports/evidence/comfyui-output/
-reports/evidence/runs/
+# Raw run output stays hash-addressed in reports/evidence/ARTIFACTS.sha256, except the smoke frames the
+# art-direction contract is hash-bound to: without them a clone cannot load the contract at all.
+reports/evidence/runs/*
+!reports/evidence/runs/emberkeep-smoke/
 
 # The manifest tool itself lives in a directory named evidence.
 !scripts/evidence/

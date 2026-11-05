@@ -1,0 +1,44 @@
+{
+  "engine": "4.7.2-stable (official)",
+  "failures": [],
+  "ok": true,
+  "scene": "res://main.tscn",
+  "steps": [
+    {
+      "from": 99.069282407408,
+      "id": "warmth_drains",
+      "ok": true,
+      "to": 96.898647366669
+    },
+    {
+      "after": 54.913921012121,
+      "before": 40.0,
+      "id": "mote_restores",
+      "ok": true
+    },
+    {
+      "beacon": "West Beacon",
+      "id": "ignite_0",
+      "lit": true,
+      "ok": true
+    },
+    {
+      "beacon": "East Beacon",
+      "id": "ignite_1",
+      "lit": true,
+      "ok": true
+    },
+    {
+      "beacon": "Sanctum Beacon",
+      "id": "ignite_2",
+      "lit": true,
+      "ok": true
+    },
+    {
+      "beacons": 3,
+      "id": "win_state",
+      "ok": true,
+      "state": "WON"
+    }
+  ]
+}
