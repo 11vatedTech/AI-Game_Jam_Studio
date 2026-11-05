@@ -49,7 +49,7 @@
       "width": 1920
     }
   ],
-  "capture_id": "614c6506-a874-b3d0-51f4-a6f5fdc5ff76",
+  "capture_id": "af1c7c33-87b2-7da2-6d76-7fd5498682aa",
   "copied_verification": {
     "checks": [
       {
@@ -508,7 +508,7 @@
         "mask_world_occupancy": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
         "mask_world_visible": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
       },
-      "capture_id": "614c6506-a874-b3d0-51f4-a6f5fdc5ff76"
+      "capture_id": "af1c7c33-87b2-7da2-6d76-7fd5498682aa"
     },
     {
       "artifacts": {
@@ -519,7 +519,7 @@
         "mask_world_occupancy": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
         "mask_world_visible": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
       },
-      "capture_id": "7e82b576-9f5c-5a97-1bac-8930c3a75108"
+      "capture_id": "32ab6a36-fee2-c2ab-4a98-5d8b73ee4401"
     },
     {
       "artifacts": {
@@ -530,7 +530,7 @@
         "mask_world_occupancy": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
         "mask_world_visible": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
       },
-      "capture_id": "e02eb66c-f60a-2c2f-d2a3-201dab9b2d5b"
+      "capture_id": "081543f8-06ed-692e-d5ff-0d72ac18420f"
     }
   ]
 }

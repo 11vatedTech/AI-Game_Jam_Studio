@@ -11,6 +11,7 @@ re-running against a human-labelled frame.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import uuid
 from dataclasses import dataclass, field
@@ -22,6 +23,10 @@ from . import metrics
 from .art_direction import ArtDirection
 
 SEVERITY_ORDER = {"blocker": 3, "major": 2, "minor": 1, "note": 0}
+
+# Metrics that explain rather than measure. Their numeric value is evidence for a
+# claim, so the report labels them as inference and never lets them decide a verdict.
+INFERENCE_METRICS = frozenset({"luminance_cause"})
 
 
 @dataclass
@@ -128,6 +133,9 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
         # dark, never why. When the cause cannot be established it says so.
         values["luminance_cause"] = metrics.luminance_cause(rgb, occupancy, floor)
         values["warm_share"] = metrics.warm_share(rgb, world, direction.threshold("warm_share"))
+        # The same question with the other denominator. Neither governs until the
+        # contract says which one the ceiling means.
+        values["warm_share_frame"] = metrics.warm_share_frame(rgb, direction.threshold("warm_share"))
         values["horizon_roll"] = metrics.horizon_roll(frame.camera_roll_deg)
         values["delta_e_max"] = metrics.palette_drift(rgb, direction.palette)
         values["clutter"] = metrics.clutter(rgb, focal)
@@ -137,6 +145,7 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
             values["consistency"] = metrics.event_delta(metrics.load_rgb(previous.path), rgb)
         previous = frame
 
+        sources = _sources(frame)
         frame_values = {}
         for metric_name, output in values.items():
             frame_values[metric_name] = {
@@ -146,6 +155,7 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
                 "confidence": output.confidence,
                 "limitations": list(output.limitations),
                 "detail": output.detail,
+                "disclosure": _disclosure(output, sources, direction.thresholds.get(metric_name), direction),
             }
             threshold = direction.thresholds.get(metric_name)
             if threshold is None:
@@ -165,12 +175,20 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
                     threshold=dict(threshold),
                     detail={
                         **output.detail,
+                        "disclosure": _disclosure(
+                            output, sources, direction.thresholds.get(metric_name), direction
+                        ),
                         "cause": values["luminance_cause"].detail
                         if metric_name == "luminance_floor"
                         else None,
                     }
                     if metric_name == "luminance_floor"
-                    else output.detail,
+                    else {
+                        **output.detail,
+                        "disclosure": _disclosure(
+                            output, sources, direction.thresholds.get(metric_name), direction
+                        ),
+                    },
                 )
             )
 
@@ -185,7 +203,10 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
                 confidence=cause.confidence,
                 limitations=cause.limitations,
                 threshold={},
-                detail=cause.detail,
+                detail={
+                    **cause.detail,
+                    "disclosure": _disclosure(cause, sources, None, direction),
+                },
             )
         )
         frame_reports.append({"frame": frame.name, "metrics": frame_values})
@@ -201,6 +222,61 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
         status=status,
         findings=findings,
     )
+
+
+def _sha256(path) -> str:
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _sources(frame: Frame) -> dict[str, Any]:
+    """Hash every input the findings were computed from, once per frame."""
+    masks = {
+        "world_visible": frame.mask_path,
+        "scene_coverage": frame.occupancy_mask_path,
+        "lantern": frame.lantern_mask_path,
+        "focal": frame.focal_mask_path,
+    }
+    return {
+        "frame_sha256": _sha256(frame.path),
+        "mask_sha256": {role: _sha256(path) for role, path in masks.items() if path is not None},
+    }
+
+
+def _disclosure(
+    output: metrics.MetricOutput,
+    sources: dict[str, Any],
+    threshold: dict[str, Any] | None,
+    direction: ArtDirection,
+) -> dict[str, Any]:
+    """Attach the details a reader needs to challenge the number, not just read it.
+
+    A score without numerator, denominator, source hashes and contract version cannot
+    be reproduced or argued with; it can only be believed. The `assertion` field keeps
+    measurement and inference separate: a measured number and a causal claim fail
+    differently, so they must not look alike in a report.
+    """
+    detail = output.detail
+    return {
+        "assertion": "inference" if output.algorithm_version.startswith("lum-cause") else "measurement",
+        "evaluated": output.evaluated,
+        # A metric that could not run explains itself rather than looking like a zero.
+        "not_measured_reason": None if output.evaluated else "; ".join(output.limitations),
+        "value": output.value,
+        "numerator": detail.get("numerator"),
+        "denominator": detail.get("denominator"),
+        "denominator_semantics": detail.get("denominator_semantics"),
+        "included_regions": list(detail.get("included_regions") or []),
+        "excluded_regions": list(detail.get("excluded_regions") or []),
+        "sources": sources,
+        "threshold": threshold,
+        "contract": {"revision": direction.revision, "sha256": direction.sha256},
+        "confidence": output.confidence,
+        "limitations": list(output.limitations),
+    }
 
 
 def _severity(metric: str, value: float | None, threshold: dict) -> str | None:

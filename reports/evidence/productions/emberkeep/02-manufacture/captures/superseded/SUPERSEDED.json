@@ -5,7 +5,7 @@
     "evidence_grade": "authoritative",
     "status": "superseded",
     "reason": "First acceptance capture. luminance_floor FAILED at p5 0.00163.",
-    "superseded_by": "614c6506-a874-b3d0-51f4-a6f5fdc5ff76",
+    "superseded_by": "af1c7c33-87b2-7da2-6d76-7fd5498682aa",
     "note": "Kept because the diagnosis of this frame changed: it was first read as missing geometry, and a magenta-background counterfactual later showed the water was present the whole time. The frame is ground truth for that correction and must not be deleted."
   },
   {
@@ -14,7 +14,7 @@
     "evidence_grade": "authoritative",
     "status": "superseded",
     "reason": "Passing capture taken before the final ripple and glint shader change.",
-    "superseded_by": "614c6506-a874-b3d0-51f4-a6f5fdc5ff76",
+    "superseded_by": "af1c7c33-87b2-7da2-6d76-7fd5498682aa",
     "note": "Repeatability evidence from this capture does not cover the final shader; it is superseded, not withdrawn."
   },
   {
@@ -23,7 +23,16 @@
     "evidence_grade": "authoritative",
     "status": "superseded",
     "reason": "Same frame as the current evidence (29c70bf4) but captured before the scene_coverage role existed.",
-    "superseded_by": "614c6506-a874-b3d0-51f4-a6f5fdc5ff76",
+    "superseded_by": "af1c7c33-87b2-7da2-6d76-7fd5498682aa",
     "note": "Byte-identical render; the bundle gained mask_world_occupancy, so this bundle was replaced rather than corrected."
+  },
+  {
+    "capture_id": "614c6506-a874-b3d0-51f4-a6f5fdc5ff76",
+    "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+    "evidence_grade": "authoritative",
+    "status": "superseded",
+    "reason": "Identical frame and bundle roles, but the critic report it accompanied did not separate coverage, detail and illumination.",
+    "superseded_by": "af1c7c33-87b2-7da2-6d76-7fd5498682aa",
+    "note": "Replaced so the committed evidence is the same capture described by the current critic. The render is unchanged (29c70bf4), only the report was re-derived."
   }
 ]

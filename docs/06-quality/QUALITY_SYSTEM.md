@@ -29,6 +29,20 @@ Use objective code/format/geometry/performance tests whenever feasible. Vision/a
 
 Do not just improve a visual symptom if the cause is upstream. Example: texture stretch should trigger UV repair, not more noise in the texture. Animation contact issues should trigger rig/pose/timing review, not camera shake.
 
+## Diagnosis discipline
+
+**No diagnostic may claim a cause more strongly than its evidence permits.** This applies to every discipline the studio evaluates — pixels, geometry, animation, interfaces, audio — and to humans and agents alike.
+
+1. **Separate what was observed from what was inferred.** A report field that measures and a report field that explains must be distinguishable, and the explanation must cite the measurement.
+2. **State the instrument.** Coverage, detail, illumination, loudness and legibility each need their own evidence. One proxy number must not stand in for another dimension.
+3. **Say `undetermined` when an input was never captured.** An absent control is not a mild limitation; it is the difference between a measurement and a guess.
+4. **Make every inferred cause falsifiable and name the test that would falsify it.** A cause that no observation could contradict is a story.
+5. **A failed hypothesis is evidence.** Supersede it with hashes and a reason; never delete it. The record of a corrected error is what makes the next correction credible.
+6. **Disclose the arithmetic of every metric:** numerator, denominator, denominator semantics, included and excluded regions, source hashes, threshold, contract version, and whether the result is a measurement or an inference.
+7. **A mask, score or statistic means one thing.** Any artifact whose meaning is ambiguous (for example a mask that means both "visible" and "present") must be split into separately typed roles.
+
+Case study: [a critic that described a symptom and called it a cause](CASE_STUDY_DARK_DIAGNOSIS.md).
+
 ## Test layers
 
 - Unit and property tests for pure logic and data contracts.
