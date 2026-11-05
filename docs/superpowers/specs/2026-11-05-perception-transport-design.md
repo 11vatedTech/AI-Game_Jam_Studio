@@ -1,6 +1,6 @@
 # Perception Transport and Verification — design
 
-**Status:** revised after design review; awaiting approval
+**Status:** approved; implemented (phases A–D). Evidence: `reports/evidence/productions/emberkeep/02-manufacture/`
 **Date:** 2026-11-05 (rev 2)
 **Supersedes:** rev 1 (`d2887f6`)
 **Scope:** one subsystem of the Studio Production Runtime

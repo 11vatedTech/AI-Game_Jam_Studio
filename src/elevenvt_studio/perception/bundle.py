@@ -14,9 +14,20 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
-from ..errors import ValidationError
+from ..errors import StudioError, ValidationError
 
 SCHEMA_VERSION = "2.0"
+
+
+class GateRejected(StudioError):
+    """Raised when non-authoritative evidence is offered to a gate.
+
+    The critic still evaluates live and unqualified captures; only the gate is
+    allowed to refuse them. Conflating the two would either silence live
+    feedback or launder supervision into certification.
+    """
+
+    code = "EVIDENCE_NOT_AUTHORITATIVE"
 
 # Role -> the semantics that role is allowed to carry. A silhouette may never be
 # labelled a visibility measurement, because that is the exact mistake cull_mask
@@ -203,6 +214,23 @@ class CaptureBundle:
 
     def roles(self) -> list[str]:
         return [artifact["role"] for artifact in self.document["artifacts"]]
+
+    def require_authoritative(self) -> None:
+        """Refuse this evidence at a gate unless authority was earned."""
+        if self.authoritative:
+            return
+        qualification = (self.document.get("qualification") or {}).get("repeatability") or {}
+        raise GateRejected(
+            f"Capture {self.capture_id} is {self.evidence_grade} and cannot satisfy a gate"
+            + (" (live observation is supervision only)" if self.mode == "live" else
+               f" (repeatability: {qualification.get('status', 'not_run')})"),
+            details={
+                "capture_id": self.capture_id,
+                "mode": self.mode,
+                "evidence_grade": self.evidence_grade,
+                "repeatability": qualification.get("status", "not_run"),
+            },
+        )
 
     def summary(self) -> dict:
         return {

@@ -5,7 +5,7 @@ import pytest
 from PIL import Image
 
 from elevenvt_studio.errors import ValidationError
-from elevenvt_studio.perception.bundle import CaptureBundle, compute_grade
+from elevenvt_studio.perception.bundle import CaptureBundle, GateRejected, compute_grade
 from perception_support import make_bundle, sha256
 
 
@@ -50,6 +50,25 @@ def test_deterministic_bundle_cannot_declare_authority_unqualified(tmp_path: Pat
 )
 def test_grade_derivation(mode, repeatability, expected):
     assert compute_grade(mode, repeatability) == expected
+
+
+def test_authoritative_bundle_passes_the_gate(tmp_path: Path):
+    bundle = CaptureBundle.load(make_bundle(tmp_path, roles=("frame",)))
+    bundle.require_authoritative()
+
+
+def test_unqualified_deterministic_bundle_is_refused_by_the_gate(tmp_path: Path):
+    bundle = CaptureBundle.load(make_bundle(tmp_path, repeatability="unqualified", declared_grade="supervisory"))
+    with pytest.raises(GateRejected) as excinfo:
+        bundle.require_authoritative()
+    assert excinfo.value.code == "EVIDENCE_NOT_AUTHORITATIVE"
+    assert excinfo.value.details["repeatability"] == "unqualified"
+
+
+def test_live_bundle_is_refused_by_the_gate(tmp_path: Path):
+    bundle = CaptureBundle.load(make_bundle(tmp_path, mode="live", declared_grade="supervisory"))
+    with pytest.raises(GateRejected):
+        bundle.require_authoritative()
 
 
 def test_path_traversal_is_refused(tmp_path: Path):

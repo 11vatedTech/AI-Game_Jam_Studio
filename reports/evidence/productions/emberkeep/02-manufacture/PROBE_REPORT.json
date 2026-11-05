@@ -1,0 +1,52 @@
+{
+  "correct_answer_result": {
+    "challenge_id": "b5eac351-51fc-4344-a294-46f2afb2472e",
+    "identity": {
+      "mcp_client_name": null,
+      "mcp_client_version": null,
+      "model_version": null,
+      "provider_model": null,
+      "provider_model_source": "unknown",
+      "studio_agent_instance": "harness"
+    },
+    "reason": "match",
+    "verified": true
+  },
+  "correct_answer_submitted_by": "harness, not an agent",
+  "deliberate_failure": {
+    "challenge_id": "9722d1d9-ea24-41f7-9a55-de197b52171a",
+    "identity": {
+      "mcp_client_name": null,
+      "mcp_client_version": null,
+      "model_version": null,
+      "provider_model": null,
+      "provider_model_source": "unknown",
+      "studio_agent_instance": "harness"
+    },
+    "reason": "mismatch",
+    "verified": false
+  },
+  "interpretation": "NOT ESTABLISHED",
+  "interpretation_note": "The probe proves the mechanism records delivery and refusal. No vision-capable client is connected here, so no model readback has been demonstrated. A passing agent result requires a connected agent and would be recorded against its identity tuple.",
+  "issued": [
+    {
+      "challenge_id": "b5eac351-51fc-4344-a294-46f2afb2472e",
+      "code_never_in_text": true,
+      "expires_at": "2026-11-05T07:03:45.585901+00:00",
+      "image_sha256": "93d4792ffbd4bd7b05d2365789f532a5eba4700da0c3859389b130f17148f337"
+    },
+    {
+      "challenge_id": "9722d1d9-ea24-41f7-9a55-de197b52171a",
+      "image_sha256": "e67f608eb1e42121e4713d5f871defc9c7db47d055ce0cb067f5b7ac42a45b77"
+    }
+  ],
+  "limitations": [
+    "A harness-submitted correct answer is not evidence that a model can read the image.",
+    "MCP identifies the client application, not the model; model identity remains self-reported until registered."
+  ],
+  "reuse_attempt": {
+    "challenge_id": "b5eac351-51fc-4344-a294-46f2afb2472e",
+    "reason": "reused",
+    "verified": false
+  }
+}

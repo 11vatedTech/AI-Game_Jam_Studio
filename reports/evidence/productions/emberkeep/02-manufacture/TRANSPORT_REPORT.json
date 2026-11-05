@@ -1,0 +1,126 @@
+{
+  "artifacts": [
+    {
+      "base64_bytes": 111292,
+      "bytes": 83468,
+      "format": "JPEG",
+      "height": 1080,
+      "mime": "image/jpeg",
+      "path": "frame.jpg",
+      "profile_id": "studio-default-v1",
+      "quality": 85,
+      "role": "frame",
+      "scale": 1.0,
+      "sha256": "6c73d25d7f6744a91e1cc85fe31f073f45f1cdce8733409e2f501105bd0d8b36",
+      "source_sha256": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
+      "width": 1920
+    },
+    {
+      "base64_bytes": 5160,
+      "bytes": 3869,
+      "format": "PNG",
+      "height": 1080,
+      "mime": "image/png",
+      "path": "mask_world_visible.png",
+      "profile_id": "studio-default-v1",
+      "quality": null,
+      "role": "mask_world_visible",
+      "scale": 1.0,
+      "sha256": "c6705f029a85d82fcc33a07edfa3d83c29a60538bf206f01522fcad58d78debc",
+      "source_sha256": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc",
+      "width": 1920
+    },
+    {
+      "base64_bytes": 3060,
+      "bytes": 2294,
+      "format": "PNG",
+      "height": 1080,
+      "mime": "image/png",
+      "path": "mask_lantern_visible.png",
+      "profile_id": "studio-default-v1",
+      "quality": null,
+      "role": "mask_lantern_visible",
+      "scale": 1.0,
+      "sha256": "30152ba6f3aaa7922a8dff14d959a7fe0f90e329e8ee4651b73d22223e7b43b7",
+      "source_sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "width": 1920
+    },
+    {
+      "base64_bytes": 3060,
+      "bytes": 2294,
+      "format": "PNG",
+      "height": 1080,
+      "mime": "image/png",
+      "path": "mask_lantern_silhouette.png",
+      "profile_id": "studio-default-v1",
+      "quality": null,
+      "role": "mask_lantern_silhouette",
+      "scale": 1.0,
+      "sha256": "30152ba6f3aaa7922a8dff14d959a7fe0f90e329e8ee4651b73d22223e7b43b7",
+      "source_sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "width": 1920
+    },
+    {
+      "base64_bytes": 9352,
+      "bytes": 7013,
+      "format": "PNG",
+      "height": 1080,
+      "mime": "image/png",
+      "path": "mask_lantern_illumination.png",
+      "profile_id": "studio-default-v1",
+      "quality": null,
+      "role": "mask_lantern_illumination",
+      "scale": 1.0,
+      "sha256": "72ccce5d37888d85899f9242bd2f6eb050a4b3c4eff8f7b7bfdcef30db68586c",
+      "source_sha256": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+      "width": 1920
+    }
+  ],
+  "blocks": [
+    {
+      "base64_bytes": 111292,
+      "mimeType": "image/jpeg",
+      "type": "image"
+    },
+    {
+      "base64_bytes": 5160,
+      "mimeType": "image/png",
+      "type": "image"
+    },
+    {
+      "base64_bytes": 3060,
+      "mimeType": "image/png",
+      "type": "image"
+    },
+    {
+      "base64_bytes": 3060,
+      "mimeType": "image/png",
+      "type": "image"
+    },
+    {
+      "base64_bytes": 9352,
+      "mimeType": "image/png",
+      "type": "image"
+    }
+  ],
+  "profile": {
+    "id": "studio-default-v1",
+    "mask_format": "PNG",
+    "max_height": 2560,
+    "max_image_bytes": 1572864,
+    "max_images_per_call": 6,
+    "max_long_edge": 2560,
+    "max_total_payload_bytes": 6291456,
+    "max_visual_tokens": null,
+    "max_width": 2560,
+    "preferred_frame_format": "JPEG",
+    "supported_formats": [
+      "PNG",
+      "JPEG",
+      "WEBP"
+    ]
+  },
+  "response_has_audience_annotation": false,
+  "response_has_structured_content": false,
+  "text_block": "capture_id: e183e1d3-4840-a2bb-7754-eda50cf9b36d\nmode: deterministic\nevidence_grade: authoritative\nauthoritative: true\nresolution: 1920x1080\nphysics_tick: 42\nrender_frame: 41\nverification: verified\nartifacts:\n  - frame (render): source_sha256=9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb transport_sha256=6c73d25d7f6744a91e1cc85fe31f073f45f1cdce8733409e2f501105bd0d8b36 1920x1080 JPEG q85 scale=1.0 bytes=83468\n  - mask_world_visible (visible_segmentation): source_sha256=f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc transport_sha256=c6705f029a85d82fcc33a07edfa3d83c29a60538bf206f01522fcad58d78debc 1920x1080 PNG scale=1.0 bytes=3869\n  - mask_lantern_visible (visible_segmentation): source_sha256=84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3 transport_sha256=30152ba6f3aaa7922a8dff14d959a7fe0f90e329e8ee4651b73d22223e7b43b7 1920x1080 PNG scale=1.0 bytes=2294\n  - mask_lantern_silhouette (unoccluded_silhouette): source_sha256=84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3 transport_sha256=30152ba6f3aaa7922a8dff14d959a7fe0f90e329e8ee4651b73d22223e7b43b7 1920x1080 PNG scale=1.0 bytes=2294\n  - mask_lantern_illumination (illumination_delta): source_sha256=e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120 transport_sha256=72ccce5d37888d85899f9242bd2f6eb050a4b3c4eff8f7b7bfdcef30db68586c 1920x1080 PNG scale=1.0 bytes=7013"
+}

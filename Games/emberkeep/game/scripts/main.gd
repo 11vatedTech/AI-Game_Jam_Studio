@@ -42,6 +42,11 @@ var pylons: Array = []
 var motes: Array = []
 var is_smoking := false
 var shot_dir := ""
+var capture_plan := ""
+var capture_out := ""
+var capture_seed := 0
+var capture_live := false
+var capture_token := ""
 var ignoring_input := false
 var message := ""
 var message_timer := 0.0
@@ -63,6 +68,73 @@ func _ready() -> void:
 	_build_hud()
 	if is_smoking:
 		_run_smoke.call_deferred()
+	if capture_plan != "":
+		_start_capture.call_deferred()
+	elif capture_live:
+		_start_live.call_deferred()
+
+# --------------------------------------------------------------------------- capture
+
+func _start_capture() -> void:
+	# An interpolated frame blends two physics ticks, so it is not a reproducible
+	# state; capture runs render on the tick itself.
+	physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
+	var watchdog := get_tree().create_timer(240.0)
+	watchdog.timeout.connect(func() -> void:
+		printerr("STUDIO_CAPTURE_TIMEOUT")
+		get_tree().quit(3))
+	var script = load("res://scripts/capture/service.gd")
+	if script == null:
+		printerr("STUDIO_CAPTURE_FAILED service_missing")
+		get_tree().quit(2)
+		return
+	var service = script.new()
+	service.name = "CaptureService"
+	add_child(service)
+	service.run_plan.call_deferred(capture_plan, capture_out)
+
+
+func _start_live() -> void:
+	physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
+	var watchdog := get_tree().create_timer(1800.0)
+	watchdog.timeout.connect(func() -> void:
+		printerr("STUDIO_CAPTURE_LIVE_TIMEOUT")
+		get_tree().quit(3))
+	var script = load("res://scripts/capture/service.gd")
+	if script == null:
+		printerr("STUDIO_CAPTURE_FAILED service_missing")
+		get_tree().quit(2)
+		return
+	var service = script.new()
+	service.name = "CaptureService"
+	add_child(service)
+	service.run_live.call_deferred(capture_token, capture_out)
+
+
+func capture_apply_state(values: Dictionary) -> void:
+	if values.has("lantern_lit"):
+		var on := bool(values["lantern_lit"])
+		if lantern_light != null:
+			lantern_light.visible = on
+		if lantern_beam != null:
+			lantern_beam.visible = on
+	if values.has("warmth"):
+		warmth = float(values["warmth"])
+	if values.has("state"):
+		state = str(values["state"])
+
+
+func capture_apply_camera(config: Dictionary) -> void:
+	if camera == null:
+		return
+	if config.has("position"):
+		var position: Array = config["position"]
+		if position.size() == 3:
+			camera.global_position = Vector3(position[0], position[1], position[2])
+	var focus := Vector3(0, 1.0, 0)
+	if player != null:
+		focus = player.global_position + Vector3(0, 1.1, 0)
+	camera.look_at(focus)
 
 # --------------------------------------------------------------------------- arguments
 
@@ -74,6 +146,19 @@ func _parse_args() -> void:
 			is_smoking = true
 		elif text.begins_with("--shot-dir="):
 			shot_dir = text.substr("--shot-dir=".length())
+		elif text.begins_with("--capture-plan="):
+			capture_plan = text.substr("--capture-plan=".length())
+		elif text.begins_with("--capture-out="):
+			capture_out = text.substr("--capture-out=".length())
+		elif text.begins_with("--seed="):
+			capture_seed = int(text.substr("--seed=".length()))
+		elif text == "--capture-live":
+			capture_live = true
+		elif text.begins_with("--capture-token-file="):
+			capture_token = text.substr("--capture-token-file=".length())
+	# Seeded once, before any build runs, so procedural placement is reproducible.
+	if capture_seed != 0:
+		seed(capture_seed)
 	if is_smoking:
 		# Watchdog: a hung smoke run must fail loudly instead of hanging CI.
 		var watchdog := get_tree().create_timer(75.0)
@@ -248,6 +333,10 @@ func _build_player() -> void:
 	# Lantern rig: damped pendulum sway is applied in _process.
 	lantern_rig = Node3D.new()
 	lantern_rig.position = Vector3(0.40, 0.82, -0.18)
+	# Capture layer taxonomy is derived from these groups, so a mask cannot
+	# silently include the player or exclude the lantern.
+	lantern_rig.add_to_group("capture_target")
+	player.add_to_group("capture_player")
 	player.add_child(lantern_rig)
 
 	# The lamplighter body: a silhouette, not a character study. Faces stay hidden by the cowl.

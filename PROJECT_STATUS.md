@@ -34,7 +34,9 @@
 | MCP stdio server | IMPLEMENTED / HOST NOT YET VERIFIED | Production bridge uses official MCP Python SDK v2 (`mcp>=2,<3`) for protocol revision `2026-07-28` and legacy interoperability; CI has SDK integration tests; Freebuff workstation connection must still be reproduced. The legacy fallback is disabled unless a developer explicitly sets `STUDIO_ALLOW_LEGACY_MCP=1`; it is not a production path. |
 | ComfyUI | IMPLEMENTED / LIVE, NOT CERTIFIED | Loopback HTTP health, queue, prompt submit, history, node/model inventory, bounded completion polling, output download and artifact provenance; no WebSocket streaming, cancellation, workflow schema validation or semantic visual QA yet. Verified against a **live** v0.34.0 instance: `flux2_klein` txt2img and `hunyuan3d` image→mesh both produced real assets. |
 | Blender | IMPLEMENTED / NOT CERTIFIED | Version and approval-gated background script process; unrestricted Blender Python is not sandboxed; semantic operations/read-back missing |
-| Godot | IMPLEMENTED / NOT CERTIFIED | Version and approval-gated headless editor check; runtime automation, package and gameplay validation missing |
+| Godot | IMPLEMENTED / NOT CERTIFIED | Version and approval-gated headless editor check; deterministic + live capture service; package and gameplay validation missing |
+| Perception transport | IMPLEMENTED / MODEL DELIVERY UNPROVEN | Bundle format v2, authoritative/transport artifact split, adaptive encoding with named refusal, image content blocks on both MCP servers, probe with single-use/expiring challenges, derived evidence grade, gate refusal. Structural delivery is tested; **no vision-capable agent is connected in this environment**, so model readback is not demonstrated |
+| Capture masks | FIXTURE-VERIFIED / EMBERKEEP PARTIAL | Visible segmentation respects occlusion by construction (occluders stay as depth writers), silhouette and illumination are separate semantics, and the wall fixture asserts the pixel regions. Emberkeep's lantern is fully unoccluded at the default camera, so its occlusion path is proven by the fixture rather than by the game |
 | Unreal / Unity | RESEARCH ONLY | No executable adapters in this release |
 | DCC-MCP Core / AI Game Dev | RESEARCH / EXTERNAL INTEGRATION CANDIDATES | Not embedded or locally reproduced in this environment |
 | Other creative disciplines | DESIGNED / NOT INTEGRATED | Audio, video, CAD, UI, web/app, writing, scientific and publishing pipelines need real adapters and tests |
@@ -42,11 +44,26 @@
 
 ## Actual test result
 
-The runtime suite completed **37 passed, 1 skipped in 19.88 s** on the Windows workstation using `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q`. Coverage includes job DAG persistence, exact approval binding, file/workspace confinement, SHA-256 manifests, backup/integrity checks, database schema-version rejection, crash quarantine/reconciliation, fail-closed MCP transport behavior, official-SDK MCP integration, ComfyUI redirect/response bounds, and a complete ComfyUI queue → completion → output retrieval → artifact verification flow.
+The runtime suite completed **140 passed, 1 skipped in 20.05 s** on the Windows workstation using `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q`. Coverage includes job DAG persistence, exact approval binding, file/workspace confinement, SHA-256 manifests, backup/integrity checks, database schema-version rejection, crash quarantine/reconciliation, fail-closed MCP transport behavior, official-SDK MCP integration, ComfyUI redirect/response bounds, and a complete ComfyUI queue → completion → output retrieval → artifact verification flow.
 
 The skipped test is `tests/test_paths.py:19` — symlink creation is unavailable without Windows developer mode. It is an environment limitation, not a runtime defect, and it does **not** skip the MCP SDK protocol test: `tests/test_mcp_sdk.py` now passes with the installed `mcp` dependency (an earlier revision of this document incorrectly attributed the skip to MCP).
 
 Passing tests still do not constitute adapter certification, and no packaged build exists yet.
+
+## Perception subsystem (spec rev 2)
+
+Spec: `docs/superpowers/specs/2026-11-05-perception-transport-design.md`; plan: `docs/superpowers/plans/2026-11-05-perception-transport-plan.md`.
+
+| Property | Evidence | State |
+|---|---|---|
+| Images survive the tool call | `tests/test_perception_mcp.py` — real `handle()` call returns `image` blocks with no `structuredContent` and no `audience` annotation, under the SDK default | PROVEN (structural) |
+| Model can read them | `reports/evidence/productions/emberkeep/02-manufacture/PROBE_REPORT.json` | **NOT ESTABLISHED** — no vision-capable client connected; a harness pass is not a model result |
+| Deterministic capture | `CAPTURE_REPORT.json` — three runs, identical frame and mask hashes, grade `authoritative` | PROVEN on this machine only |
+| Live capture is supervision only | `LIVE_CAPTURE_REPORT.json` — verified bundle, grade `supervisory`, gate refuses with `EVIDENCE_NOT_AUTHORITATIVE` | PROVEN |
+| Masks respect occlusion | `tests/test_perception_godot_fixture.py` — target behind a wall excluded from visibility, present in silhouette | PROVEN by fixture |
+| Emberkeep frame passes the critic | `CRITIC_REPORT.json` — `luminance_floor` major: p5 0.0016 vs 0.015 floor | **FAILING** — a real production defect, not a perception defect |
+
+Honest limits: repeatability is same-machine only; the mask construction is derived from documented render semantics rather than an official feature; a 1080p capture is not a packaging test; and the game may not grant itself authority, so no capture is `authoritative` until the Studio's three-run qualification says so.
 
 ## Immediate next work
 
@@ -58,7 +75,7 @@ Governing plan: `docs/superpowers/plans/2026-11-05-emberkeep-implementation-plan
 | P1 Art-direction contract | **COMPLETE** — schema, loader, hash binding, 15 tests |
 | P2 Trace ledger + migration to schema 2 | **COMPLETE** — 10-class taxonomy, gaps CLI, 17 tests |
 | P3 Critic v1 + end-to-end benchmark | **COMPLETE** — 8 metrics, p95 1.16 s at 1080p vs 3 s budget; no native code needed |
-| P4 Godot modularisation | pending |
+| P4 Godot modularisation | in progress — capture service, render-layer taxonomy, physics-tick waits and mask fixture landed; the 715-line monolith is not yet split |
 | P5 Package + staged acceptance | pending |
 | P6 ACE-Step 1.5 score | pending |
 | P7 Human gates | pending |

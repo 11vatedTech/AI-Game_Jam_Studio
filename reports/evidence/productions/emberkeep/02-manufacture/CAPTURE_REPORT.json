@@ -1,0 +1,452 @@
+{
+  "artifacts": [
+    {
+      "bytes": 447557,
+      "height": 1080,
+      "role": "frame",
+      "semantics": "render",
+      "sha256": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
+      "width": 1920
+    },
+    {
+      "bytes": 4921,
+      "height": 1080,
+      "role": "mask_world_visible",
+      "semantics": "visible_segmentation",
+      "sha256": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc",
+      "width": 1920
+    },
+    {
+      "bytes": 2357,
+      "height": 1080,
+      "role": "mask_lantern_visible",
+      "semantics": "visible_segmentation",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "width": 1920
+    },
+    {
+      "bytes": 2357,
+      "height": 1080,
+      "role": "mask_lantern_silhouette",
+      "semantics": "unoccluded_silhouette",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "width": 1920
+    },
+    {
+      "bytes": 8687,
+      "height": 1080,
+      "role": "mask_lantern_illumination",
+      "semantics": "illumination_delta",
+      "sha256": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+      "width": 1920
+    }
+  ],
+  "capture_id": "e183e1d3-4840-a2bb-7754-eda50cf9b36d",
+  "copied_verification": {
+    "checks": [
+      {
+        "detail": null,
+        "name": "frame:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
+          "declared": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb"
+        },
+        "name": "frame:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 447557,
+          "declared": 447557
+        },
+        "name": "frame:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "RGB"
+        },
+        "name": "frame:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "frame:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "frame:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "floor": 0.002,
+          "p99_linear_luminance": 0.097886
+        },
+        "name": "frame:blackness",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "mask_world_visible:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc",
+          "declared": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc"
+        },
+        "name": "mask_world_visible:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 4921,
+          "declared": 4921
+        },
+        "name": "mask_world_visible:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "L"
+        },
+        "name": "mask_world_visible:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "mask_world_visible:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_world_visible:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "non_binary_pixels": 0,
+          "rule": "values must be 0 or 255"
+        },
+        "name": "mask_world_visible:binary",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "mask_lantern_visible:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+          "declared": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3"
+        },
+        "name": "mask_lantern_visible:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 2357,
+          "declared": 2357
+        },
+        "name": "mask_lantern_visible:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "L"
+        },
+        "name": "mask_lantern_visible:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "mask_lantern_visible:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_visible:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "non_binary_pixels": 0,
+          "rule": "values must be 0 or 255"
+        },
+        "name": "mask_lantern_visible:binary",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "mask_lantern_silhouette:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+          "declared": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3"
+        },
+        "name": "mask_lantern_silhouette:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 2357,
+          "declared": 2357
+        },
+        "name": "mask_lantern_silhouette:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "L"
+        },
+        "name": "mask_lantern_silhouette:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "mask_lantern_silhouette:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_silhouette:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "non_binary_pixels": 0,
+          "rule": "values must be 0 or 255"
+        },
+        "name": "mask_lantern_silhouette:binary",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "mask_lantern_illumination:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+          "declared": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120"
+        },
+        "name": "mask_lantern_illumination:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 8687,
+          "declared": 8687
+        },
+        "name": "mask_lantern_illumination:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "L"
+        },
+        "name": "mask_lantern_illumination:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "mask_lantern_illumination:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_illumination:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "non_binary_pixels": 0,
+          "rule": "values must be 0 or 255"
+        },
+        "name": "mask_lantern_illumination:binary",
+        "ok": true
+      },
+      {
+        "detail": {
+          "frame": [
+            1920,
+            1080
+          ],
+          "mask": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_world_visible:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "frame": [
+            1920,
+            1080
+          ],
+          "mask": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_visible:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "frame": [
+            1920,
+            1080
+          ],
+          "mask": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_silhouette:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "frame": [
+            1920,
+            1080
+          ],
+          "mask": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_illumination:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "roles:declared",
+        "ok": true
+      }
+    ],
+    "status": "verified"
+  },
+  "evidence_grade": "authoritative",
+  "limitations": [
+    "Repeatability is established on this machine only; cross-machine reproducibility is not claimed.",
+    "Masks are produced by a two-pass construction derived from documented render semantics, not by an official Godot mask feature.",
+    "This capture is not a packaging test: it does not prove the exported game renders at 1080p."
+  ],
+  "qualification": {
+    "measured_max_delta": null,
+    "render_contract": "exact_sha256",
+    "runs": 3,
+    "state_digest": "55aec8746e623c268b4b8467a4e556879f221223d2a521cb048b0fad7d4b265f",
+    "status": "qualified",
+    "tolerance": null
+  },
+  "runs": [
+    {
+      "artifacts": {
+        "frame": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
+        "mask_lantern_illumination": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+        "mask_lantern_silhouette": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+        "mask_lantern_visible": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+        "mask_world_visible": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc"
+      },
+      "capture_id": "e183e1d3-4840-a2bb-7754-eda50cf9b36d"
+    },
+    {
+      "artifacts": {
+        "frame": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
+        "mask_lantern_illumination": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+        "mask_lantern_silhouette": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+        "mask_lantern_visible": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+        "mask_world_visible": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc"
+      },
+      "capture_id": "cef6adf1-d99b-d3ea-1467-5d6dc15e6e23"
+    },
+    {
+      "artifacts": {
+        "frame": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
+        "mask_lantern_illumination": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+        "mask_lantern_silhouette": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+        "mask_lantern_visible": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+        "mask_world_visible": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc"
+      },
+      "capture_id": "70230134-d93f-b0f4-653e-ed6eb5e98ecc"
+    }
+  ]
+}

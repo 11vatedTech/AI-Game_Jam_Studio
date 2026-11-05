@@ -55,6 +55,32 @@ class StudioService:
             "godot.health":self._godot_health,
             "godot.validate_project":self._godot_validate,
         }
+    @property
+    def godot_capture(self):
+        """Capture adapter for the reference production.
+
+        Built lazily so a runtime without a Godot project still starts, and so the
+        absence of an adapter is reported as a missing capability rather than a
+        crash at import time.
+        """
+        if getattr(self, "_godot_capture", None) is None:
+            import hashlib
+            from .adapters.godot_capture import GodotCaptureAdapter
+            from .ledger import Ledger
+            contract = self.config.workspace / "Games" / "emberkeep" / "art_direction.json"
+            self._godot_capture = GodotCaptureAdapter(
+                godot_executable=self.config.godot_executable,
+                project_path=self.config.workspace / "Games" / "emberkeep" / "game",
+                captures_root=self.config.evidence_root / "captures",
+                workspace_root=self.config.workspace,
+                name="emberkeep",
+                contract_sha256=hashlib.sha256(contract.read_bytes()).hexdigest() if contract.is_file() else None,
+                resolution=(1920, 1080),
+                warmup_frames=30,
+                ledger=Ledger(self.db),
+            )
+        return self._godot_capture
+
     def invoke(self, capability_id: str, inputs: dict, *, job_id: str | None=None, task_id: str | None=None) -> dict:
         cap=self.registry.get(capability_id)
         if capability_id.startswith("comfyui.") and not self.comfyui.is_loopback:

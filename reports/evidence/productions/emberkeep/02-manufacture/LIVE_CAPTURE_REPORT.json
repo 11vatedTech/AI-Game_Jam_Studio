@@ -1,0 +1,187 @@
+{
+  "artifacts": [
+    {
+      "bytes": 392610,
+      "height": 1080,
+      "role": "frame",
+      "semantics": "render",
+      "sha256": "bff900c36c2c8cae0d88438b5536486008c44e3480615b1517daaa3f940669c0",
+      "width": 1920
+    },
+    {
+      "bytes": 2366,
+      "height": 1080,
+      "role": "mask_lantern_visible",
+      "semantics": "visible_segmentation",
+      "sha256": "56892f85b380721a8f9f658dd8216f913c608b2647285b862cd6840e99de9867",
+      "width": 1920
+    }
+  ],
+  "capture_id": "64b5a5a9-6363-9532-b30a-0d5985d0ecd9",
+  "evidence_grade": "supervisory",
+  "gate": {
+    "code": "EVIDENCE_NOT_AUTHORITATIVE",
+    "message": "Capture 64b5a5a9-6363-9532-b30a-0d5985d0ecd9 is supervisory and cannot satisfy a gate (live observation is supervision only)",
+    "rejected": true
+  },
+  "limitations": [
+    "A live bundle guides iteration and cannot satisfy a gate; this is enforced by the gate, not by the critic.",
+    "The critic evaluates live captures too, but none of its findings on this bundle would be certifiable."
+  ],
+  "mode": "live",
+  "state_before_capture": {
+    "fps": 15.0,
+    "mode": "live",
+    "ok": true,
+    "physics_tick": 22,
+    "render_frame": 18
+  },
+  "token_acl": {
+    "method": "icacls",
+    "ok": true,
+    "stderr": "",
+    "stdout": "processed file: C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\reports\\evidence\\_staging\\emberkeep-live\\__live\\token.txt\nSuccessfully processed 1 files; Failed processing 0 files"
+  },
+  "verification": {
+    "checks": [
+      {
+        "detail": null,
+        "name": "frame:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "bff900c36c2c8cae0d88438b5536486008c44e3480615b1517daaa3f940669c0",
+          "declared": "bff900c36c2c8cae0d88438b5536486008c44e3480615b1517daaa3f940669c0"
+        },
+        "name": "frame:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 392610,
+          "declared": 392610
+        },
+        "name": "frame:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "RGB"
+        },
+        "name": "frame:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "frame:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "frame:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "floor": 0.002,
+          "p99_linear_luminance": 0.092241
+        },
+        "name": "frame:blackness",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "mask_lantern_visible:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "56892f85b380721a8f9f658dd8216f913c608b2647285b862cd6840e99de9867",
+          "declared": "56892f85b380721a8f9f658dd8216f913c608b2647285b862cd6840e99de9867"
+        },
+        "name": "mask_lantern_visible:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 2366,
+          "declared": 2366
+        },
+        "name": "mask_lantern_visible:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "L"
+        },
+        "name": "mask_lantern_visible:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "mask_lantern_visible:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_visible:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "non_binary_pixels": 0,
+          "rule": "values must be 0 or 255"
+        },
+        "name": "mask_lantern_visible:binary",
+        "ok": true
+      },
+      {
+        "detail": {
+          "frame": [
+            1920,
+            1080
+          ],
+          "mask": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_visible:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "roles:declared",
+        "ok": true
+      }
+    ],
+    "status": "verified"
+  }
+}

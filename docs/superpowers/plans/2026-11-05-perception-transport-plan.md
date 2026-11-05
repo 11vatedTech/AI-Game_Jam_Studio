@@ -2,7 +2,7 @@
 
 **Spec:** `2026-11-05-perception-transport-design.md` (rev 2, `12959d6`)
 **Date:** 2026-11-05
-**Status:** executing
+**Status:** executed — phases A–D landed, with two honest gaps recorded in `PROJECT_STATUS.md`: no vision-capable client is connected, and Emberkeep's frame fails the luminance floor.
 
 ## Ordering rule
 

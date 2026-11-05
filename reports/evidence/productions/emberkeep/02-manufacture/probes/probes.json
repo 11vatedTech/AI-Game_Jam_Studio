@@ -1,0 +1,44 @@
+{
+  "challenges": {
+    "9722d1d9-ea24-41f7-9a55-de197b52171a": {
+      "challenge_id": "9722d1d9-ea24-41f7-9a55-de197b52171a",
+      "code": "33CGSX",
+      "created_at": "2026-11-05T07:00:45.659100+00:00",
+      "expires_at": "2026-11-05T07:03:45.659100+00:00",
+      "identity": {
+        "mcp_client_name": null,
+        "mcp_client_version": null,
+        "model_version": null,
+        "provider_model": null,
+        "provider_model_source": "unknown",
+        "studio_agent_instance": "harness"
+      },
+      "result": {
+        "answered_at": "2026-11-05T07:00:45.698270+00:00",
+        "reason": "mismatch",
+        "verified": false
+      },
+      "used": true
+    },
+    "b5eac351-51fc-4344-a294-46f2afb2472e": {
+      "challenge_id": "b5eac351-51fc-4344-a294-46f2afb2472e",
+      "code": "8333JS",
+      "created_at": "2026-11-05T07:00:45.585901+00:00",
+      "expires_at": "2026-11-05T07:03:45.585901+00:00",
+      "identity": {
+        "mcp_client_name": null,
+        "mcp_client_version": null,
+        "model_version": null,
+        "provider_model": null,
+        "provider_model_source": "unknown",
+        "studio_agent_instance": "harness"
+      },
+      "result": {
+        "answered_at": "2026-11-05T07:00:45.643841+00:00",
+        "reason": "match",
+        "verified": true
+      },
+      "used": true
+    }
+  }
+}
