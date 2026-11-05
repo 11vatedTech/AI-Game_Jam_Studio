@@ -54,6 +54,12 @@ The skipped test is `tests/test_paths.py:19` — symlink creation is unavailable
 
 Passing tests still do not constitute adapter certification, and no packaged build exists yet.
 
+## Hosted CI follow-up — cross-platform path validation
+
+The first handoff PR run (`42111183630`) confirmed that dependency installation, JSON parsing and repository-contract/link verification passed on all Ubuntu jobs. The three Ubuntu test jobs then exposed one independent defect: `perception.bundle._safe_relative` relied on the host OS `pathlib.Path` grammar, so a Windows drive path such as `C:/Windows/system32/x.png` was accepted when a bundle was verified on Linux. Each Ubuntu version reported the same failing regression test (146 passed, 1 failed, 13 environment skips). This is a path-boundary defect, not a dependency issue.
+
+The handoff branch now checks POSIX and Windows path grammars explicitly, normalizes separators before constructing the host path, rejects drive/UNC paths and rejects parent traversal in either dialect. Regression cases cover Windows drive paths, UNC paths and backslash traversal. The follow-up Actions run is the required proof; do not mark the CI gate complete until every matrix job passes.
+
 ## Perception subsystem (spec rev 2)
 
 Spec: `docs/superpowers/specs/2026-11-05-perception-transport-design.md`; plan: `docs/superpowers/plans/2026-11-05-perception-transport-plan.md`.

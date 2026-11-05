@@ -1,6 +1,6 @@
 {
-  "file_count_excluding_manifest": 175,
-  "file_count_including_manifest": 176,
+  "file_count_excluding_manifest": 177,
+  "file_count_including_manifest": 178,
   "files": [
     {
       "path": ".github/workflows/ci.yml",
@@ -34,8 +34,8 @@
     },
     {
       "path": "FREEBUFF_EXECUTION_HANDOFF_2026-11-05.md",
-      "sha256": "9d62fda870bb95084daf2220cb96ab8b8a6f130c02fc0107602d9ec32cbfa89b",
-      "size_bytes": 13901
+      "sha256": "4fd8e439f187445a49d77400573fe878073a05f6c26b79ed206ac1f40890cd26",
+      "size_bytes": 14553
     },
     {
       "path": "FREEBUFF_START_HERE.md",
@@ -49,8 +49,8 @@
     },
     {
       "path": "PROJECT_STATUS.md",
-      "sha256": "e1e78ea4389ebc641cf5136b2e9aa667e5213d5db1717330a6f4aa366633c42f",
-      "size_bytes": 19893
+      "sha256": "cb67c4c633702ff4de49f59caa68f9cc6bed10b65c1cea83279d148b82810bf2",
+      "size_bytes": 20931
     },
     {
       "path": "PUSH_TO_GITHUB.md",
@@ -788,6 +788,11 @@
       "size_bytes": 1920
     },
     {
+      "path": "src/elevenvt_studio/perception/bundle.py",
+      "sha256": "1775f41bc7aabd50583e6966e5154bba2e634ad9f2e41cf0e352ed31a6b4ac40",
+      "size_bytes": 15942
+    },
+    {
       "path": "src/elevenvt_studio/policy.py",
       "sha256": "e171fb5003e1cf6a2bd4ab485e3bbbd85e42dc0a290185ad80dbc510757a6c0e",
       "size_bytes": 5594
@@ -866,6 +871,11 @@
       "path": "tests/test_paths.py",
       "sha256": "15ffc35787c1f4d2b224f0bdd188ddd32bea4a8322006142990be5e65b8776eb",
       "size_bytes": 923
+    },
+    {
+      "path": "tests/test_perception_bundle.py",
+      "sha256": "707cbfaf795ada6ac22f018c0abe4a3d4b108ede28169c81bb336fb2fb9659e5",
+      "size_bytes": 7582
     },
     {
       "path": "tests/test_recovery.py",

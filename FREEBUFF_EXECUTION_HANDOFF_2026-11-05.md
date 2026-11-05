@@ -160,3 +160,8 @@ For each domain: research proven local/open-source tools; inspect exact source/v
 For each gate, commit changed paths and rationale, exact commands and versions, test counts/pass/fail/skip/blocked, artifact paths and SHA-256, native read-back/runtime/package evidence, required human craft/rights reviews, remaining defects and the next highest-impact gate.
 
 Do not return another master plan. Start at Gate 0, execute it, and continue with verified evidence. Keep main releasable; use focused branches and PRs; do not merge a red build.
+
+
+## Follow-up CI diagnosis — Windows path grammar on POSIX
+
+The first PR run `42111183630` moved past installation, JSON checks and repository-contract verification on Ubuntu, but all three Ubuntu test jobs exposed one shared test failure: `perception.bundle._safe_relative` used only the host `pathlib.Path` parser, so `C:/Windows/system32/x.png` was treated as relative on Linux. The branch fix checks `PureWindowsPath` and `PurePosixPath` on every host, normalizes separators, and adds regression cases for Windows drive, UNC and backslash traversal forms. The rerun must pass the full six-job matrix; Windows jobs must also finish successfully.

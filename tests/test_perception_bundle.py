@@ -89,6 +89,24 @@ def test_absolute_path_is_refused(tmp_path: Path):
         CaptureBundle.load(path)
 
 
+@pytest.mark.parametrize(
+    "artifact_path",
+    [
+        r"C:\\Windows\\system32\\x.png",
+        r"\\\\server\\share\\x.png",
+        r"folder\\..\\escape.png",
+    ],
+)
+def test_windows_path_dialects_are_checked_on_every_host(tmp_path: Path, artifact_path: str):
+    (tmp_path / "bundle.json").unlink(missing_ok=True)
+    root = tmp_path / "capture"
+    root.mkdir()
+    path = make_bundle(root, mutate={"artifacts.0.path": artifact_path})
+    expected = "traversal" if ".." in artifact_path else "relative"
+    with pytest.raises(ValidationError, match=expected):
+        CaptureBundle.load(path)
+
+
 def test_duplicate_role_is_refused(tmp_path: Path):
     path = make_bundle(tmp_path)
     document = json.loads(path.read_text())
