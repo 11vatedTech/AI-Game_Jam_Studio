@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://11vated.tech/schemas/art-direction.schema.json",
+  "title": "Art direction contract",
+  "description": "Versioned, hash-bound declaration of what a production's frames must satisfy. Thresholds live here, never in code.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "production",
+    "revision",
+    "threshold_status",
+    "palette",
+    "thresholds",
+    "capture",
+    "references"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "production": { "type": "string", "minLength": 1 },
+    "revision": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "threshold_status": {
+      "type": "string",
+      "enum": ["provisional", "confirmed"],
+      "description": "Only a human calibration review may promote provisional to confirmed."
+    },
+    "palette": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base", "roles"],
+      "properties": {
+        "base": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" }
+        },
+        "roles": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ink", "slate", "mist", "bone", "lantern", "ember"],
+          "properties": {
+            "ink": { "type": "integer", "minimum": 0, "maximum": 5 },
+            "slate": { "type": "integer", "minimum": 0, "maximum": 5 },
+            "mist": { "type": "integer", "minimum": 0, "maximum": 5 },
+            "bone": { "type": "integer", "minimum": 0, "maximum": 5 },
+            "lantern": { "type": "integer", "minimum": 0, "maximum": 5 },
+            "ember": { "type": "integer", "minimum": 0, "maximum": 5 }
+          }
+        }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "silhouette",
+        "warm_share",
+        "horizon_roll",
+        "delta_e_max",
+        "clutter",
+        "lantern_dominance",
+        "consistency"
+      ],
+      "properties": {
+        "silhouette": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["iou_min", "perceptual_delta_min"],
+          "properties": {
+            "iou_min": { "type": "number", "minimum": 0, "maximum": 1 },
+            "perceptual_delta_min": { "type": "number", "minimum": 0 },
+            "blocker_below": { "type": "number", "minimum": 0 },
+            "major_below": { "type": "number", "minimum": 0 }
+          }
+        },
+        "warm_share": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["hue_deg", "sat_min", "val_min", "ceiling"],
+          "properties": {
+            "hue_deg": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": { "type": "number", "minimum": 0, "maximum": 360 }
+            },
+            "sat_min": { "type": "number", "minimum": 0, "maximum": 1 },
+            "val_min": { "type": "number", "minimum": 0, "maximum": 1 },
+            "ceiling": { "type": "number", "minimum": 0, "maximum": 1 },
+            "blocker_above": { "type": "number", "minimum": 0, "maximum": 1 },
+            "major_above": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "horizon_roll": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["max_deg"],
+          "properties": {
+            "max_deg": { "type": "number", "minimum": 0, "maximum": 45 },
+            "blocker_above": { "type": "number", "minimum": 0 },
+            "major_above": { "type": "number", "minimum": 0 }
+          }
+        },
+        "delta_e_max": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["max"],
+          "properties": {
+            "max": { "type": "number", "minimum": 0 },
+            "blocker_above": { "type": "number", "minimum": 0 },
+            "major_above": { "type": "number", "minimum": 0 }
+          }
+        },
+        "clutter": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["edge_density_max", "saliency_max"],
+          "properties": {
+            "edge_density_max": { "type": "number", "minimum": 0, "maximum": 1 },
+            "saliency_max": { "type": "number", "minimum": 0, "maximum": 1 },
+            "blocker_above": { "type": "number", "minimum": 0 },
+            "major_above": { "type": "number", "minimum": 0 }
+          }
+        },
+        "lantern_dominance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["brightest_must_be_lantern", "min_luminance_gap"],
+          "properties": {
+            "brightest_must_be_lantern": { "type": "boolean" },
+            "min_luminance_gap": { "type": "number", "minimum": 0 }
+          }
+        },
+        "consistency": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["event_delta_min", "event_delta_max"],
+          "properties": {
+            "event_delta_min": { "type": "number", "minimum": 0, "maximum": 1 },
+            "event_delta_max": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        }
+      }
+    },
+    "capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resolution", "legibility_resolution", "fov_deg"],
+      "properties": {
+        "resolution": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": "integer", "minimum": 320, "maximum": 7680 }
+        },
+        "legibility_resolution": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": "integer", "minimum": 320, "maximum": 7680 }
+        },
+        "fov_deg": { "type": "number", "minimum": 20, "maximum": 120 }
+      }
+    },
+    "references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "path", "sha256"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "reviewer": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "calibration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewed_by", "reviewed_at", "report_path"],
+      "properties": {
+        "reviewed_by": { "type": "string", "minLength": 1 },
+        "reviewed_at": { "type": "string", "minLength": 1 },
+        "report_path": { "type": "string", "minLength": 1 },
+        "per_metric_accuracy": {
+          "type": "object",
+          "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "threshold_status": { "const": "confirmed" } }, "required": ["threshold_status"] },
+      "then": { "required": ["calibration"] }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0.0",
+  "production": "emberkeep",
+  "revision": "1.0.0",
+  "threshold_status": "provisional",
+  "palette": {
+    "base": [
+      "#0B1016",
+      "#1C2B33",
+      "#3E5A63",
+      "#D8CDBA",
+      "#FFC168",
+      "#FF7A2F"
+    ],
+    "roles": {
+      "ink": 0,
+      "slate": 1,
+      "mist": 2,
+      "bone": 3,
+      "lantern": 4,
+      "ember": 5
+    }
+  },
+  "thresholds": {
+    "silhouette": {
+      "iou_min": 0.55,
+      "perceptual_delta_min": 12.0,
+      "blocker_below": 0.4,
+      "major_below": 0.55
+    },
+    "warm_share": {
+      "hue_deg": [
+        20,
+        45
+      ],
+      "sat_min": 0.25,
+      "val_min": 0.2,
+      "ceiling": 0.1,
+      "blocker_above": 0.18,
+      "major_above": 0.1
+    },
+    "horizon_roll": {
+      "max_deg": 1.5,
+      "blocker_above": 3.0,
+      "major_above": 1.5
+    },
+    "delta_e_max": {
+      "max": 6.0,
+      "blocker_above": 10.0,
+      "major_above": 6.0
+    },
+    "clutter": {
+      "edge_density_max": 0.18,
+      "saliency_max": 0.35,
+      "blocker_above": 0.28,
+      "major_above": 0.18
+    },
+    "lantern_dominance": {
+      "brightest_must_be_lantern": true,
+      "min_luminance_gap": 0.08
+    },
+    "consistency": {
+      "event_delta_min": 0.04,
+      "event_delta_max": 0.55
+    }
+  },
+  "capture": {
+    "resolution": [
+      1920,
+      1080
+    ],
+    "legibility_resolution": [
+      1280,
+      720
+    ],
+    "fov_deg": 55
+  },
+  "references": [
+    {
+      "id": "ref-arrival-01",
+      "path": "../../reports/evidence/runs/emberkeep-smoke/shot_00_start.png",
+      "sha256": "cf5a840be14d8b2016a84ea85ea58c7b5db16e42c1e01c29604746cb57d1d7f3",
+      "notes": "Provisional. Current arrival framing; the lower third is dead black and this frame is expected to be replaced at Gate 1."
+    },
+    {
+      "id": "ref-dawn-01",
+      "path": "../../reports/evidence/runs/emberkeep-smoke/shot_01_dawn.png",
+      "sha256": "cc94582072b8cc9387c9d2b113da78fcac7f04872cc7bd131350990518b172e6",
+      "notes": "Provisional. Dawn light pass."
+    },
+    {
+      "id": "ref-gameplay-west",
+      "path": "../../reports/evidence/runs/emberkeep-smoke/shot_02_gameplay_west.png",
+      "sha256": "663f6f81a6d36ce4eb2c40b894cdd1ea9f7ca06145d4cf9f620d80a304f591c5",
+      "notes": "Provisional. Gameplay distance, western route."
+    },
+    {
+      "id": "ref-beacon-lit",
+      "path": "../../reports/evidence/runs/emberkeep-smoke/shot_03_beacon_lit.png",
+      "sha256": "1acbecab9cf26c87a91797213cdead7d0729d7c1a3c9717e5faac64ee8963ef1",
+      "notes": "Provisional. Post-ignition warmth."
+    }
+  ]
+}
