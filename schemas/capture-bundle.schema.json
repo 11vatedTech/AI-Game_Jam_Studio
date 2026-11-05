@@ -171,6 +171,7 @@
     "role": {
       "enum": [
         "frame",
+        "mask_world_occupancy",
         "mask_world_visible",
         "mask_player_visible",
         "mask_lantern_visible",
@@ -182,6 +183,7 @@
     "semantics": {
       "enum": [
         "render",
+        "scene_coverage",
         "visible_segmentation",
         "unoccluded_silhouette",
         "illumination_delta",

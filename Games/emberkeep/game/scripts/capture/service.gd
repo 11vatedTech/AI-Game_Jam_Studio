@@ -129,6 +129,10 @@ func _capture_entry(entry: Dictionary, capture_mode: String = "deterministic") -
 		var world_mask := await _mask_world()
 		white_pixels["mask_world_visible"] = _white_count(world_mask)
 		artifacts.append(_write_artifact("mask_world_visible", "visible_segmentation", world_mask, capture_id))
+	if roles.has("mask_world_occupancy"):
+		var occupancy := await _mask_occupancy()
+		white_pixels["mask_world_occupancy"] = _white_count(occupancy)
+		artifacts.append(_write_artifact("mask_world_occupancy", "scene_coverage", occupancy, capture_id))
 	if roles.has("mask_player_visible"):
 		var player_mask := await _mask(LAYER_PLAYER)
 		white_pixels["mask_player_visible"] = _white_count(player_mask)
@@ -186,6 +190,31 @@ func _silhouette() -> Image:
 
 func _mask_world() -> Image:
 	return await _render_mask(LAYER_WORLD | LAYER_PLAYER, false, false, true)
+
+
+## Coverage: which pixels have surfaces in them at all.
+##
+## The visible-segmentation pass cannot answer this — the environment sky is drawn
+## into that viewport, so it reports coverage for pixels where nothing exists. Here
+## the sky is replaced by a background colour the palette cannot produce
+## (cyan, red channel 0) and every surface is forced white, so the red channel
+## separates "a surface is here" from "the camera is looking at nothing"
+## regardless of how dark the surface happens to be lit.
+func _mask_occupancy() -> Image:
+	var environment: Environment = null
+	var saved_mode := Environment.BG_SKY
+	var saved_color := Color(0, 0, 0)
+	if _world_env != null and _world_env.environment != null:
+		environment = _world_env.environment
+		saved_mode = environment.background_mode
+		saved_color = environment.background_color
+		environment.background_mode = Environment.BG_COLOR
+		environment.background_color = Color(0.0, 1.0, 1.0, 1.0)
+	var image := await _render_mask(ALL_LAYERS, true, false, true)
+	if environment != null:
+		environment.background_mode = saved_mode
+		environment.background_color = saved_color
+	return image
 
 
 func _illumination() -> Image:

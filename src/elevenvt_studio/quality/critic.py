@@ -31,6 +31,7 @@ class Frame:
     name: str
     path: Path
     mask_path: Path | None = None
+    occupancy_mask_path: Path | None = None
     lantern_mask_path: Path | None = None
     focal_mask_path: Path | None = None
     camera_roll_deg: float | None = None
@@ -114,11 +115,18 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
     for frame in frames:
         rgb = metrics.load_rgb(frame.path)
         world = _load_mask(frame.mask_path)
+        # Coverage, not visibility: the visible-segmentation pass draws the sky and
+        # therefore reports "surface" where nothing exists.
+        occupancy = _load_mask(frame.occupancy_mask_path)
         lantern = _load_mask(frame.lantern_mask_path)
         focal = _load_mask(frame.focal_mask_path)
 
+        floor = direction.threshold("luminance_floor").get("p5_min")
         values: dict[str, Any] = {}
         values["luminance_floor"] = metrics.luminance_percentiles(rgb)
+        # Diagnosis travels with the measurement: a percentile can say a frame is
+        # dark, never why. When the cause cannot be established it says so.
+        values["luminance_cause"] = metrics.luminance_cause(rgb, occupancy, floor)
         values["warm_share"] = metrics.warm_share(rgb, world, direction.threshold("warm_share"))
         values["horizon_roll"] = metrics.horizon_roll(frame.camera_roll_deg)
         values["delta_e_max"] = metrics.palette_drift(rgb, direction.palette)
@@ -155,9 +163,31 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
                     confidence=output.confidence,
                     limitations=output.limitations,
                     threshold=dict(threshold),
-                    detail=output.detail,
+                    detail={
+                        **output.detail,
+                        "cause": values["luminance_cause"].detail
+                        if metric_name == "luminance_floor"
+                        else None,
+                    }
+                    if metric_name == "luminance_floor"
+                    else output.detail,
                 )
             )
+
+        cause = values["luminance_cause"]
+        findings.append(
+            Finding(
+                frame=frame.name,
+                metric="luminance_cause",
+                value=cause.value,
+                severity="note",
+                algorithm_version=cause.algorithm_version,
+                confidence=cause.confidence,
+                limitations=cause.limitations,
+                threshold={},
+                detail=cause.detail,
+            )
+        )
         frame_reports.append({"frame": frame.name, "metrics": frame_values})
 
     worst = max((SEVERITY_ORDER[f.severity] for f in findings), default=-1)
@@ -268,6 +298,7 @@ def frames_from_directory(directory: Path, names: Iterable[str] | None = None) -
             continue
         sidecar = load_sidecar(path)
         mask_path = _optional(directory / f"{path.stem}.mask.png")
+        occupancy_path = _optional(directory / f"{path.stem}.occupancy.png")
         lantern_path = _optional(directory / f"{path.stem}.lantern.png")
         focal_path = _optional(directory / f"{path.stem}.focal.png")
         frames.append(
@@ -275,6 +306,7 @@ def frames_from_directory(directory: Path, names: Iterable[str] | None = None) -
                 name=path.name,
                 path=path,
                 mask_path=mask_path,
+                occupancy_mask_path=occupancy_path,
                 lantern_mask_path=lantern_path,
                 focal_mask_path=focal_path,
                 camera_roll_deg=sidecar.get("camera_roll_deg"),

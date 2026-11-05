@@ -1,0 +1,29 @@
+[
+  {
+    "capture_id": "e183e1d3-4840-a2bb-7754-eda50cf9b36d",
+    "frame_sha256": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
+    "evidence_grade": "authoritative",
+    "status": "superseded",
+    "reason": "First acceptance capture. luminance_floor FAILED at p5 0.00163.",
+    "superseded_by": "614c6506-a874-b3d0-51f4-a6f5fdc5ff76",
+    "note": "Kept because the diagnosis of this frame changed: it was first read as missing geometry, and a magenta-background counterfactual later showed the water was present the whole time. The frame is ground truth for that correction and must not be deleted."
+  },
+  {
+    "capture_id": "5d4ca9ef-1614-2f41-e47a-61067066e9e2",
+    "frame_sha256": "d11968219c7e61299f1baf8c8c678c38136c71e7c3dee2a1f3f255e6e895c945",
+    "evidence_grade": "authoritative",
+    "status": "superseded",
+    "reason": "Passing capture taken before the final ripple and glint shader change.",
+    "superseded_by": "614c6506-a874-b3d0-51f4-a6f5fdc5ff76",
+    "note": "Repeatability evidence from this capture does not cover the final shader; it is superseded, not withdrawn."
+  },
+  {
+    "capture_id": "c50f532a-8fdf-db07-c5de-4667bd7bb599",
+    "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+    "evidence_grade": "authoritative",
+    "status": "superseded",
+    "reason": "Same frame as the current evidence (29c70bf4) but captured before the scene_coverage role existed.",
+    "superseded_by": "614c6506-a874-b3d0-51f4-a6f5fdc5ff76",
+    "note": "Byte-identical render; the bundle gained mask_world_occupancy, so this bundle was replaced rather than corrected."
+  }
+]

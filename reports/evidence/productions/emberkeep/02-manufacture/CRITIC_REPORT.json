@@ -19,6 +19,135 @@
         "max_deg": 1.5
       },
       "value": null
+    },
+    {
+      "algorithm_version": "lum-cause-1",
+      "confidence": 0.9,
+      "detail": {
+        "bands": [
+          {
+            "dark_pixels": 38,
+            "dark_share": 0.00014660493827160494,
+            "flat_share": 0.08419753086419753,
+            "geometry_share": 1.0,
+            "index": 0,
+            "p5": 0.03369756651203411,
+            "rows": [
+              0,
+              135
+            ]
+          },
+          {
+            "dark_pixels": 10,
+            "dark_share": 3.8580246913580246e-05,
+            "flat_share": 0.1580246913580247,
+            "geometry_share": 1.0,
+            "index": 1,
+            "p5": 0.021473603260969802,
+            "rows": [
+              135,
+              270
+            ]
+          },
+          {
+            "dark_pixels": 28,
+            "dark_share": 0.0001080246913580247,
+            "flat_share": 0.307283950617284,
+            "geometry_share": 1.0,
+            "index": 2,
+            "p5": 0.019727905019989098,
+            "rows": [
+              270,
+              405
+            ]
+          },
+          {
+            "dark_pixels": 0,
+            "dark_share": 0.0,
+            "flat_share": 0.32012345679012344,
+            "geometry_share": 1.0,
+            "index": 3,
+            "p5": 0.019861564756036384,
+            "rows": [
+              405,
+              540
+            ]
+          },
+          {
+            "dark_pixels": 1584,
+            "dark_share": 0.006111111111111111,
+            "flat_share": 0.2382716049382716,
+            "geometry_share": 1.0,
+            "index": 4,
+            "p5": 0.018886729246030166,
+            "rows": [
+              540,
+              675
+            ]
+          },
+          {
+            "dark_pixels": 516,
+            "dark_share": 0.001990740740740741,
+            "flat_share": 0.4254320987654321,
+            "geometry_share": 1.0,
+            "index": 5,
+            "p5": 0.017123224065079767,
+            "rows": [
+              675,
+              810
+            ]
+          },
+          {
+            "dark_pixels": 87990,
+            "dark_share": 0.33946759259259257,
+            "flat_share": 0.6474074074074074,
+            "geometry_share": 1.0,
+            "index": 6,
+            "p5": 0.01421985082844711,
+            "rows": [
+              810,
+              945
+            ]
+          },
+          {
+            "dark_pixels": 135,
+            "dark_share": 0.0005208333333333333,
+            "flat_share": 0.5728395061728395,
+            "geometry_share": 1.0,
+            "index": 7,
+            "p5": 0.01983267986428139,
+            "rows": [
+              945,
+              1080
+            ]
+          }
+        ],
+        "dark_over_geometry_share": 1.0,
+        "dark_share": 0.04354793595679012,
+        "detail_free_dark_share": 0.8141216597822837,
+        "diagnosis": {
+          "basis": [
+            "1.00 of dark pixels lie on rendered geometry",
+            "0.81 of them are in detail-free tiles"
+          ],
+          "cannot_distinguish": [],
+          "confidence": 0.9,
+          "kind": "unlit_flat_surface"
+        },
+        "floor": 0.015,
+        "gap_bands": [],
+        "sky_bands": []
+      },
+      "frame": "frame.png",
+      "limitations": [
+        "Band position is the only separator between sky and unrendered void; a camera pitched far enough to put sky low in frame would swap them.",
+        "There is no depth buffer here: occlusion and absence are distinguished only by the engine's coverage mask.",
+        "Detail-free regions are found by local standard deviation, so a deliberately smooth gradient is counted as flat."
+      ],
+      "metric": "luminance_cause",
+      "severity": "note",
+      "threshold": {},
+      "value": 0.0
     }
   ],
   "frames": [
@@ -110,6 +239,132 @@
           ],
           "value": 0.45969540666367914
         },
+        "luminance_cause": {
+          "algorithm_version": "lum-cause-1",
+          "confidence": 0.9,
+          "detail": {
+            "bands": [
+              {
+                "dark_pixels": 38,
+                "dark_share": 0.00014660493827160494,
+                "flat_share": 0.08419753086419753,
+                "geometry_share": 1.0,
+                "index": 0,
+                "p5": 0.03369756651203411,
+                "rows": [
+                  0,
+                  135
+                ]
+              },
+              {
+                "dark_pixels": 10,
+                "dark_share": 3.8580246913580246e-05,
+                "flat_share": 0.1580246913580247,
+                "geometry_share": 1.0,
+                "index": 1,
+                "p5": 0.021473603260969802,
+                "rows": [
+                  135,
+                  270
+                ]
+              },
+              {
+                "dark_pixels": 28,
+                "dark_share": 0.0001080246913580247,
+                "flat_share": 0.307283950617284,
+                "geometry_share": 1.0,
+                "index": 2,
+                "p5": 0.019727905019989098,
+                "rows": [
+                  270,
+                  405
+                ]
+              },
+              {
+                "dark_pixels": 0,
+                "dark_share": 0.0,
+                "flat_share": 0.32012345679012344,
+                "geometry_share": 1.0,
+                "index": 3,
+                "p5": 0.019861564756036384,
+                "rows": [
+                  405,
+                  540
+                ]
+              },
+              {
+                "dark_pixels": 1584,
+                "dark_share": 0.006111111111111111,
+                "flat_share": 0.2382716049382716,
+                "geometry_share": 1.0,
+                "index": 4,
+                "p5": 0.018886729246030166,
+                "rows": [
+                  540,
+                  675
+                ]
+              },
+              {
+                "dark_pixels": 516,
+                "dark_share": 0.001990740740740741,
+                "flat_share": 0.4254320987654321,
+                "geometry_share": 1.0,
+                "index": 5,
+                "p5": 0.017123224065079767,
+                "rows": [
+                  675,
+                  810
+                ]
+              },
+              {
+                "dark_pixels": 87990,
+                "dark_share": 0.33946759259259257,
+                "flat_share": 0.6474074074074074,
+                "geometry_share": 1.0,
+                "index": 6,
+                "p5": 0.01421985082844711,
+                "rows": [
+                  810,
+                  945
+                ]
+              },
+              {
+                "dark_pixels": 135,
+                "dark_share": 0.0005208333333333333,
+                "flat_share": 0.5728395061728395,
+                "geometry_share": 1.0,
+                "index": 7,
+                "p5": 0.01983267986428139,
+                "rows": [
+                  945,
+                  1080
+                ]
+              }
+            ],
+            "dark_over_geometry_share": 1.0,
+            "dark_share": 0.04354793595679012,
+            "detail_free_dark_share": 0.8141216597822837,
+            "diagnosis": {
+              "basis": [
+                "1.00 of dark pixels lie on rendered geometry",
+                "0.81 of them are in detail-free tiles"
+              ],
+              "cannot_distinguish": [],
+              "confidence": 0.9,
+              "kind": "unlit_flat_surface"
+            },
+            "floor": 0.015,
+            "gap_bands": [],
+            "sky_bands": []
+          },
+          "evaluated": true,
+          "limitations": [
+            "Band position is the only separator between sky and unrendered void; a camera pitched far enough to put sky low in frame would swap them.",
+            "There is no depth buffer here: occlusion and absence are distinguished only by the engine's coverage mask.",
+            "Detail-free regions are found by local standard deviation, so a deliberately smooth gradient is counted as flat."
+          ],
+          "value": 0.0
+        },
         "luminance_floor": {
           "algorithm_version": "lum-pct-1",
           "confidence": 0.95,
@@ -145,12 +400,12 @@
     }
   ],
   "gate_eligible": true,
-  "job_id": "perception-c50f532a-8fdf-db07-c5de-4667bd7bb599",
+  "job_id": "perception-614c6506-a874-b3d0-51f4-a6f5fdc5ff76",
   "severity_counts": {
     "blocker": 0,
     "major": 0,
     "minor": 0,
-    "note": 1
+    "note": 2
   },
   "status": "PASS",
   "threshold_status": "provisional"

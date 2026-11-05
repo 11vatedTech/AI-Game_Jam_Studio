@@ -35,6 +35,7 @@ class GateRejected(StudioError):
 ROLE_SEMANTICS: dict[str, frozenset[str]] = {
     "frame": frozenset({"render"}),
     "mask_world_visible": frozenset({"visible_segmentation"}),
+    "mask_world_occupancy": frozenset({"scene_coverage"}),
     "mask_player_visible": frozenset({"visible_segmentation"}),
     "mask_lantern_visible": frozenset({"visible_segmentation"}),
     "mask_lantern_silhouette": frozenset({"unoccluded_silhouette"}),

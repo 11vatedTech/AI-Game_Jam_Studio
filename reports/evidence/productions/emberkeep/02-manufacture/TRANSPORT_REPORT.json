@@ -21,6 +21,21 @@
       "format": "PNG",
       "height": 1080,
       "mime": "image/png",
+      "path": "mask_world_occupancy.png",
+      "profile_id": "studio-default-v1",
+      "quality": null,
+      "role": "mask_world_occupancy",
+      "scale": 1.0,
+      "sha256": "df78ba07b16aeba44db27cc5bc4a983c1c7394d3a7950caa8f632ea29bf39d6b",
+      "source_sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "width": 1920
+    },
+    {
+      "base64_bytes": 4600,
+      "bytes": 3449,
+      "format": "PNG",
+      "height": 1080,
+      "mime": "image/png",
       "path": "mask_world_visible.png",
       "profile_id": "studio-default-v1",
       "quality": null,
@@ -61,8 +76,8 @@
       "width": 1920
     },
     {
-      "base64_bytes": 14424,
-      "bytes": 10817,
+      "base64_bytes": 13936,
+      "bytes": 10451,
       "format": "PNG",
       "height": 1080,
       "mime": "image/png",
@@ -71,8 +86,8 @@
       "quality": null,
       "role": "mask_lantern_illumination",
       "scale": 1.0,
-      "sha256": "3eee6ceb85f33737765a671078083cc8f61d400acb2e385f487546e92ac89de4",
-      "source_sha256": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
+      "sha256": "b570a9e1c28ca429442a0c15e2204476a4fd951cb085458292a76e370809bc3c",
+      "source_sha256": "487a72793712e8e8355dde65b48a8a4f5e6f63d9d2026e17c107823cd50d539c",
       "width": 1920
     }
   ],
@@ -80,6 +95,11 @@
     {
       "base64_bytes": 173740,
       "mimeType": "image/jpeg",
+      "type": "image"
+    },
+    {
+      "base64_bytes": 4600,
+      "mimeType": "image/png",
       "type": "image"
     },
     {
@@ -98,7 +118,7 @@
       "type": "image"
     },
     {
-      "base64_bytes": 14424,
+      "base64_bytes": 13936,
       "mimeType": "image/png",
       "type": "image"
     }
@@ -122,5 +142,5 @@
   },
   "response_has_audience_annotation": false,
   "response_has_structured_content": false,
-  "text_block": "capture_id: c50f532a-8fdf-db07-c5de-4667bd7bb599\nmode: deterministic\nevidence_grade: authoritative\nauthoritative: true\nresolution: 1920x1080\nphysics_tick: 42\nrender_frame: 41\nverification: verified\nartifacts:\n  - frame (render): source_sha256=29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318 transport_sha256=5d4967c7eb4577aac7016ee0f81b0a9a404d0c4d84cd9cc7bc190da9b2e29da7 1920x1080 JPEG q85 scale=1.0 bytes=130303\n  - mask_world_visible (visible_segmentation): source_sha256=bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb transport_sha256=df78ba07b16aeba44db27cc5bc4a983c1c7394d3a7950caa8f632ea29bf39d6b 1920x1080 PNG scale=1.0 bytes=3449\n  - mask_lantern_visible (visible_segmentation): source_sha256=84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3 transport_sha256=30152ba6f3aaa7922a8dff14d959a7fe0f90e329e8ee4651b73d22223e7b43b7 1920x1080 PNG scale=1.0 bytes=2294\n  - mask_lantern_silhouette (unoccluded_silhouette): source_sha256=84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3 transport_sha256=30152ba6f3aaa7922a8dff14d959a7fe0f90e329e8ee4651b73d22223e7b43b7 1920x1080 PNG scale=1.0 bytes=2294\n  - mask_lantern_illumination (illumination_delta): source_sha256=bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd transport_sha256=3eee6ceb85f33737765a671078083cc8f61d400acb2e385f487546e92ac89de4 1920x1080 PNG scale=1.0 bytes=10817"
+  "text_block": "capture_id: 614c6506-a874-b3d0-51f4-a6f5fdc5ff76\nmode: deterministic\nevidence_grade: authoritative\nauthoritative: true\nresolution: 1920x1080\nphysics_tick: 44\nrender_frame: 43\nverification: verified\nartifacts:\n  - frame (render): source_sha256=29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318 transport_sha256=5d4967c7eb4577aac7016ee0f81b0a9a404d0c4d84cd9cc7bc190da9b2e29da7 1920x1080 JPEG q85 scale=1.0 bytes=130303\n  - mask_world_occupancy (scene_coverage): source_sha256=bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb transport_sha256=df78ba07b16aeba44db27cc5bc4a983c1c7394d3a7950caa8f632ea29bf39d6b 1920x1080 PNG scale=1.0 bytes=3449\n  - mask_world_visible (visible_segmentation): source_sha256=bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb transport_sha256=df78ba07b16aeba44db27cc5bc4a983c1c7394d3a7950caa8f632ea29bf39d6b 1920x1080 PNG scale=1.0 bytes=3449\n  - mask_lantern_visible (visible_segmentation): source_sha256=84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3 transport_sha256=30152ba6f3aaa7922a8dff14d959a7fe0f90e329e8ee4651b73d22223e7b43b7 1920x1080 PNG scale=1.0 bytes=2294\n  - mask_lantern_silhouette (unoccluded_silhouette): source_sha256=84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3 transport_sha256=30152ba6f3aaa7922a8dff14d959a7fe0f90e329e8ee4651b73d22223e7b43b7 1920x1080 PNG scale=1.0 bytes=2294\n  - mask_lantern_illumination (illumination_delta): source_sha256=487a72793712e8e8355dde65b48a8a4f5e6f63d9d2026e17c107823cd50d539c transport_sha256=b570a9e1c28ca429442a0c15e2204476a4fd951cb085458292a76e370809bc3c 1920x1080 PNG scale=1.0 bytes=10451"
 }

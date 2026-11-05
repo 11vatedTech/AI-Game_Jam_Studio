@@ -17,6 +17,14 @@
       "width": 1920
     },
     {
+      "bytes": 4283,
+      "height": 1080,
+      "role": "mask_world_occupancy",
+      "semantics": "scene_coverage",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "width": 1920
+    },
+    {
       "bytes": 2357,
       "height": 1080,
       "role": "mask_lantern_visible",
@@ -33,15 +41,15 @@
       "width": 1920
     },
     {
-      "bytes": 13573,
+      "bytes": 13138,
       "height": 1080,
       "role": "mask_lantern_illumination",
       "semantics": "illumination_delta",
-      "sha256": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
+      "sha256": "487a72793712e8e8355dde65b48a8a4f5e6f63d9d2026e17c107823cd50d539c",
       "width": 1920
     }
   ],
-  "capture_id": "c50f532a-8fdf-db07-c5de-4667bd7bb599",
+  "capture_id": "614c6506-a874-b3d0-51f4-a6f5fdc5ff76",
   "copied_verification": {
     "checks": [
       {
@@ -160,6 +168,65 @@
           "rule": "values must be 0 or 255"
         },
         "name": "mask_world_visible:binary",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "mask_world_occupancy:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+          "declared": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
+        },
+        "name": "mask_world_occupancy:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 4283,
+          "declared": 4283
+        },
+        "name": "mask_world_occupancy:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "L"
+        },
+        "name": "mask_world_occupancy:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "mask_world_occupancy:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_world_occupancy:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "non_binary_pixels": 0,
+          "rule": "values must be 0 or 255"
+        },
+        "name": "mask_world_occupancy:binary",
         "ok": true
       },
       {
@@ -287,16 +354,16 @@
       },
       {
         "detail": {
-          "actual": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
-          "declared": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd"
+          "actual": "487a72793712e8e8355dde65b48a8a4f5e6f63d9d2026e17c107823cd50d539c",
+          "declared": "487a72793712e8e8355dde65b48a8a4f5e6f63d9d2026e17c107823cd50d539c"
         },
         "name": "mask_lantern_illumination:sha256",
         "ok": true
       },
       {
         "detail": {
-          "actual": 13573,
-          "declared": 13573
+          "actual": 13138,
+          "declared": 13138
         },
         "name": "mask_lantern_illumination:bytes",
         "ok": true
@@ -351,6 +418,20 @@
           ]
         },
         "name": "mask_world_visible:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "frame": [
+            1920,
+            1080
+          ],
+          "mask": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_world_occupancy:frame_dimensions",
         "ok": true
       },
       {
@@ -421,32 +502,35 @@
     {
       "artifacts": {
         "frame": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
-        "mask_lantern_illumination": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
+        "mask_lantern_illumination": "487a72793712e8e8355dde65b48a8a4f5e6f63d9d2026e17c107823cd50d539c",
         "mask_lantern_silhouette": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
         "mask_lantern_visible": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+        "mask_world_occupancy": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
         "mask_world_visible": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
       },
-      "capture_id": "c50f532a-8fdf-db07-c5de-4667bd7bb599"
+      "capture_id": "614c6506-a874-b3d0-51f4-a6f5fdc5ff76"
     },
     {
       "artifacts": {
         "frame": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
-        "mask_lantern_illumination": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
+        "mask_lantern_illumination": "487a72793712e8e8355dde65b48a8a4f5e6f63d9d2026e17c107823cd50d539c",
         "mask_lantern_silhouette": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
         "mask_lantern_visible": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+        "mask_world_occupancy": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
         "mask_world_visible": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
       },
-      "capture_id": "7947b183-39ec-5d00-3368-8f173955487a"
+      "capture_id": "7e82b576-9f5c-5a97-1bac-8930c3a75108"
     },
     {
       "artifacts": {
         "frame": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
-        "mask_lantern_illumination": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
+        "mask_lantern_illumination": "487a72793712e8e8355dde65b48a8a4f5e6f63d9d2026e17c107823cd50d539c",
         "mask_lantern_silhouette": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
         "mask_lantern_visible": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+        "mask_world_occupancy": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
         "mask_world_visible": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
       },
-      "capture_id": "a7b03fd6-4463-4878-62cd-567cb5e1cc34"
+      "capture_id": "e02eb66c-f60a-2c2f-d2a3-201dab9b2d5b"
     }
   ]
 }

@@ -44,7 +44,7 @@
 
 ## Actual test result
 
-The runtime suite completed **140 passed, 1 skipped in 20.05 s** on the Windows workstation using `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q`. Coverage includes job DAG persistence, exact approval binding, file/workspace confinement, SHA-256 manifests, backup/integrity checks, database schema-version rejection, crash quarantine/reconciliation, fail-closed MCP transport behavior, official-SDK MCP integration, ComfyUI redirect/response bounds, and a complete ComfyUI queue → completion → output retrieval → artifact verification flow.
+The runtime suite completed **149 passed, 1 skipped in 36.81 s** on the Windows workstation using `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q`. Coverage includes job DAG persistence, exact approval binding, file/workspace confinement, SHA-256 manifests, backup/integrity checks, database schema-version rejection, crash quarantine/reconciliation, fail-closed MCP transport behavior, official-SDK MCP integration, ComfyUI redirect/response bounds, and a complete ComfyUI queue → completion → output retrieval → artifact verification flow.
 
 The skipped test is `tests/test_paths.py:19` — symlink creation is unavailable without Windows developer mode. It is an environment limitation, not a runtime defect, and it does **not** skip the MCP SDK protocol test: `tests/test_mcp_sdk.py` now passes with the installed `mcp` dependency (an earlier revision of this document incorrectly attributed the skip to MCP).
 
@@ -64,16 +64,32 @@ Spec: `docs/superpowers/specs/2026-11-05-perception-transport-design.md`; plan: 
 | Protocol eras | `tests/test_perception_mcp.py` (legacy `2025-11-25`) and `tests/test_mcp_sdk.py` (official SDK negotiates `2026-07-28`) | PROVEN for the image contract on both paths |
 | Ledger completeness | `LEDGER_REPORT.json` — `perception.capture` recorded at the engine boundary, outcome `ok`, `gaps: []` | PROVEN |
 | Emberkeep frame passes the critic | `CRITIC_REPORT.json` — PASS, p5 0.01565 vs 0.015 floor, lantern gap 0.46, warm share 0.006, ΔE 2.24 | PROVEN on qualified evidence, thin margin (4%) |
+| The critic names a cause, not just a symptom | `CRITIC_REPORT.json` → `luminance_cause`; `tests/test_critic_spatial.py` separates unlit surface, absent surface and shadow | PROVEN on synthetic ground truth; the original frames cannot be re-attributed |
+| Coverage evidence exists | `mask_world_occupancy` (kind `scene_coverage`) in the bundle, cross-checked against a magenta-background render | PROVEN as a measurement; it is constant for Emberkeep because the flood fills the frame |
 
 Honest limits: repeatability is same-machine only; the mask construction is derived from documented render semantics rather than an official feature; a 1080p capture is not a packaging test; and the game may not grant itself authority, so no capture is `authoritative` until the Studio's three-run qualification says so.
 
-### The grade fix, and what it cost
+### The grade fix, and the diagnosis that was wrong twice
 
-The arrival frame failed `luminance_floor` at p5 0.00163. The measured cause was not a dark lower third but a structural hole: the water plane sat at y=-1.25, below the terrace slab, so it never rendered. The camera therefore looked past the world edge into the sky's ground hemisphere and the bottom quarter of the frame was background, not water — 25% of pixels at a flat 0.0019. The sky was a flat ink fill, giving the same dead value across the upper band.
+The arrival frame failed `luminance_floor` at p5 0.00163. The first reading was "a dead-black lower third", which is a description of pixels, not a cause.
 
-Changes, all as authored geometry rather than exposure alone: the waterline moved to y=-0.45 so the standing water is actually in frame; the sky became a mist-to-ink gradient instead of a flat fill; ambient rose 0.26 → 1.4, the moon 0.34 → 0.9, exposure to 2.05; and the water albedo moved from near-black (0.02, 0.035, 0.045) to a slate mirror (0.20, 0.28, 0.32) with stronger ripple normals, so it reads as water instead of black glass. Measured result: p5 0.00163 → 0.01565, p50 0.00425 → 0.03509, PASS with the lantern still the warmest thing in frame (gap 0.46, warm share 0.006).
+**Correction, measured.** An earlier version of this document claimed the water plane sat below the terrace slab and never rendered, so the camera looked past the world edge into the sky's ground hemisphere. That is false, and it was checkable. The water plane was already 260 × 260 at y = -1.25 in the failing build, and a magenta-background counterfactual renders zero background pixels anywhere in frame. The camera never sees past the world edge: the flood covers the whole view. The dark lower third was **water that was present, unlit, and visually flat** — near-black albedo, no ripple detail, no light reaching it. The scene-coverage pass agrees: coverage is 1.000 in every band.
+
+What actually moved the metric was therefore material and light, not geometry: water albedo from near-black (0.02, 0.035, 0.045) to a slate mirror (0.20, 0.28, 0.32), stronger ripple normals, ambient 0.26 → 1.4, moon 0.34 → 0.9, exposure 2.05, and a mist-to-ink sky gradient that is mostly invisible from this camera because the flood fills the frame. The waterline change to y = -0.45 stays because it makes the deck read as a quay rather than a floating slab — an art improvement, not the fix, and it is recorded as such.
+
+Measured result: p5 0.00163 → 0.01565, p50 0.00425 → 0.03509, PASS with the lantern still the warmest thing in frame (gap 0.46, warm share 0.006).
 
 The cost is honest to state: the palette's own ink is 0.0050 linear, a third of the floor, so at most 5% of any frame may sit at ink. A deep-night grade and this threshold cannot coexist. What passes is a haze-lit blue hour, not the original near-black night, and the 4% margin means the next art change must re-run the critic rather than assume the pass survives.
+
+### What the critic could not do, and now can
+
+Three different defects produced the same finding: unlit geometry, absent geometry, and exposure that never reached the lower frame. The critic reported the symptom and left the cause to whoever read it — and two different readers (this agent, twice) got it wrong.
+
+`luminance_cause` now attributes every pixel below the floor to a situation and says which one dominates: `missing_coverage` (dark where no surface exists, located by band), `unlit_flat_surface` (surface present, no detail readable), `shadowed_geometry` (surface present with structure, which may be intentional), or `dark_sky`. It reports the bands carrying the failure, a confidence, and the basis sentence; when the coverage mask is missing it returns `undetermined` with value `null` and says what it could not separate. It is always severity `note`: a diagnosis explains a verdict, it never decides one.
+
+The input it needed did not exist. `mask_world_visible` is a segmentation of the world's geometry after depth, not a statement about whether anything is there — it selects 97–100% of the Emberkeep frame. A new role, `mask_world_occupancy` (semantics `scene_coverage`), renders the scene against a background colour the palette cannot produce and marks every pixel carrying a surface, independent of how dark that surface is lit. It is verified against an independent magenta-background render rather than trusted.
+
+Superseded captures now live in `captures/superseded/` with a `SUPERSEDED.json` recording why each was replaced, including the failing first capture, which is the ground truth for the correction above.
 
 ## Immediate next work
 

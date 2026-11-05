@@ -21,6 +21,21 @@
       "format": "PNG",
       "height": 1080,
       "mime": "image/png",
+      "path": "mask_world_occupancy.png",
+      "profile_id": "studio-default-v1",
+      "quality": null,
+      "role": "mask_world_occupancy",
+      "scale": 1.0,
+      "sha256": "df78ba07b16aeba44db27cc5bc4a983c1c7394d3a7950caa8f632ea29bf39d6b",
+      "source_sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "width": 1920
+    },
+    {
+      "base64_bytes": 4600,
+      "bytes": 3449,
+      "format": "PNG",
+      "height": 1080,
+      "mime": "image/png",
       "path": "mask_world_visible.png",
       "profile_id": "studio-default-v1",
       "quality": null,
@@ -61,8 +76,8 @@
       "width": 1920
     },
     {
-      "base64_bytes": 14424,
-      "bytes": 10817,
+      "base64_bytes": 13936,
+      "bytes": 10451,
       "format": "PNG",
       "height": 1080,
       "mime": "image/png",
@@ -71,12 +86,12 @@
       "quality": null,
       "role": "mask_lantern_illumination",
       "scale": 1.0,
-      "sha256": "3eee6ceb85f33737765a671078083cc8f61d400acb2e385f487546e92ac89de4",
-      "source_sha256": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
+      "sha256": "b570a9e1c28ca429442a0c15e2204476a4fd951cb085458292a76e370809bc3c",
+      "source_sha256": "487a72793712e8e8355dde65b48a8a4f5e6f63d9d2026e17c107823cd50d539c",
       "width": 1920
     }
   ],
-  "capture_id": "c50f532a-8fdf-db07-c5de-4667bd7bb599",
+  "capture_id": "614c6506-a874-b3d0-51f4-a6f5fdc5ff76",
   "profile": {
     "id": "studio-default-v1",
     "mask_format": "PNG",
@@ -94,5 +109,5 @@
       "WEBP"
     ]
   },
-  "total_base64_bytes": 198884
+  "total_base64_bytes": 202996
 }

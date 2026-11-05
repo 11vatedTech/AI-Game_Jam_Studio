@@ -11,7 +11,7 @@ contract, and a missing threshold means "not gated", never "passed".
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Sequence
 
 import numpy as np
 from PIL import Image
@@ -66,6 +66,162 @@ def luminance_percentiles(rgb: np.ndarray) -> MetricOutput:
             "Reports the whole frame; a dark region covering less than 5% of the image will not be seen.",
         ),
         detail={"p1": float(p1), "p5": float(p5), "p50": float(p50), "p95": float(p95), "p99": float(p99)},
+    )
+
+
+def luminance_cause(
+    rgb: np.ndarray,
+    occupancy: np.ndarray | None,
+    floor: float,
+    *,
+    band_count: int = 8,
+    tile: int = 32,
+    flat_std: float = 0.002,
+) -> MetricOutput:
+    """Explain where a frame is dark, and what kind of darkness it is.
+
+    A global percentile says a frame is dark; it cannot say whether the camera is
+    looking at unlit stone, at a surface with no detail, or at nothing at all. This
+    metric attributes every pixel below the floor to one of three situations, using
+    the engine's coverage mask (surfaces present, independent of their lighting) and
+    local image detail:
+
+      below rendered geometry   dark where nothing was drawn (a coverage defect)
+      on flat geometry          geometry present, no detail readable (material/light)
+      on structured geometry    shadow with shape in it (may be intentional)
+
+    It reports a diagnosis with its evidence, and `undetermined` when the inputs
+    cannot separate those cases. Its value is never used as a threshold.
+    """
+    y = luminance(rgb)
+    height, width = y.shape
+    dark = y < floor
+    dark_total = int(dark.sum())
+    flat = _detail_free(y, tile, flat_std)
+
+    geometry = None if occupancy is None else _match_mask(occupancy, width, height)
+
+    bands: list[dict[str, Any]] = []
+    for index in range(band_count):
+        y0 = height * index // band_count
+        y1 = height * (index + 1) // band_count
+        slab = slice(y0, y1)
+        band_dark = dark[slab]
+        bands.append(
+            {
+                "index": index,
+                "rows": [y0, y1],
+                "p5": float(np.percentile(y[slab], 5)),
+                "dark_pixels": int(band_dark.sum()),
+                "dark_share": float(band_dark.mean()),
+                "geometry_share": None if geometry is None else float(geometry[slab].mean()),
+                "flat_share": float(flat[slab].mean()),
+            }
+        )
+
+    limitations = [
+        "Band position is the only separator between sky and unrendered void; a camera pitched far enough to put sky low in frame would swap them.",
+        "There is no depth buffer here: occlusion and absence are distinguished only by the engine's coverage mask.",
+        "Detail-free regions are found by local standard deviation, so a deliberately smooth gradient is counted as flat.",
+    ]
+
+    if geometry is None:
+        return MetricOutput(
+            None,
+            "lum-cause-1",
+            0.0,
+            tuple(limitations)
+            + ("No coverage mask: dark pixels cannot be attributed to surface or background, so no cause is claimed.",),
+            detail={
+                "floor": floor,
+                "dark_share": dark_total / float(y.size),
+                "bands": bands,
+                "diagnosis": {
+                    "kind": "undetermined",
+                    "confidence": 0.0,
+                    "cannot_distinguish": ["background or geometry", "unlit surface or absent surface"],
+                },
+            },
+        )
+
+    first_geometry = next((b["index"] for b in bands if (b["geometry_share"] or 0.0) >= 0.02), None)
+    empty = [b["index"] for b in bands if (b["geometry_share"] or 0.0) < 0.02]
+    sky_bands = [i for i in empty if first_geometry is None or i < first_geometry]
+    gap_bands = [i for i in empty if first_geometry is not None and i > first_geometry]
+
+    def dark_in(indices: Sequence[int]) -> int:
+        return sum(b["dark_pixels"] for b in bands if b["index"] in indices)
+
+    if dark_total:
+        gap_share = dark_in(gap_bands) / dark_total
+        sky_share = dark_in(sky_bands) / dark_total
+        geometry_share = float((dark & geometry).sum()) / dark_total
+        flat_share = float((dark & flat).sum()) / dark_total
+    else:
+        gap_share = sky_share = geometry_share = flat_share = 0.0
+
+    candidates = [
+        ("missing_coverage", gap_share),
+        ("unlit_flat_surface" if flat_share >= 0.5 else "shadowed_geometry", geometry_share),
+        ("dark_sky", sky_share),
+    ]
+    ranked = sorted(candidates, key=lambda item: item[1], reverse=True)
+    kind, dominant = ranked[0]
+    runner_up = ranked[1][1]
+
+    if dark_total == 0:
+        kind, confidence, dominant = "no_darkness", 0.9, 0.0
+    else:
+        confidence = min(0.9, 0.55 + 0.35 * dominant)
+        if dominant - runner_up < 0.15:
+            confidence = min(confidence, 0.5)
+
+    cannot_distinguish: list[str] = []
+    if dark_total and dominant - runner_up < 0.15:
+        cannot_distinguish.append(f"{ranked[0][0]} and {ranked[1][0]} fit the pixels about equally well")
+    if dark_total and gap_share >= 0.1 and sky_share >= 0.1:
+        cannot_distinguish.append("sky from unrendered void where both are unsegmented")
+
+    if kind == "missing_coverage":
+        basis = [
+            f"{gap_share:.2f} of pixels below the floor sit in {len(gap_bands)} band(s) with no rendered geometry: {gap_bands}",
+            f"rendered geometry first appears in band {first_geometry}",
+        ]
+    elif kind == "unlit_flat_surface":
+        basis = [
+            f"{geometry_share:.2f} of dark pixels lie on rendered geometry",
+            f"{flat_share:.2f} of them are in detail-free tiles",
+        ]
+    elif kind == "shadowed_geometry":
+        basis = [
+            f"{geometry_share:.2f} of dark pixels lie on rendered geometry",
+            f"only {flat_share:.2f} of them are detail-free, so the shadow has structure",
+        ]
+    elif kind == "dark_sky":
+        basis = [f"{sky_share:.2f} of dark pixels sit above all rendered geometry"]
+    else:
+        basis = ["no pixels below the floor"]
+
+    return MetricOutput(
+        value=float(gap_share),
+        algorithm_version="lum-cause-1",
+        confidence=float(confidence),
+        limitations=tuple(limitations) + tuple(cannot_distinguish),
+        detail={
+            "floor": floor,
+            "dark_share": dark_total / float(y.size),
+            "dark_over_geometry_share": geometry_share,
+            "detail_free_dark_share": flat_share,
+            "sky_bands": sky_bands,
+            "gap_bands": gap_bands,
+            "bands": bands,
+            "diagnosis": {
+                "kind": kind,
+                "confidence": float(confidence),
+                "basis": basis,
+                "cannot_distinguish": cannot_distinguish,
+            },
+        },
     )
 
 
@@ -296,6 +452,30 @@ def _downsample(rgb: np.ndarray, target: int) -> np.ndarray:
     with Image.fromarray(rgb) as image:
         resized = image.resize((max(1, int(width * scale)), max(1, int(height * scale))), Image.BILINEAR)
         return np.asarray(resized, dtype=np.uint8)
+
+
+def _detail_free(y: np.ndarray, tile: int, flat_std: float) -> np.ndarray:
+    """Tiles with no local variation: the signature of fill rather than surface."""
+    height, width = y.shape
+    rows = max(1, height // tile)
+    cols = max(1, width // tile)
+    cropped = y[: rows * tile, : cols * tile]
+    blocks = cropped.reshape(rows, tile, cols, tile).transpose(0, 2, 1, 3)
+    per_tile = blocks.reshape(rows, cols, tile * tile).std(axis=2) < flat_std
+    # Pad the tile grid so the repeated map covers a frame whose height or width
+    # is not a whole number of tiles.
+    pad_rows = 1 if height > rows * tile else 0
+    pad_cols = 1 if width > cols * tile else 0
+    if pad_rows or pad_cols:
+        per_tile = np.pad(per_tile, ((0, pad_rows), (0, pad_cols)), mode="edge")
+    return np.repeat(np.repeat(per_tile, tile, axis=0), tile, axis=1)[:height, :width]
+
+
+def _match_mask(mask: np.ndarray, width: int, height: int) -> np.ndarray:
+    mask = np.asarray(mask).astype(bool)
+    if mask.shape == (height, width):
+        return mask
+    return _downsample_mask(mask, width, height)
 
 
 def _downsample_mask(mask: np.ndarray, width: int, height: int) -> np.ndarray:

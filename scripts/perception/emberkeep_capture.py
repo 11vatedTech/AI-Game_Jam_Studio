@@ -37,6 +37,7 @@ CONTRACT = ROOT / "Games/emberkeep/art_direction.json"
 
 ROLES = [
     "frame",
+    "mask_world_occupancy",
     "mask_world_visible",
     "mask_lantern_visible",
     "mask_lantern_silhouette",
@@ -109,6 +110,9 @@ def main() -> int:
         name="frame.png",
         path=copied.image_path("frame"),
         mask_path=copied.image_path("mask_world_visible") if copied.has("mask_world_visible") else None,
+        occupancy_mask_path=copied.image_path("mask_world_occupancy")
+        if copied.has("mask_world_occupancy")
+        else None,
         lantern_mask_path=copied.image_path("mask_lantern_visible") if copied.has("mask_lantern_visible") else None,
     )
     critic_report = critic.evaluate([frame], direction, job_id=f"perception-{copied.capture_id}")
