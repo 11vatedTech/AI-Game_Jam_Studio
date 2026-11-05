@@ -4,7 +4,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Iterator
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 SCHEMA = """
 PRAGMA foreign_keys=ON;
@@ -45,6 +45,40 @@ CREATE INDEX IF NOT EXISTS idx_artifacts_job ON artifacts(job_id);
 CREATE INDEX IF NOT EXISTS idx_reviews_job_type ON reviews(job_id,review_type,created_at);
 """
 
+# Schema 2 adds the execution-boundary trace ledger: what was called, by which
+# agent boundary, with what outcome, and — when it failed — in which class.
+SCHEMA_V2 = """
+PRAGMA foreign_keys=ON;
+CREATE TABLE IF NOT EXISTS operations (
+ id TEXT PRIMARY KEY, job_id TEXT, task_id TEXT, kind TEXT NOT NULL,
+ boundary TEXT NOT NULL, target TEXT NOT NULL,
+ started_at TEXT NOT NULL, finished_at TEXT,
+ outcome TEXT NOT NULL, failure_class TEXT, notes TEXT,
+ request_digest TEXT, response_digest TEXT, inputs_json TEXT, outputs_json TEXT
+);
+CREATE TABLE IF NOT EXISTS critic_findings (
+ id TEXT PRIMARY KEY, job_id TEXT NOT NULL, frame TEXT NOT NULL, metric TEXT NOT NULL,
+ value REAL, threshold_json TEXT NOT NULL, severity TEXT NOT NULL,
+ algorithm_version TEXT NOT NULL, confidence REAL, limitations_json TEXT NOT NULL,
+ evidence_json TEXT NOT NULL, created_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS decisions (
+ id TEXT PRIMARY KEY, job_id TEXT, question TEXT NOT NULL, decision TEXT NOT NULL,
+ rationale TEXT NOT NULL, alternatives_json TEXT, made_by TEXT NOT NULL,
+ evidence_json TEXT NOT NULL, created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_operations_job ON operations(job_id,started_at);
+CREATE INDEX IF NOT EXISTS idx_operations_outcome ON operations(outcome);
+CREATE INDEX IF NOT EXISTS idx_findings_job_frame ON critic_findings(job_id,frame);
+"""
+
+
+def _migrate_2(conn: sqlite3.Connection) -> None:
+    conn.executescript(SCHEMA_V2)
+
+
+MIGRATIONS = {2: _migrate_2}
+
 class Database:
     def __init__(self, path: Path):
         self.path = path
@@ -56,7 +90,16 @@ class Database:
             if current < 1:
                 # Idempotent bootstrap is also the migration from the original unversioned v0.2 preview DB.
                 conn.executescript(SCHEMA)
-                conn.execute(f"PRAGMA user_version={SCHEMA_VERSION}")
+                conn.execute("PRAGMA user_version=1")
+                current = 1
+            while current < SCHEMA_VERSION:
+                target = current + 1
+                migration = MIGRATIONS.get(target)
+                if migration is None:
+                    raise RuntimeError(f"No migration path from schema {current} to {target}")
+                migration(conn)
+                conn.execute(f"PRAGMA user_version={target}")
+                current = target
             conn.execute("PRAGMA journal_mode=WAL")
     @contextmanager
     def connect(self) -> Iterator[sqlite3.Connection]:

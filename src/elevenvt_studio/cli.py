@@ -51,6 +51,11 @@ def build_parser():
     aps.add_parser("list").add_argument("--status")
     req=aps.add_parser("request"); req.add_argument("--scope",required=True); req.add_argument("--side-effect",required=True); req.add_argument("--target",required=True); req.add_argument("--reason",required=True)
     dec=aps.add_parser("decide"); dec.add_argument("approval_id"); dec.add_argument("--approve",action="store_true"); dec.add_argument("--reject",action="store_true"); dec.add_argument("--approver",required=True)
+    led=sub.add_parser("ledger",help="Execution-boundary trace ledger"); lgs=led.add_subparsers(dest="ledger_command",required=True)
+    lglist=lgs.add_parser("list"); lglist.add_argument("--job-id"); lglist.add_argument("--limit",type=int,default=100)
+    lgshow=lgs.add_parser("show"); lgshow.add_argument("op_id")
+    lggaps=lgs.add_parser("gaps",help="Operations that never resolved to a known outcome"); lggaps.add_argument("--job-id")
+    lgsum=lgs.add_parser("failures",help="Failure-class counts"); lgsum.add_argument("--job-id")
     dbp=sub.add_parser("database",help="Database integrity and backup tools"); dbs=dbp.add_subparsers(dest="database_command",required=True)
     dbs.add_parser("integrity-check")
     backup=dbs.add_parser("backup"); backup.add_argument("--destination",type=Path)
@@ -109,6 +114,13 @@ def main(argv=None):
                 if args.approve==args.reject: raise ValueError("Specify exactly one of --approve or --reject")
                 if args.approve: _require_human_confirmation("APPROVE",args.approval_id)
                 _print(service.policy.decide(args.approval_id,args.approve,args.approver))
+        elif args.command=="ledger":
+            from .ledger import Ledger
+            ledger=Ledger(_service(args).db)
+            if args.ledger_command=="list": _print(ledger.list_operations(args.job_id,args.limit))
+            elif args.ledger_command=="show": _print(ledger.show(args.op_id))
+            elif args.ledger_command=="gaps": _print(ledger.gaps(args.job_id))
+            else: _print(ledger.failure_summary(args.job_id))
         elif args.command=="database":
             service=_service(args)
             if args.database_command=="integrity-check": _print(service.db.integrity_check())

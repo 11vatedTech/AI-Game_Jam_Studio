@@ -3,7 +3,7 @@ import sqlite3
 
 import pytest
 
-from elevenvt_studio.db import Database
+from elevenvt_studio.db import SCHEMA_VERSION, Database
 from elevenvt_studio.errors import ValidationError
 
 
@@ -66,7 +66,8 @@ def test_database_schema_version_is_guarded(tmp_path):
     path = tmp_path / "versioned.sqlite3"
     db = Database(path)
     with db.connect() as conn:
-        assert conn.execute("PRAGMA user_version").fetchone()[0] == 1
+        # The guard is what matters; the literal version belongs to the runtime, not the test.
+        assert conn.execute("PRAGMA user_version").fetchone()[0] == SCHEMA_VERSION
     future = tmp_path / "future.sqlite3"
     conn = sqlite3.connect(future)
     conn.execute("PRAGMA user_version=999")
