@@ -45,3 +45,10 @@ reports/evidence/_staging/
 *.pdb
 # The evidence bundle IS the product's proof; the generic evidence/ rule above must not swallow it.
 !reports/evidence/
+# Raw generation outputs are hash-addressed, not committed (reports/evidence/ARTIFACTS.sha256).
+# Release evidence under reports/evidence/productions/ stays tracked.
+reports/evidence/comfyui-output/
+reports/evidence/runs/
+
+# The manifest tool itself lives in a directory named evidence.
+!scripts/evidence/

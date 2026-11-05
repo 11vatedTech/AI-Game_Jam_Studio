@@ -1,0 +1,194 @@
+{
+  "file_count": 37,
+  "files": [
+    {
+      "path": "comfyui-output/studio/backdrop_00001_.png",
+      "sha256": "6a0f3cf3fd4d875be53e4cd6a11b983974829e445448244890c6af5f5db5f137",
+      "size_bytes": 1470820
+    },
+    {
+      "path": "comfyui-output/studio/backdrop_00002_.png",
+      "sha256": "6a0f3cf3fd4d875be53e4cd6a11b983974829e445448244890c6af5f5db5f137",
+      "size_bytes": 1470820
+    },
+    {
+      "path": "comfyui-output/studio/lantern_mesh_00001_.glb",
+      "sha256": "dd4d3d4353514b531aa77351d9304425c133479cd712ec56e642bac29ce1e73c",
+      "size_bytes": 29213932
+    },
+    {
+      "path": "comfyui-output/studio/pylon_concept_00001_.png",
+      "sha256": "609d7f0840b8a1813b4bf928900b1827c42d28df9440a7a270140dbe9a3aa09f",
+      "size_bytes": 860484
+    },
+    {
+      "path": "comfyui-output/studio/pylon_concept_00002_.png",
+      "sha256": "609d7f0840b8a1813b4bf928900b1827c42d28df9440a7a270140dbe9a3aa09f",
+      "size_bytes": 860484
+    },
+    {
+      "path": "comfyui-output/studio/pylon_concept_sq_00001_.png",
+      "sha256": "028b88f63c630c12133ce834ddb00b7ccbd41ca8cef0e2ce16de428dd74ec437",
+      "size_bytes": 954730
+    },
+    {
+      "path": "comfyui-output/studio/pylon_mesh2_00001_.glb",
+      "sha256": "302d243a9a29c06a05318aed0b41ec23bc35fca531895bc3f07dbcc9018fc957",
+      "size_bytes": 20795832
+    },
+    {
+      "path": "comfyui-output/studio/pylon_mesh3_00001_.glb",
+      "sha256": "b6c25ac8e1e55c60827306ecae262396664f386320e75ffb47d0f09ea67a7271",
+      "size_bytes": 18354752
+    },
+    {
+      "path": "comfyui-output/studio/pylon_mesh_00001_.glb",
+      "sha256": "eba9f768e9b77081426a0da14168e50aca7327335e0aa443a22d830f0388fc11",
+      "size_bytes": 37453760
+    },
+    {
+      "path": "comfyui-output/studio/smoke_lantern_00001_.png",
+      "sha256": "50eb177768f7ba6e49f9d2d066c41f197dc95b30fd57dcd48929b8e471ef8ea1",
+      "size_bytes": 402929
+    },
+    {
+      "path": "runs/backdrop/backdrop_00002_.png",
+      "sha256": "6a0f3cf3fd4d875be53e4cd6a11b983974829e445448244890c6af5f5db5f137",
+      "size_bytes": 1470820
+    },
+    {
+      "path": "runs/backdrop/run.json",
+      "sha256": "279aa0176fa682114e548a30a9fe3b8cb1042cbfc01a55e6167579e7cd28f3b0",
+      "size_bytes": 993
+    },
+    {
+      "path": "runs/emberkeep-smoke/runtime_report.json",
+      "sha256": "a52f9ab690d70af1f302ce9e78a71a31f1e0a7cc3308ba7c1b41f88a3f5fda61",
+      "size_bytes": 764
+    },
+    {
+      "path": "runs/emberkeep-smoke/shot_00_start.png",
+      "sha256": "cf5a840be14d8b2016a84ea85ea58c7b5db16e42c1e01c29604746cb57d1d7f3",
+      "size_bytes": 173855
+    },
+    {
+      "path": "runs/emberkeep-smoke/shot_01_dawn.png",
+      "sha256": "cc94582072b8cc9387c9d2b113da78fcac7f04872cc7bd131350990518b172e6",
+      "size_bytes": 296125
+    },
+    {
+      "path": "runs/emberkeep-smoke/shot_02_gameplay_west.png",
+      "sha256": "663f6f81a6d36ce4eb2c40b894cdd1ea9f7ca06145d4cf9f620d80a304f591c5",
+      "size_bytes": 379363
+    },
+    {
+      "path": "runs/emberkeep-smoke/shot_03_beacon_lit.png",
+      "sha256": "1acbecab9cf26c87a91797213cdead7d0729d7c1a3c9717e5faac64ee8963ef1",
+      "size_bytes": 337389
+    },
+    {
+      "path": "runs/lantern-mesh/lantern_mesh_00001_.glb",
+      "sha256": "dd4d3d4353514b531aa77351d9304425c133479cd712ec56e642bac29ce1e73c",
+      "size_bytes": 29213932
+    },
+    {
+      "path": "runs/lantern-mesh/preview_front.jpg",
+      "sha256": "5aae0126488a7c32241b5361cc5c03fd29fa8e028e7b76d8635b8df3fcfeec1d",
+      "size_bytes": 29910
+    },
+    {
+      "path": "runs/lantern-mesh/preview_tq.jpg",
+      "sha256": "f77689aec97980f056188a7ae490157b2217175fadb66396d6a47dc0e69bc9c6",
+      "size_bytes": 26629
+    },
+    {
+      "path": "runs/lantern-mesh/run.json",
+      "sha256": "9b5198b8b7927c535a22391fc2710c16a5547cb721a6f3ab9a0319d43782d1bb",
+      "size_bytes": 771
+    },
+    {
+      "path": "runs/pylon-concept/backdrop.jpg",
+      "sha256": "7242ddd4364f59acb4aae0b7f2929605ac74cba38f4bfcf1ce9c0201483b87ee",
+      "size_bytes": 64819
+    },
+    {
+      "path": "runs/pylon-concept/pylon.jpg",
+      "sha256": "24e6fb0e62e5aecb4bf3a62d072ac9519a73be951a19a59ac72897cf5d546273",
+      "size_bytes": 28414
+    },
+    {
+      "path": "runs/pylon-concept/pylon_concept_00001_.png",
+      "sha256": "609d7f0840b8a1813b4bf928900b1827c42d28df9440a7a270140dbe9a3aa09f",
+      "size_bytes": 860484
+    },
+    {
+      "path": "runs/pylon-concept/pylon_concept_00002_.png",
+      "sha256": "609d7f0840b8a1813b4bf928900b1827c42d28df9440a7a270140dbe9a3aa09f",
+      "size_bytes": 860484
+    },
+    {
+      "path": "runs/pylon-concept/pylon_square.png",
+      "sha256": "16dc86150078cb8308114d3e90885f7e4c36db705353c7778069116e07681639",
+      "size_bytes": 844931
+    },
+    {
+      "path": "runs/pylon-concept/run.json",
+      "sha256": "2761604dd0d88e98bf05c80de967fcb0a46b5e38b8ff419d51417825392976b0",
+      "size_bytes": 987
+    },
+    {
+      "path": "runs/pylon-concept-sq/pylon_concept_sq_00001_.png",
+      "sha256": "028b88f63c630c12133ce834ddb00b7ccbd41ca8cef0e2ce16de428dd74ec437",
+      "size_bytes": 954730
+    },
+    {
+      "path": "runs/pylon-concept-sq/run.json",
+      "sha256": "b85abe7f8f6357b51a1787e273c94b46083cc0c8f7431c4857a640d6e4105e33",
+      "size_bytes": 999
+    },
+    {
+      "path": "runs/pylon-mesh/preview.jpg",
+      "sha256": "e3b9759ff59b59aee8fd3d4b42c9256af8448a480d34bc72e5cf0dab57d35231",
+      "size_bytes": 8193
+    },
+    {
+      "path": "runs/pylon-mesh/pylon_mesh_00001_.glb",
+      "sha256": "eba9f768e9b77081426a0da14168e50aca7327335e0aa443a22d830f0388fc11",
+      "size_bytes": 37453760
+    },
+    {
+      "path": "runs/pylon-mesh/run.json",
+      "sha256": "014b619ec718989f11fef26be3e9b64a87cfd3299535fbfec4d853a9b9752fcf",
+      "size_bytes": 766
+    },
+    {
+      "path": "runs/pylon-mesh2/pylon.glb",
+      "sha256": "302d243a9a29c06a05318aed0b41ec23bc35fca531895bc3f07dbcc9018fc957",
+      "size_bytes": 20795832
+    },
+    {
+      "path": "runs/pylon-mesh3/preview.jpg",
+      "sha256": "11c1e98dacfa2b9fa5a63c188b5d2def6398015eb35e1acbb19b40ca3c7465c4",
+      "size_bytes": 17343
+    },
+    {
+      "path": "runs/pylon-mesh3/pylon.glb",
+      "sha256": "b6c25ac8e1e55c60827306ecae262396664f386320e75ffb47d0f09ea67a7271",
+      "size_bytes": 18354752
+    },
+    {
+      "path": "runs/smoke-lantern/run.json",
+      "sha256": "07fdc57a96e747a7ad4f58981f63655d75b21e26768e2395606d7a353478fea1",
+      "size_bytes": 820
+    },
+    {
+      "path": "runs/smoke-lantern/smoke_lantern_00001_.png",
+      "sha256": "50eb177768f7ba6e49f9d2d066c41f197dc95b30fd57dcd48929b8e471ef8ea1",
+      "size_bytes": 402929
+    }
+  ],
+  "kind": "evidence-manifest",
+  "root": "C:/Users/11vat/OneDrive/AI-game_Jam_Studio/AI-Game-jam-studio/reports/evidence",
+  "total_bytes": 224419337,
+  "version": 1
+}
