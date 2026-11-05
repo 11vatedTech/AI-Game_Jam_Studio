@@ -1,0 +1,75 @@
+{
+  "kind": "lamplighter",
+  "blender": "5.2.0 LTS",
+  "glb": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lamplighter\\lamplighter.glb",
+  "blend": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lamplighter\\lamplighter.blend",
+  "geometry": {
+    "objects": 9,
+    "triangles": 2159,
+    "detail": [
+      {
+        "name": "Lamplighter_Cloak",
+        "triangles": 730,
+        "materials": [
+          "CLOTH_DARK"
+        ]
+      },
+      {
+        "name": "Lamplighter_Mantle",
+        "triangles": 358,
+        "materials": [
+          "CLOTH_TRIM"
+        ]
+      },
+      {
+        "name": "Lamplighter_Hood",
+        "triangles": 435,
+        "materials": [
+          "CLOTH_DARK"
+        ]
+      },
+      {
+        "name": "Lamplighter_Belt",
+        "triangles": 576,
+        "materials": [
+          "LEATHER_WORN"
+        ]
+      },
+      {
+        "name": "Lamplighter_Boot_-1",
+        "triangles": 12,
+        "materials": [
+          "LEATHER_WORN"
+        ]
+      },
+      {
+        "name": "Lamplighter_Boot_1",
+        "triangles": 12,
+        "materials": [
+          "LEATHER_WORN"
+        ]
+      },
+      {
+        "name": "Lamplighter_Arm",
+        "triangles": 12,
+        "materials": [
+          "CLOTH_DARK"
+        ]
+      },
+      {
+        "name": "Lamplighter_Hand",
+        "triangles": 12,
+        "materials": [
+          "LEATHER_WORN"
+        ]
+      },
+      {
+        "name": "Lamplighter_ArmLeft",
+        "triangles": 12,
+        "materials": [
+          "CLOTH_DARK"
+        ]
+      }
+    ]
+  }
+}

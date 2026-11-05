@@ -1,0 +1,355 @@
+{
+  "kind": "environment",
+  "blender": "5.2.0 LTS",
+  "glb": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\environment\\shrine_terrace.glb",
+  "blend": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\environment\\shrine_terrace.blend",
+  "geometry": {
+    "objects": 49,
+    "triangles": 4346,
+    "detail": [
+      {
+        "name": "Deck",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Sanctum",
+        "triangles": 12,
+        "materials": [
+          "STONE_WORN"
+        ]
+      },
+      {
+        "name": "Step_0",
+        "triangles": 12,
+        "materials": [
+          "STONE_WORN"
+        ]
+      },
+      {
+        "name": "Step_1",
+        "triangles": 12,
+        "materials": [
+          "STONE_WORN"
+        ]
+      },
+      {
+        "name": "Step_2",
+        "triangles": 12,
+        "materials": [
+          "STONE_WORN"
+        ]
+      },
+      {
+        "name": "Parapet_north_0",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_north_1",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_north_3",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_north_4",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_south_0",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_south_2",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_south_3",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_east_0",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_east_1",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_east_3",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_east_4",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_west_0",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_west_2",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Parapet_west_3",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_NW_Pillar_-1",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_NW_Pillar_1",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_NW_Band",
+        "triangles": 256,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_NW_Keystone",
+        "triangles": 12,
+        "materials": [
+          "STONE_WORN"
+        ]
+      },
+      {
+        "name": "Arch_NE_Pillar_-1",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_NE_Pillar_1",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_NE_Band",
+        "triangles": 256,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_NE_Keystone",
+        "triangles": 12,
+        "materials": [
+          "STONE_WORN"
+        ]
+      },
+      {
+        "name": "Arch_W_Pillar_-1",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_W_Pillar_1",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_W_Band",
+        "triangles": 256,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_W_Keystone",
+        "triangles": 12,
+        "materials": [
+          "STONE_WORN"
+        ]
+      },
+      {
+        "name": "Arch_E_Pillar_-1",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_E_Pillar_1",
+        "triangles": 12,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_E_Band",
+        "triangles": 256,
+        "materials": [
+          "STONE_WET"
+        ]
+      },
+      {
+        "name": "Arch_E_Keystone",
+        "triangles": 12,
+        "materials": [
+          "STONE_WORN"
+        ]
+      },
+      {
+        "name": "PylonSocket_0",
+        "triangles": 290,
+        "materials": [
+          "STONE_WORN"
+        ]
+      },
+      {
+        "name": "PylonRing_0",
+        "triangles": 640,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "PylonSocket_1",
+        "triangles": 290,
+        "materials": [
+          "STONE_WORN"
+        ]
+      },
+      {
+        "name": "PylonRing_1",
+        "triangles": 640,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "PylonSocket_2",
+        "triangles": 290,
+        "materials": [
+          "STONE_WORN"
+        ]
+      },
+      {
+        "name": "PylonRing_2",
+        "triangles": 640,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "Rubble_0",
+        "triangles": 20,
+        "materials": [
+          "STONE_DEEP"
+        ]
+      },
+      {
+        "name": "Rubble_1",
+        "triangles": 20,
+        "materials": [
+          "STONE_DEEP"
+        ]
+      },
+      {
+        "name": "Rubble_2",
+        "triangles": 20,
+        "materials": [
+          "STONE_DEEP"
+        ]
+      },
+      {
+        "name": "Rubble_3",
+        "triangles": 20,
+        "materials": [
+          "STONE_DEEP"
+        ]
+      },
+      {
+        "name": "Rubble_4",
+        "triangles": 20,
+        "materials": [
+          "STONE_DEEP"
+        ]
+      },
+      {
+        "name": "Rubble_5",
+        "triangles": 20,
+        "materials": [
+          "STONE_DEEP"
+        ]
+      },
+      {
+        "name": "Rubble_6",
+        "triangles": 20,
+        "materials": [
+          "STONE_DEEP"
+        ]
+      },
+      {
+        "name": "Rubble_7",
+        "triangles": 20,
+        "materials": [
+          "STONE_DEEP"
+        ]
+      }
+    ]
+  }
+}

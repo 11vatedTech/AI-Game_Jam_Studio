@@ -1,0 +1,102 @@
+{
+  "tool": {
+    "blender": "5.2.0 LTS",
+    "source": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern_hero\\lantern_hero.glb"
+  },
+  "asset": "lantern_hero_review",
+  "imported": {
+    "vertices": 3748,
+    "triangles": 4934,
+    "polygons": 4934,
+    "materials": [
+      "BRASS_AGED",
+      "EMBER_CORE",
+      "GLASS_LANTERN"
+    ],
+    "uv_layers": [
+      "UVMap"
+    ],
+    "color_attributes": [],
+    "bbox_min": [
+      -0.079,
+      -0.077,
+      0.0
+    ],
+    "bbox_max": [
+      0.079,
+      0.077,
+      0.307231
+    ],
+    "dimensions": [
+      0.158,
+      0.154,
+      0.307231
+    ],
+    "non_manifold_edges": 2498,
+    "loose_vertices": 0,
+    "volume_m3": null
+  },
+  "weld": {
+    "merged_before": 4924
+  },
+  "decimation": {
+    "decimated": false
+  },
+  "scaling": {
+    "scale_factor": 1.36705,
+    "final_dimensions": [
+      0.216,
+      0.2105,
+      0.42
+    ]
+  },
+  "uv": {
+    "uv_unwrapped": false,
+    "existing": [
+      "UVMap"
+    ]
+  },
+  "final": {
+    "vertices": 2490,
+    "triangles": 4924,
+    "polygons": 4924,
+    "materials": [
+      "BRASS_AGED",
+      "EMBER_CORE",
+      "GLASS_LANTERN"
+    ],
+    "uv_layers": [
+      "UVMap"
+    ],
+    "color_attributes": [],
+    "bbox_min": [
+      -0.107997,
+      -0.105263,
+      0.0
+    ],
+    "bbox_max": [
+      0.107997,
+      0.105263,
+      0.42
+    ],
+    "dimensions": [
+      0.215994,
+      0.210526,
+      0.42
+    ],
+    "non_manifold_edges": 100,
+    "loose_vertices": 0,
+    "volume_m3": null
+  },
+  "outputs": {
+    "blend": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern_hero\\review\\lantern_hero_review.blend",
+    "glb": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern_hero\\review\\lantern_hero_review.glb",
+    "renders": [
+      "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern_hero\\review\\lantern_hero_review_front.png",
+      "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern_hero\\review\\lantern_hero_review_three_quarter.png",
+      "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern_hero\\review\\lantern_hero_review_side.png"
+    ]
+  },
+  "verdict": "GEOMETRY_MEASURED",
+  "note": "Numeric verification only. Silhouette, material and gameplay-distance judgement require review."
+}

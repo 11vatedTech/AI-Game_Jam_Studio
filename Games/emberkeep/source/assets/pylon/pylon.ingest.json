@@ -1,0 +1,110 @@
+{
+  "tool": {
+    "blender": "5.2.0 LTS",
+    "source": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\reports\\evidence\\runs\\pylon-mesh3\\pylon.glb"
+  },
+  "asset": "pylon",
+  "imported": {
+    "vertices": 1019576,
+    "triangles": 509788,
+    "polygons": 509788,
+    "materials": [
+      "Material_0"
+    ],
+    "uv_layers": [],
+    "color_attributes": [],
+    "bbox_min": [
+      -0.981308,
+      -0.981308,
+      -0.588785
+    ],
+    "bbox_max": [
+      0.981308,
+      0.981308,
+      0.588785
+    ],
+    "dimensions": [
+      1.962617,
+      1.962617,
+      1.17757
+    ],
+    "non_manifold_edges": 1019576,
+    "loose_vertices": 0,
+    "volume_m3": null
+  },
+  "trim": {
+    "trim_radius": 0,
+    "removed_vertices": 0
+  },
+  "floor": {
+    "floor_removed": 280034,
+    "p90_radius": 0.3581,
+    "trim_limit": 0.4834,
+    "apron_removed": 8349,
+    "remaining_vertices": 451159
+  },
+  "weld": {
+    "merged_before": 225373
+  },
+  "decimation": {
+    "decimated": true,
+    "ratio": 0.0621,
+    "triangles_before": 225373,
+    "triangles_after": 14000
+  },
+  "scaling": {
+    "scale_factor": 3.073404,
+    "final_dimensions": [
+      2.8311,
+      2.7356,
+      3.6
+    ]
+  },
+  "uv": {
+    "uv_unwrapped": true,
+    "existing": [
+      "UVMap"
+    ]
+  },
+  "final": {
+    "vertices": 7569,
+    "triangles": 14000,
+    "polygons": 14000,
+    "materials": [
+      "Material_0"
+    ],
+    "uv_layers": [
+      "UVMap"
+    ],
+    "color_attributes": [],
+    "bbox_min": [
+      -1.41554,
+      -1.367781,
+      0.0
+    ],
+    "bbox_max": [
+      1.41554,
+      1.367781,
+      3.6
+    ],
+    "dimensions": [
+      2.831079,
+      2.735562,
+      3.6
+    ],
+    "non_manifold_edges": 3041,
+    "loose_vertices": 0,
+    "volume_m3": null
+  },
+  "outputs": {
+    "blend": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\pylon\\pylon.blend",
+    "glb": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\pylon\\pylon.glb",
+    "renders": [
+      "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\pylon\\pylon_front.png",
+      "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\pylon\\pylon_three_quarter.png",
+      "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\pylon\\pylon_side.png"
+    ]
+  },
+  "verdict": "GEOMETRY_MEASURED",
+  "note": "Numeric verification only. Silhouette, material and gameplay-distance judgement require review."
+}

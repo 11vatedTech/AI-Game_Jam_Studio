@@ -36,3 +36,12 @@ Temp/
 Thumbs.db
 .vscode/
 .idea/
+
+# EMBERKEEP production (added P0)
+Games/**/dist/
+Games/**/.godot/
+Games/**/.import/
+reports/evidence/_staging/
+*.pdb
+# The evidence bundle IS the product's proof; the generic evidence/ rule above must not swallow it.
+!reports/evidence/

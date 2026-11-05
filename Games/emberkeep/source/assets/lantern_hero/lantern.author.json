@@ -1,0 +1,103 @@
+{
+  "kind": "lantern",
+  "blender": "5.2.0 LTS",
+  "glb": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern_hero\\lantern_hero.glb",
+  "blend": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern_hero\\lantern_hero.blend",
+  "geometry": {
+    "objects": 13,
+    "triangles": 4454,
+    "detail": [
+      {
+        "name": "Lantern_Foot",
+        "triangles": 483,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "Lantern_Tank",
+        "triangles": 476,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "Lantern_Glass",
+        "triangles": 480,
+        "materials": [
+          "GLASS_LANTERN"
+        ]
+      },
+      {
+        "name": "Lantern_Core",
+        "triangles": 440,
+        "materials": [
+          "EMBER_CORE"
+        ]
+      },
+      {
+        "name": "Lantern_Crown",
+        "triangles": 723,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "Lantern_Bar_0",
+        "triangles": 12,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "Lantern_Bar_1",
+        "triangles": 12,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "Lantern_Bar_2",
+        "triangles": 12,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "Lantern_Hoop_Low",
+        "triangles": 576,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "Lantern_Hoop_High",
+        "triangles": 576,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "Lantern_Handle",
+        "triangles": 640,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "Lantern_HandleRoot_-1",
+        "triangles": 12,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      },
+      {
+        "name": "Lantern_HandleRoot_1",
+        "triangles": 12,
+        "materials": [
+          "BRASS_AGED"
+        ]
+      }
+    ]
+  }
+}

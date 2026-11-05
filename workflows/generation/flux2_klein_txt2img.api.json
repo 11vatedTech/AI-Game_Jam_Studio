@@ -1,0 +1,63 @@
+{
+  "_meta": {
+    "pipeline": "image.txt2img",
+    "model_family": "flux2-klein",
+    "comfyui_version": "0.34.0",
+    "license_note": "Model weights are not distributed with this repository. Validate the model license before commercial use.",
+    "placeholders": ["__PROMPT__", "__WIDTH__", "__HEIGHT__", "__SEED__", "__STEPS__", "__CFG__", "__PREFIX__"]
+  },
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": { "unet_name": "flux-2-klein-4b-fp8.safetensors", "weight_dtype": "default" }
+  },
+  "2": {
+    "class_type": "CLIPLoader",
+    "inputs": { "clip_name": "qwen_3_4b.safetensors", "type": "flux2", "device": "default" }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": { "vae_name": "flux2-vae.safetensors" }
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "text": "__PROMPT__", "clip": ["2", 0] }
+  },
+  "5": {
+    "class_type": "ConditioningZeroOut",
+    "inputs": { "conditioning": ["4", 0] }
+  },
+  "6": {
+    "class_type": "EmptyFlux2LatentImage",
+    "inputs": { "width": "__WIDTH__", "height": "__HEIGHT__", "batch_size": 1 }
+  },
+  "7": {
+    "class_type": "Flux2Scheduler",
+    "inputs": { "steps": "__STEPS__", "width": "__WIDTH__", "height": "__HEIGHT__" }
+  },
+  "8": {
+    "class_type": "KSamplerSelect",
+    "inputs": { "sampler_name": "euler" }
+  },
+  "9": {
+    "class_type": "SamplerCustom",
+    "inputs": {
+      "model": ["1", 0],
+      "add_noise": true,
+      "noise_seed": "__SEED__",
+      "cfg": "__CFG__",
+      "positive": ["4", 0],
+      "negative": ["5", 0],
+      "sampler": ["8", 0],
+      "sigmas": ["7", 0],
+      "latent_image": ["6", 0]
+    }
+  },
+  "10": {
+    "class_type": "VAEDecode",
+    "inputs": { "samples": ["9", 0], "vae": ["3", 0] }
+  },
+  "11": {
+    "class_type": "SaveImage",
+    "inputs": { "images": ["10", 0], "filename_prefix": "__PREFIX__" }
+  }
+}

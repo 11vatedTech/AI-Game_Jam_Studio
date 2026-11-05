@@ -1,0 +1,99 @@
+{
+  "tool": {
+    "blender": "5.2.0 LTS",
+    "source": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\reports\\evidence\\runs\\lantern-mesh\\lantern_mesh_00001_.glb"
+  },
+  "asset": "lantern",
+  "imported": {
+    "vertices": 1622864,
+    "triangles": 811432,
+    "polygons": 811432,
+    "materials": [
+      "Material_0"
+    ],
+    "uv_layers": [],
+    "color_attributes": [],
+    "bbox_min": [
+      -0.984416,
+      -0.984416,
+      -0.683117
+    ],
+    "bbox_max": [
+      0.984416,
+      0.984416,
+      0.688312
+    ],
+    "dimensions": [
+      1.968831,
+      1.968831,
+      1.371429
+    ],
+    "non_manifold_edges": 1622864,
+    "loose_vertices": 0,
+    "volume_m3": null
+  },
+  "weld": {
+    "merged_before": 811432
+  },
+  "decimation": {
+    "decimated": true,
+    "ratio": 0.02,
+    "triangles_before": 811432,
+    "triangles_after": 16228
+  },
+  "scaling": {
+    "scale_factor": 0.307208,
+    "final_dimensions": [
+      0.6048,
+      0.6048,
+      0.42
+    ]
+  },
+  "uv": {
+    "uv_unwrapped": true,
+    "existing": [
+      "UVMap"
+    ]
+  },
+  "final": {
+    "vertices": 7995,
+    "triangles": 16228,
+    "polygons": 16228,
+    "materials": [
+      "Material_0"
+    ],
+    "uv_layers": [
+      "UVMap"
+    ],
+    "color_attributes": [],
+    "bbox_min": [
+      -0.302421,
+      -0.302421,
+      0.0
+    ],
+    "bbox_max": [
+      0.302421,
+      0.302421,
+      0.42
+    ],
+    "dimensions": [
+      0.604841,
+      0.604841,
+      0.42
+    ],
+    "non_manifold_edges": 66,
+    "loose_vertices": 0,
+    "volume_m3": null
+  },
+  "outputs": {
+    "blend": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern\\lantern.blend",
+    "glb": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern\\lantern.glb",
+    "renders": [
+      "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern\\lantern_front.png",
+      "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern\\lantern_three_quarter.png",
+      "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\source\\assets\\lantern\\lantern_side.png"
+    ]
+  },
+  "verdict": "GEOMETRY_MEASURED",
+  "note": "Numeric verification only. Silhouette, material and gameplay-distance judgement require review."
+}

@@ -1,0 +1,64 @@
+{
+  "_meta": {
+    "pipeline": "asset.image_to_mesh",
+    "model_family": "hunyuan3d-v2.1",
+    "comfyui_version": "0.34.0",
+    "license_note": "Hunyuan3D community license; verify commercial terms for your jurisdiction and use before shipping.",
+    "postconditions": [
+      "SaveGLB writes a mesh file; geometry quality is not implied.",
+      "Mesh must be inspected, cleaned and scaled in Blender before engine import."
+    ],
+    "placeholders": ["__IMAGE__", "__RESOLUTION__", "__STEPS__", "__CFG__", "__OCTREE__", "__THRESHOLD__", "__PREFIX__"]
+  },
+  "1": {
+    "class_type": "ImageOnlyCheckpointLoader",
+    "inputs": { "ckpt_name": "hunyuan_3d_v2.1.safetensors" }
+  },
+  "2": {
+    "class_type": "LoadImage",
+    "inputs": { "image": "__IMAGE__" }
+  },
+  "3": {
+    "class_type": "CLIPVisionEncode",
+    "inputs": { "clip_vision": ["1", 1], "image": ["2", 0], "crop": "center" }
+  },
+  "4": {
+    "class_type": "Hunyuan3Dv2Conditioning",
+    "inputs": { "clip_vision_output": ["3", 0] }
+  },
+  "5": {
+    "class_type": "ConditioningZeroOut",
+    "inputs": { "conditioning": ["4", 0] }
+  },
+  "6": {
+    "class_type": "EmptyLatentHunyuan3Dv2",
+    "inputs": { "resolution": "__RESOLUTION__", "batch_size": 1 }
+  },
+  "7": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["1", 0],
+      "seed": 42,
+      "steps": "__STEPS__",
+      "cfg": "__CFG__",
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "positive": ["4", 0],
+      "negative": ["5", 0],
+      "latent_image": ["6", 0],
+      "denoise": 1.0
+    }
+  },
+  "8": {
+    "class_type": "VAEDecodeHunyuan3D",
+    "inputs": { "samples": ["7", 0], "vae": ["1", 2], "num_chunks": 8000, "octree_resolution": "__OCTREE__" }
+  },
+  "9": {
+    "class_type": "VoxelToMeshBasic",
+    "inputs": { "voxel": ["8", 0], "threshold": "__THRESHOLD__" }
+  },
+  "10": {
+    "class_type": "SaveGLB",
+    "inputs": { "mesh": ["9", 0], "filename_prefix": "__PREFIX__" }
+  }
+}
