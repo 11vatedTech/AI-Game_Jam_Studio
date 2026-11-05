@@ -454,6 +454,8 @@ Does **not** prove:
 | D-08 | Model routing, resource scheduling, memory, autonomous repair at scale (P6) | parent roadmap |
 | D-09 | Save system, settings menu, accessibility pass, localisation | out of scope entirely for this pilot |
 | D-10 | Trailer, store page, marketing renders beyond the key art and five screenshots | parent roadmap |
+| D-11 | Native performance core (C++ geometry/image components) as a Studio subsystem | parent roadmap, gated by §14.2 benchmarks |
+| D-12 | CUDA kernels for critic/geometry workloads | only after the C++ rung is measured insufficient |
 
 The exclusion of these items does not weaken the governing product requirement: **any compatible AI agent must be able to use the Studio's accumulated knowledge, skills, pipelines, integrations, models, quality intelligence and manufacturing capability to produce substantially better work than it could alone.**
 
@@ -474,7 +476,63 @@ Deferred to the ACES spec: profiling which competencies a given agent lacks, rou
 
 ---
 
-## 14. Definition of done
+## 14. Language and native-code policy (governing)
+
+**Decision:** C++ is a first-class technology in the Studio. It is not the default, and it is not a rewrite program.
+
+Python remains the orchestration, integration and workflow language. GDScript remains the gameplay, scene and UI language for this pilot. Native code appears where a benchmark shows the Python/library path misses a declared budget — and nowhere else.
+
+### 14.1 Responsibility map (Studio-wide)
+
+| Responsibility | Preferred technology |
+|---|---|
+| Agent orchestration, planning, MCP and application integration | Python + official SDKs |
+| Workflow, project state, trace ledger | Python + SQLite |
+| Visual analysis (critic) | Python + established native-backed libraries (numpy, scikit-image, OpenCV); custom C++ only per §14.2 |
+| Mesh and geometry processing | Established libraries first; C++ when measured |
+| GPU-heavy computation | CUDA / torch kernels, only after §14.2 |
+| Engine integration | Native engine APIs + GDExtension where justified |
+| Web interfaces | TypeScript |
+| Build, packaging, validation | CMake + Python |
+
+Godot's own documentation states that built-in engine functions run at the same speed regardless of whether they are called from GDScript, C# or C++. C++ therefore helps with *our own* computation, not with engine calls — which is why the gameplay layer stays in GDScript.
+
+### 14.2 Escalation ladder (mandatory order)
+
+1. Python standard library / numpy
+2. An established native-backed library (scikit-image, OpenCV, Open3D, trimesh, torch)
+3. A C++ component (pybind11 for Python; GDExtension inside Godot)
+4. A CUDA / torch GPU kernel
+
+No rung may be skipped. Each escalation requires, recorded as evidence: the baseline timing at production scale, the budget it misses, the measured post-change timing, and the improvement as a ratio. "C++ would be faster" is not evidence.
+
+### 14.3 Native interface contract
+
+Any component crossing the language boundary must satisfy all of:
+
+- **Types:** explicit; no implicit conversions or loose dicts across the boundary
+- **Ownership:** single documented owner; array views carry explicit lifetime guarantees
+- **Errors:** C++ exceptions translated to typed Python errors; no silent fallback paths
+- **Compatibility:** pinned Python ABI, compiler and pybind11 versions, embedded build hash; import fails loudly on mismatch rather than misbehaving
+- **Tests:** native unit tests *and* Python-interface tests, both in CI
+- **Build:** CMake, reproducible flags, no vendored binaries; the built artifact is hash-registered like any other deliverable
+
+### 14.4 This pilot's stance
+
+- Gameplay, scenes, HUD, camera, audio triggers: **GDScript, unchanged.** No GDExtension is introduced unless a measured requirement appears during the production. If one does, its requirement, baseline and measurement go to `reports/evidence/productions/emberkeep/02-manufacture/native/`.
+- **The critic (§4) is the first candidate.** It must run the full metric suite over 1080p frames within **3.0 s/frame** on the target workstation. Rung 2 (scikit-image/OpenCV) is tried first; if it meets the budget, no native code is written and the benchmark itself is the evidence.
+- The 5–10 minute scope does not justify C++ gameplay code. Rewriting it would add deployment complexity without improving the delivered image.
+
+### 14.5 Rejected anti-patterns
+
+- Reimplementing Blender, ComfyUI or Godot functionality in C++
+- Native code written before a baseline exists
+- A second build system introduced for convenience
+- Unpinned compilers or ABI drift across machines
+
+---
+
+## 15. Definition of done
 
 1. `dist/windows-x64/emberkeep/` exists, complete, hash-listed, and runs from outside the repo
 2. Acceptance job persisted with `CERTIFIED` or an explicit defect list
@@ -484,3 +542,4 @@ Deferred to the ACES spec: profiling which competencies a given agent lacks, rou
 6. Op ledger populated for every production operation, with read-back, no `unknown` classes left unreconciled
 7. Migration + backup + restore drill evidence present
 8. `PROJECT_STATUS.md` updated with the honest state, including anything that failed
+9. If any native component was introduced: baseline, missed budget, post-change measurement and interface tests present per §14.2–14.3 — otherwise the production ships with zero native code and says so
