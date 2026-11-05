@@ -21,6 +21,7 @@ from ..errors import ValidationError
 SCHEMA_PATH = Path(__file__).resolve().parents[3] / "schemas" / "art-direction.schema.json"
 PALETTE_ROLES = ("ink", "slate", "mist", "bone", "lantern", "ember")
 THRESHOLD_KEYS = (
+    "luminance_floor",
     "silhouette",
     "warm_share",
     "horizon_roll",

@@ -22,6 +22,10 @@
     }
   },
   "thresholds": {
+    "luminance_floor": {
+      "p5_min": 0.015,
+      "note": "Catches the dead-black lower third seen in the arrival frame: if 5% of pixels are below this linear luminance, the frame has no shadow detail."
+    },
     "silhouette": {
       "iou_min": 0.55,
       "perceptual_delta_min": 12.0,

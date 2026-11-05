@@ -60,9 +60,19 @@
         "delta_e_max",
         "clutter",
         "lantern_dominance",
-        "consistency"
+        "consistency",
+        "luminance_floor"
       ],
       "properties": {
+        "luminance_floor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["p5_min"],
+          "properties": {
+            "p5_min": { "type": "number", "minimum": 0, "maximum": 1 },
+            "note": { "type": "string" }
+          }
+        },
         "silhouette": {
           "type": "object",
           "additionalProperties": false,

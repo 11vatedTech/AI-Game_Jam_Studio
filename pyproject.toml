@@ -16,6 +16,9 @@ dependencies = []
 monitoring = ["psutil>=5.9"]
 mcp = ["mcp>=2,<3"]
 test = ["pytest>=8.0", "jsonschema>=4.22"]
+# Critic frame metrics. Rung 2 of the escalation ladder: established native-backed
+# libraries, no custom C++ (a benchmark must justify that first).
+quality = ["numpy>=1.26", "pillow>=10.0", "scikit-image>=0.22"]
 
 [project.scripts]
 studio = "elevenvt_studio.cli:main"

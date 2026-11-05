@@ -1,0 +1,58 @@
+{
+  "budget_ms": 3000.0,
+  "cold_ms": 4001.29,
+  "contract_sha256": "4d594759629c9e7edf04d5a21db31b2658a108b155cb1f67c789a2d4b76ac43c",
+  "declared_resolution": [
+    1920,
+    1080
+  ],
+  "frame_count": 4,
+  "frame_set_meets_declared_resolution": false,
+  "frames_directory": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\reports\\evidence\\runs\\emberkeep-smoke",
+  "gate": "p95 <= budget",
+  "limitations": [
+    "Frame count below the planned 24-frame set weakens the p99 estimate.",
+    "Frames are [1280, 720], not the declared [1920, 1080]; the budget is stated for 1080p, so this run does not prove the declared case.",
+    "Timings are from a shared desktop; background load is not controlled beyond being noted."
+  ],
+  "machine": {
+    "PIL": "13.0.0",
+    "cpu_count": 24,
+    "numpy": "2.5.4",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 198 Stepping 2, GenuineIntel",
+    "python": "3.12.10",
+    "ram_gb": 31.4,
+    "skimage": "0.26.0"
+  },
+  "metric": "end-to-end: file read + decode + all metrics + report JSON write",
+  "metric_profile_ms": {
+    "clutter": 70.06,
+    "decode": 14.88,
+    "delta_e_max": 187.58,
+    "lantern_dominance": 0.0,
+    "luminance_floor": 140.61,
+    "warm_share": 0.0
+  },
+  "per_frame": {
+    "max_ms": 1537.86,
+    "median_ms": 444.62,
+    "min_ms": 401.23,
+    "p95_ms": 494.62,
+    "p99_ms": 1537.86,
+    "samples": 32
+  },
+  "resolution": [
+    1280,
+    720
+  ],
+  "status": "PASS",
+  "whole_frame_set": {
+    "max_ms": 2582.69,
+    "median_ms": 2564.88,
+    "min_ms": 2534.54,
+    "p95_ms": 2582.69,
+    "p99_ms": 2582.69,
+    "samples": 3
+  }
+}
