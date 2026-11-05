@@ -152,6 +152,28 @@ def test_explicit_call_tool_result_has_no_structured_content_and_no_annotations(
     assert getattr(result.content[1], "annotations", None) is None
 
 
+def test_legacy_server_reports_its_protocol_era(service):
+    """The dev server speaks the legacy handshake; the SDK path negotiates 2026-07-28.
+
+    Transport behaviour is asserted independently of the negotiated version, so a
+    client on either era receives the same image contract.
+    """
+    server = MCPServer(service)
+    explicit = server.handle(
+        {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "initialize",
+            "params": {"protocolVersion": "2025-11-25"},
+        }
+    )["result"]["protocolVersion"]
+    default = server.handle({"jsonrpc": "2.0", "id": 2, "method": "initialize", "params": {}})["result"][
+        "protocolVersion"
+    ]
+    assert explicit == "2025-11-25"
+    assert default == "2025-11-25"
+
+
 def test_sdk_server_registers_perception_tools(service):
     pytest.importorskip("mcp")
     from elevenvt_studio.mcp.sdk_server import build_server

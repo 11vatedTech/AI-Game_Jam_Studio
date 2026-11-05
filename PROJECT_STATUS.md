@@ -61,6 +61,8 @@ Spec: `docs/superpowers/specs/2026-11-05-perception-transport-design.md`; plan: 
 | Deterministic capture | `CAPTURE_REPORT.json` — three runs, identical frame and mask hashes, grade `authoritative` | PROVEN on this machine only |
 | Live capture is supervision only | `LIVE_CAPTURE_REPORT.json` — verified bundle, grade `supervisory`, gate refuses with `EVIDENCE_NOT_AUTHORITATIVE` | PROVEN |
 | Masks respect occlusion | `tests/test_perception_godot_fixture.py` — target behind a wall excluded from visibility, present in silhouette | PROVEN by fixture |
+| Protocol eras | `tests/test_perception_mcp.py` (legacy `2025-11-25`) and `tests/test_mcp_sdk.py` (official SDK negotiates `2026-07-28`) | PROVEN for the image contract on both paths |
+| Ledger completeness | `LEDGER_REPORT.json` — `perception.capture` recorded at the engine boundary, outcome `ok`, `gaps: []` | PROVEN |
 | Emberkeep frame passes the critic | `CRITIC_REPORT.json` — `luminance_floor` major: p5 0.0016 vs 0.015 floor | **FAILING** — a real production defect, not a perception defect |
 
 Honest limits: repeatability is same-machine only; the mask construction is derived from documented render semantics rather than an official feature; a 1080p capture is not a packaging test; and the game may not grant itself authority, so no capture is `authoritative` until the Studio's three-run qualification says so.

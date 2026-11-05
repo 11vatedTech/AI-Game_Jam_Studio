@@ -1,0 +1,15 @@
+{
+  "capture_id": "1c589fe1-7cd0-c4c7-8fb2-c2d0134cf45c",
+  "evidence_grade": "supervisory",
+  "ledger_gaps": [],
+  "ledger_operations": [
+    {
+      "boundary": "engine",
+      "failure_class": null,
+      "kind": "perception.capture",
+      "outcome": "ok",
+      "target": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\game"
+    }
+  ],
+  "note": "A capture that never completes or never resolves appears in gaps; an empty list means every recorded operation reached a terminal state."
+}
