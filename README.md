@@ -11,6 +11,7 @@
 
 ## Start here
 
+- **Current Freebuff execution handoff:** [`FREEBUFF_EXECUTION_HANDOFF_2026-11-05.md`](FREEBUFF_EXECUTION_HANDOFF_2026-11-05.md) — live baseline, current CI blocker, ordered acceptance gates and branch checkout instructions.
 1. [`FREEBUFF_START_HERE.md`](FREEBUFF_START_HERE.md) — binding implementation and production handoff for Freebuff.
 2. [`AGENTS.md`](AGENTS.md) — repository and security rules.
 3. [`PROJECT_STATUS.md`](PROJECT_STATUS.md) — verified implementation state and known gaps.

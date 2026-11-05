@@ -11,7 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass, field
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any, Iterable, Mapping
 
 from ..errors import StudioError, ValidationError
@@ -107,13 +107,34 @@ class Verification:
 
 
 def _safe_relative(value: str) -> Path:
-    """Reject anything that could point outside the capture directory."""
+    """Reject absolute paths and traversal in both path dialects on every host.
+
+    A capture bundle may be produced on Windows and verified on Linux (or the
+    reverse). pathlib.Path follows only the current host's path grammar, so a
+    Windows drive path such as C:/private/file.png looks relative on POSIX.
+    Check both dialects explicitly and normalize separators before returning a
+    host Path. This keeps validation independent of where the bundle is read.
+    """
     if not isinstance(value, str) or not value.strip():
         raise ValidationError("Artifact path must be a non-empty string")
-    path = Path(value)
-    if path.is_absolute() or path.drive or path.root:
+    if chr(0) in value:
+        raise ValidationError("Artifact path must not contain a NUL byte")
+
+    windows_path = PureWindowsPath(value)
+    posix_path = PurePosixPath(value.replace("\\", "/"))
+    path = Path(value.replace("\\", "/"))
+
+    if (
+        path.is_absolute()
+        or path.drive
+        or path.root
+        or windows_path.is_absolute()
+        or bool(windows_path.drive)
+        or posix_path.is_absolute()
+    ):
         raise ValidationError(f"Artifact path must be relative: {value}")
-    if any(part in {"..", ""} for part in path.parts):
+
+    if any(part == ".." for candidate in (path, windows_path, posix_path) for part in candidate.parts):
         raise ValidationError(f"Artifact path traversal is refused: {value}")
     return path
 

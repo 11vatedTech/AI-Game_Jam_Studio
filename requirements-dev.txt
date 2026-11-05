@@ -1,5 +1,3 @@
-pytest>=8.0
-jsonschema>=4.22
-psutil>=5.9
+# Keep the development environment aligned with pyproject.toml optional dependency groups.
+-e .[test,monitoring,mcp,quality]
 ruff>=0.6
-mcp>=2,<3

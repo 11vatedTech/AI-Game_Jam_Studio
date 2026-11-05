@@ -6,7 +6,7 @@
 
 | Fact | Value | How it was measured |
 |---|---|---|
-| Runtime tests | 37 passed, 1 skipped, 19.9 s | `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q` |
+| Runtime tests | 159 passed, 1 skipped, 22.74 s | `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q` |
 | The skip | `tests/test_paths.py:19` — symlink creation unavailable | Windows lacks the privilege without developer mode; not a runtime defect |
 | Python | 3.12.10 in `.venv` | `studio doctor` |
 | Host | RTX 5070 Ti 12 227 MiB, 24 CPUs, 33.7 GB RAM | `studio doctor` |
@@ -42,6 +42,10 @@
 | Other creative disciplines | DESIGNED / NOT INTEGRATED | Audio, video, CAD, UI, web/app, writing, scientific and publishing pipelines need real adapters and tests |
 | Security / license / commercial readiness | PARTIAL DESIGN | Full audit, sandbox, SBOM, migration/restore drills, cross-project lock, penetration tests and rights review remain release blockers |
 
+## Hosted CI baseline before the handoff repair
+
+The base commit `4924961684530eaad536dfc576d177409745dc0d` triggered Actions run `42088269841` on 2026-11-05. All six Ubuntu/Windows and Python 3.11/3.12/3.13 jobs failed during test collection because the CI install omitted the `quality` extra that supplies NumPy and Pillow to critic/perception tests. The logs show `ModuleNotFoundError: numpy` and `ModuleNotFoundError: PIL`. This is an environment/dependency-contract failure before test execution, not a failed assertion in the reported 159-test workstation run. The repair is staged on branch `agent/handoff-production-gap-closure-2026-11-05`; the branch's pull-request matrix is the verification gate.
+
 ## Actual test result
 
 The runtime suite completed **159 passed, 1 skipped in 22.74 s** on the Windows workstation using `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q`. Coverage includes job DAG persistence, exact approval binding, file/workspace confinement, SHA-256 manifests, backup/integrity checks, database schema-version rejection, crash quarantine/reconciliation, fail-closed MCP transport behavior, official-SDK MCP integration, ComfyUI redirect/response bounds, and a complete ComfyUI queue → completion → output retrieval → artifact verification flow.
@@ -49,6 +53,12 @@ The runtime suite completed **159 passed, 1 skipped in 22.74 s** on the Windows 
 The skipped test is `tests/test_paths.py:19` — symlink creation is unavailable without Windows developer mode. It is an environment limitation, not a runtime defect, and it does **not** skip the MCP SDK protocol test: `tests/test_mcp_sdk.py` now passes with the installed `mcp` dependency (an earlier revision of this document incorrectly attributed the skip to MCP).
 
 Passing tests still do not constitute adapter certification, and no packaged build exists yet.
+
+## Hosted CI follow-up — cross-platform path validation
+
+The first handoff PR run (`42111183630`) confirmed that dependency installation, JSON parsing and repository-contract/link verification passed on all Ubuntu jobs. The three Ubuntu test jobs then exposed one independent defect: `perception.bundle._safe_relative` relied on the host OS `pathlib.Path` grammar, so a Windows drive path such as `C:/Windows/system32/x.png` was accepted when a bundle was verified on Linux. Each Ubuntu version reported the same failing regression test (146 passed, 1 failed, 13 environment skips). This is a path-boundary defect, not a dependency issue.
+
+The handoff branch now checks POSIX and Windows path grammars explicitly, normalizes separators before constructing the host path, rejects drive/UNC paths and rejects parent traversal in either dialect. Regression cases cover Windows drive paths, UNC paths and backslash traversal. The follow-up Actions run is the required proof; do not mark the CI gate complete until every matrix job passes.
 
 ## Perception subsystem (spec rev 2)
 
