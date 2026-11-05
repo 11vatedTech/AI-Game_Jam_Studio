@@ -83,7 +83,8 @@ Delivery requires `CERTIFIED` on the package, the art direction, and the accepta
 | GPU | NVIDIA RTX 5070 Ti Laptop, 12 227 MiB |
 | CPU / RAM | 24 logical CPUs / 33.7 GB |
 | Renderer | Forward+ |
-| Target | 1280×720 windowed, 60 FPS |
+| Capture | 1920×1080 release frames; 1280×720 legibility leg |
+| Performance target | 60 FPS at 1920×1080 (ART_BIBLE §12), asserted as p95 frame time ≤ 16.7 ms |
 
 Any change to these invalidates performance figures and requires re-measurement.
 
@@ -105,8 +106,9 @@ Required content:
   "production": "emberkeep",
   "threshold_status": "provisional",   // becomes "confirmed" after calibration review
   "palette": {
-    "base": ["#0B1014", "#1B2733", "#2E3E4A", "#C8BFAA", "#E2A24B", "#8C4A2F"],
+    "base": ["#0B1016", "#1C2B33", "#3E5A63", "#D8CDBA", "#FFC168", "#FF7A2F"],
     "roles":  { "ink": 0, "slate": 1, "mist": 2, "bone": 3, "lantern": 4, "ember": 5 },
+    // hexes are copied verbatim from docs/games/emberkeep/ART_BIBLE.md §3; the art bible is authoritative
     "derived_rules": { "max_delta_e2000_per_role": 14, "lighting_derivation_allowed": true }
   },
   "measurement": {
@@ -119,7 +121,7 @@ Required content:
     "bloom_included": false
   },
   "metrics": {
-    "warm_share":     { "hue_deg": [15, 50], "sat_min": 0.25, "val_min": 0.20,
+    "warm_share":     { "hue_deg": [20, 45], "sat_min": 0.25, "val_min": 0.20,
                         "region": "world_only_excluding_sky_and_ui",
                         "denominator": "all_world_pixels_after_exclusions",
                         "ceiling": 0.10 },
@@ -221,7 +223,7 @@ Subjective findings add `reasoning`, `criteria_applied`, `alternatives_considere
 |---|---|---|
 | Silhouette | Isolation pass renders the player alone on the real background; compare masked grayscale at 128 and 256 px thumbnails via RMS contrast ratio | Meaningless when the player is legitimately off-camera; the critic must check `scene_report.player_visible` first |
 | Luminance | sRGB → linear via IEC 61966-2-1 inverse EOTF; compare masked p95 of focal objects against masked p50 of the scene | Bloom is excluded from measurement by contract, so apparent glow in-game exceeds the measured value |
-| Warm share | HSV classification (`hue 15–50°`, `sat ≥ 0.25`, `val ≥ 0.20`); numerator is pixels passing classification, denominator is **every** world pixel after sky and UI exclusion. (Using the classified set as the denominator would force the ratio to 1.0 and make the metric vacuous.) | Underground/interior scenes would need a different ceiling — this is why it lives in the JSON |
+| Warm share | HSV classification (`hue 20–45°`, `sat ≥ 0.25`, `val ≥ 0.20` — the art bible's 90/10 law, §3); numerator is pixels passing classification, denominator is **every** world pixel after sky and UI exclusion. (Using the classified set as the denominator would force the ratio to 1.0 and make the metric vacuous.) | Underground/interior scenes would need a different ceiling — this is why it lives in the JSON |
 | Horizon | Project the declared world horizon plane (`y = 0`) through the camera matrix; the projected line's screen-y must land inside the band | A deliberately tilted or obstructed horizon is a design change requiring a new art-direction version, not a critic exception |
 | Palette | sRGB → CIELAB (D65); area-weighted histogram matched to the six base colours with CIEDE2000; lighting-derived colours counted against the nearest role with the `derived` budget | Small emissive areas are under-weighted by area weighting; composite with luminance findings |
 | Clutter | Normalized Sobel edge density **plus** object/saliency density in the centre third (count of distinct salient blobs per unit area) | High-detail stone reads as clutter if the threshold is tuned to flat surfaces |
@@ -360,7 +362,8 @@ No primitive geometry or canvas/SVG-style placeholder art ships as final content
 
 Fixed configuration, recorded with every result:
 
-- 1280×720 windowed, Forward+, VSync off, no debug overlay, plugged-in power profile recorded by name
+- **1920×1080** windowed (the art bible's acceptance resolution), Forward+, VSync off, no debug overlay, plugged-in power profile recorded by name
+- A secondary 1280×720 legibility check runs the same clock, because ART_BIBLE §12 requires the frame to survive at gameplay distance *and* at detail
 - 10 s warm-up excluded; 180 s continuous sampling in a scripted run
 - Per-frame times captured to CSV (`frame_index`, `dt_ms`), not inferred from an FPS counter
 - Report p50, p95, p99, max, mean FPS, plus CPU/GPU identity and driver version
@@ -376,7 +379,7 @@ The pipeline below runs as one persisted Studio job. Steps 3–9 operate on the 
 
 1. Export Windows x64 candidate with the pinned engine and `4.7.2.stable` templates
 2. Stage to `%LOCALAPPDATA%\11vatedTech\AI-Game-Jam-Studio\acceptance\emberkeep-<hash8>\`
-3. Verify package completeness: `.exe`, `.pck`, `README.txt`, `THIRD_PARTY_NOTICES.md`, `LICENSES/`, `sha256sums.txt` all present; hashes match
+3. Verify package completeness: `.exe`, `.pck`, `README.txt`, `THIRD_PARTY_NOTICES.md`, `LICENSES/`, `sha256sums.txt` all present; hashes match; the packaged run reports the pinned engine version
 4. Launch the staged build (not the project directory)
 5. Drive the required experience — arrival, warmth, three beacons, dawn, restart
 6. Inspect logs: zero script errors, zero missing-resource errors, audio device opened
