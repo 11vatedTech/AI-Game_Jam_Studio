@@ -6,7 +6,7 @@
 
 | Fact | Value | How it was measured |
 |---|---|---|
-| Runtime tests | 37 passed, 1 skipped, 19.9 s | `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q` |
+| Runtime tests | 159 passed, 1 skipped, 22.74 s | `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q` |
 | The skip | `tests/test_paths.py:19` — symlink creation unavailable | Windows lacks the privilege without developer mode; not a runtime defect |
 | Python | 3.12.10 in `.venv` | `studio doctor` |
 | Host | RTX 5070 Ti 12 227 MiB, 24 CPUs, 33.7 GB RAM | `studio doctor` |
@@ -41,6 +41,10 @@
 | DCC-MCP Core / AI Game Dev | RESEARCH / EXTERNAL INTEGRATION CANDIDATES | Not embedded or locally reproduced in this environment |
 | Other creative disciplines | DESIGNED / NOT INTEGRATED | Audio, video, CAD, UI, web/app, writing, scientific and publishing pipelines need real adapters and tests |
 | Security / license / commercial readiness | PARTIAL DESIGN | Full audit, sandbox, SBOM, migration/restore drills, cross-project lock, penetration tests and rights review remain release blockers |
+
+## Hosted CI baseline before the handoff repair
+
+The base commit `4924961684530eaad536dfc576d177409745dc0d` triggered Actions run `42088269841` on 2026-11-05. All six Ubuntu/Windows and Python 3.11/3.12/3.13 jobs failed during test collection because the CI install omitted the `quality` extra that supplies NumPy and Pillow to critic/perception tests. The logs show `ModuleNotFoundError: numpy` and `ModuleNotFoundError: PIL`. This is an environment/dependency-contract failure before test execution, not a failed assertion in the reported 159-test workstation run. The repair is staged on branch `agent/handoff-production-gap-closure-2026-11-05`; the branch's pull-request matrix is the verification gate.
 
 ## Actual test result
 

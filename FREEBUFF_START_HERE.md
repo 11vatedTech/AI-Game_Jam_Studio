@@ -1,3 +1,5 @@
+> **Current execution handoff (2026-11-05):** Read [FREEBUFF_EXECUTION_HANDOFF_2026-11-05.md](FREEBUFF_EXECUTION_HANDOFF_2026-11-05.md) before taking the next task. It records the live repository baseline, the hosted CI failure and the ordered acceptance gates. This dated handoff supersedes older chat assumptions, not the repository's security or certification rules.
+
 # Freebuff — Operational Handoff and Mission
 
 **You are the primary implementation agent for 11vatedTech AI Game Jam Studio.** This is a real repository with a specification and an executable v0.2.0 runtime foundation. Your assignment is to turn it into an exceptionally capable, commercial-grade creative-production system by reusing the best proven professional software and closing the remaining gaps with verified implementations.
@@ -13,7 +15,7 @@ The Python runtime is dependency-free at its core and includes:
 - Default-deny permission policy, exact scope/side-effect/target approvals, explicit blocked scopes and a human-only approval CLI.
 - Managed workspace path confinement, symlink escape checks, no-overwrite file creation and SHA-256 artifact integrity checks.
 - Host inventory including CPU, OS, Python, disk, optional RAM metrics and NVIDIA GPU/VRAM via `nvidia-smi`.
-- A native ComfyUI HTTP adapter for health, queue, prompt submission/history, live node/model inventory, bounded completion polling, output retrieval and artifact provenance. Its full path is tested against a controlled HTTP fixture, not yet a live workstation ComfyUI installation.
+- A native ComfyUI HTTP adapter for health, queue, prompt submission/history, live node/model inventory, bounded completion polling, output retrieval and artifact provenance. It has also been exercised against a live local ComfyUI v0.34.0 instance for txt2img and Hunyuan3D image-to-mesh, with real output assets recorded in PROJECT_STATUS.md; semantic asset quality and adapter certification remain open.
 - Read-only version checks and approval-gated script/project execution for Blender and Godot.
 - An optional OpenAI-compatible model endpoint client; no external model API is required by the runtime.
 - Unit/integration tests. **Run them. Do not assume this handoff's previous test result matches your machine.**
@@ -36,7 +38,7 @@ pytest -q
 
 Record actual output, time, versions, exit codes and issues in `reports/environment/`. Verify Python, Git, compiler toolchains, GPU driver, CUDA, ComfyUI 8188, Blender, Unreal, Unity, Godot, ffmpeg, audio/video applications, local model servers, storage and free RAM/VRAM. Never infer installation from prior conversation memory.
 
-Configure Freebuff to attach the MCP server using `scripts/windows/mcp-config.example.json`, replacing the placeholders with actual absolute paths. The production bootstrap installs the official MCP Python SDK v2 (`mcp>=2,<3`), whose current protocol support includes the `2026-07-28` revision and legacy client interoperability. Restart/reload Freebuff, then verify `server/discover` on modern clients (or `initialize` on legacy clients), tool listing and `studio_status`. The SDK integration test is in `tests/test_mcp_sdk.py`; it was skipped in the offline build container and must pass on a connected machine. The server communicates over stdio; **stdout is protocol-only**. Send diagnostics to stderr/files.
+Configure Freebuff to attach the MCP server using `scripts/windows/mcp-config.example.json`, replacing the placeholders with actual absolute paths. The production bootstrap installs the official MCP Python SDK v2 (`mcp>=2,<3`), whose current protocol support includes the `2026-07-28` revision and legacy client interoperability. Restart/reload Freebuff, then verify `server/discover` on modern clients (or `initialize` on legacy clients), tool listing and `studio_status`. The SDK integration suite is in `tests/test_mcp_sdk.py` and is reported passing on the Windows workstation; the live Freebuff host handshake and safe tool invocation still require reproduction on the installed client. The server communicates over stdio; **stdout is protocol-only**. Send diagnostics to stderr/files.
 
 ## 2. Operating principles
 

@@ -1,11 +1,11 @@
 {
-  "file_count_excluding_manifest": 174,
-  "file_count_including_manifest": 175,
+  "file_count_excluding_manifest": 175,
+  "file_count_including_manifest": 176,
   "files": [
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "d3db3b5e38e9bcd6cb0f89b2cc665d77fdc437a2641158bb61f0cde158198423",
-      "size_bytes": 801
+      "sha256": "de00b7c03cbbc8ed1577c566fe522d05f28a98b565a10b1adad6978221fd764c",
+      "size_bytes": 979
     },
     {
       "path": ".gitignore",
@@ -33,9 +33,14 @@
       "size_bytes": 1159
     },
     {
+      "path": "FREEBUFF_EXECUTION_HANDOFF_2026-11-05.md",
+      "sha256": "9d62fda870bb95084daf2220cb96ab8b8a6f130c02fc0107602d9ec32cbfa89b",
+      "size_bytes": 13901
+    },
+    {
       "path": "FREEBUFF_START_HERE.md",
-      "sha256": "9757b61b96dc5a06b94c4bd4cac2404e95a73273e09a0f1d04c80dd20842df7b",
-      "size_bytes": 14713
+      "sha256": "88b83d6cd3863216d7fb432ce2beb0d009430830d09934e745265405ad654ec6",
+      "size_bytes": 15285
     },
     {
       "path": "LICENSE_POLICY.md",
@@ -44,8 +49,8 @@
     },
     {
       "path": "PROJECT_STATUS.md",
-      "sha256": "cb11ec147f25abc9068c191b88a06c6bb2a2f1ba7b14c621ff2398500833b71f",
-      "size_bytes": 6487
+      "sha256": "e1e78ea4389ebc641cf5136b2e9aa667e5213d5db1717330a6f4aa366633c42f",
+      "size_bytes": 19893
     },
     {
       "path": "PUSH_TO_GITHUB.md",
@@ -54,8 +59,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "a46a3878e99fdac3595b00c25c35f04017e39e8c01cdb483cf3ea7fb29ddf548",
-      "size_bytes": 6182
+      "sha256": "2002f239639d6ecf6831d6c0ae05b47bd669fd949bd4a7157b828bac27f15ed8",
+      "size_bytes": 6409
     },
     {
       "path": "VERSION",
@@ -559,8 +564,8 @@
     },
     {
       "path": "requirements-dev.txt",
-      "sha256": "fa9392277a2a8f38ef39687b3cefc5c1441dd8b339be58953ca28027fefd6653",
-      "size_bytes": 61
+      "sha256": "ec3bbf0ff272f25e14bd70e668c54c33b69f1e4f6ae4f1d1f718886ae61704b5",
+      "size_bytes": 135
     },
     {
       "path": "schemas/artifact-manifest.schema.json",
@@ -624,8 +629,8 @@
     },
     {
       "path": "scripts/windows/bootstrap.ps1",
-      "sha256": "c32ad3c4255ddc334ac4925bdf6a2b62f0a2d876830b50b1de3a8c826b0fd594",
-      "size_bytes": 1059
+      "sha256": "4ee1904ec19c18b0f199c8ab18619a382f7d4ae55da7d664327d30a6d356bbd0",
+      "size_bytes": 1067
     },
     {
       "path": "scripts/windows/mcp-config.example.json",
