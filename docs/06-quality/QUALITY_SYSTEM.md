@@ -40,6 +40,11 @@ Do not just improve a visual symptom if the cause is upstream. Example: texture 
 5. **A failed hypothesis is evidence.** Supersede it with hashes and a reason; never delete it. The record of a corrected error is what makes the next correction credible.
 6. **Disclose the arithmetic of every metric:** numerator, denominator, denominator semantics, included and excluded regions, source hashes, threshold, contract version, and whether the result is a measurement or an inference.
 7. **A mask, score or statistic means one thing.** Any artifact whose meaning is ambiguous (for example a mask that means both "visible" and "present") must be split into separately typed roles.
+8. **A critic must know the limits of its own instruments.** Every evaluator — 3D character, animation, audio mix, UI composition, gameplay behaviour, architecture — must state what its instruments can establish, what they cannot, and when the evidence is insufficient to judge at all.
+9. **Separate measurement status from assertion type.** "Was this measured?" and "is this a measurement or an inference?" are different questions. Every dimension reports `evidence_status`; every conclusion reports `assertion_type`. A conclusion never borrows the status of its inputs.
+10. **A measurement states its scope.** A number computed over the whole frame may not be reported under a name that promises the scene, the character, the mix or the room. If the scope cannot be established, the metric reports `not_measured` and names what does exist.
+11. **Two identical numbers are one check.** If two metrics return the same value on the same input because they share a denominator, one of them is not measuring anything. Name the duplicate, or remove it from the verdict.
+12. **A proxy measures itself, not the thing it stands for.** Pixel variation is not readability; loudness is not clarity; frame time is not smoothness. A proxy may be reported, may be gated, and may never be described as the quality it approximates.
 
 Case study: [a critic that described a symptom and called it a cause](CASE_STUDY_DARK_DIAGNOSIS.md).
 

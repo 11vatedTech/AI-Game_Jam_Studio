@@ -41,9 +41,18 @@ ROLE_SEMANTICS: dict[str, frozenset[str]] = {
     "mask_lantern_silhouette": frozenset({"unoccluded_silhouette"}),
     "mask_lantern_illumination": frozenset({"illumination_delta"}),
     "diff": frozenset({"pixel_difference"}),
+    # Paired light controls: the same frame with one light mechanism held back. They are
+    # renders, not masks, and they are evidence for a measurement rather than a picture
+    # of the scene, which is why they carry their own semantics.
+    "light_control_all": frozenset({"light_control"}),
+    "light_control_direct": frozenset({"light_control"}),
+    "light_control_environment": frozenset({"light_control"}),
+    "light_control_emissive": frozenset({"light_control"}),
 }
 
-MASK_ROLES = frozenset(role for role in ROLE_SEMANTICS if role != "frame")
+LIGHT_CONTROL_ROLES = frozenset(role for role in ROLE_SEMANTICS if role.startswith("light_control_"))
+RENDER_ROLES = frozenset({"frame"}) | LIGHT_CONTROL_ROLES
+MASK_ROLES = frozenset(role for role in ROLE_SEMANTICS if role not in RENDER_ROLES)
 ALLOWED_MIME = frozenset({"image/png", "image/jpeg", "image/webp"})
 # p99 linear luminance at or below this is the band the known-broken captures occupy.
 BLACK_LUMINANCE = 0.002
@@ -293,7 +302,7 @@ class CaptureBundle:
                     mode = image.mode
                     pixels = image.convert("L") if role in MASK_ROLES else None
                     histogram = pixels.histogram() if pixels is not None else None
-                    rgb = image.convert("RGB") if role == "frame" else None
+                    rgb = image.convert("RGB") if role in RENDER_ROLES else None
                     rgb_array = None
                     if rgb is not None:
                         import numpy as np
@@ -340,8 +349,14 @@ class CaptureBundle:
 
         frame_size = sizes.get("frame")
         for role, size in sizes.items():
-            if role in MASK_ROLES and frame_size is not None:
-                checks.append(Check(f"{role}:frame_dimensions", size == frame_size, {"mask": list(size), "frame": list(frame_size)}))
+            if role in ROLE_SEMANTICS and frame_size is not None:
+                checks.append(
+                    Check(
+                        f"{role}:frame_dimensions",
+                        size == frame_size,
+                        {"artifact": list(size), "frame": list(frame_size)},
+                    )
+                )
 
         declared_roles = set(self.document["request"]["roles"])
         checks.append(Check("roles:declared", declared_roles <= set(sizes) | {a["role"] for a in self.document["artifacts"]}))

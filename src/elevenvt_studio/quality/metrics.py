@@ -87,25 +87,34 @@ def luminance_cause(
     floor: float,
     *,
     band_count: int = 8,
-    tile: int = 32,
+    tiles: Sequence[int] = (8, 16, 32),
     flat_std: float = 0.002,
-    control_rgb: np.ndarray | None = None,
+    illumination_controls: dict[str, np.ndarray] | None = None,
     contribution_min: float = 0.25,
 ) -> MetricOutput:
-    """Measure why a frame is dark, and claim no more cause than the inputs support.
+    """Measure why a frame is dark, and claim no more than the inputs support.
 
     Three independent questions, kept apart because they fail apart:
 
-      coverage          is a rendered surface at this pixel?       (needs a coverage mask)
-      surface detail    does the region carry readable variation?  (measured from pixels)
-      illumination      does scene light reach that surface?       (needs a lights-off control)
+      coverage           is a rendered surface at this pixel?      (needs a coverage mask)
+      surface_variation  does the region vary at viewing scale?    (measured from pixels)
+      illumination       how much luminance comes from scene light?(needs paired controls)
 
-    Detail is a property of the pixels; illumination is a property of the lighting rig.
-    A smooth near-black surface is low detail whether or not any light reaches it, so
-    calling it "unlit" on a variance measurement would be a cause asserted past its
-    evidence — the same mistake this metric exists to prevent. Without a control capture
-    at identical exposure the illumination dimension stays `undetermined`, and the
-    diagnosis reports only what was measured.
+    Variation is not detail. Local pixel variance says the image contains variation; it
+    says nothing about whether a viewer can read the surface. Smooth reflective water is
+    low-variation and can be excellent; sensor noise is high-variation and terrible; fine
+    texture can vanish at 1080p from a distance. So this dimension reports where the
+    variation lives (which spatial scales), never how good the surface looks, and it
+    leaves readability `not_established` until a semantic understanding of the surface
+    exists.
+
+    Illumination is only reported from paired captures that disable one light mechanism
+    at a time. Without an all-off control the dimension stays `not_measured`, because a
+    single frame cannot separate light from albedo.
+
+    Every dimension carries its own `evidence_status` (was it measured?) and
+    `assertion_type` (measurement or inference). The composed diagnosis is an inference
+    over measured inputs, and says so instead of borrowing their status.
 
     The value is the share of below-floor pixels sitting where nothing was drawn. It is
     never thresholded: a diagnosis explains a verdict, it does not set one.
@@ -114,8 +123,28 @@ def luminance_cause(
     height, width = y.shape
     dark = y < floor
     dark_total = int(dark.sum())
-    flat = _detail_free(y, tile, flat_std)
     geometry = None if occupancy is None else _match_mask(occupancy, width, height)
+
+    scales: dict[str, dict[str, Any]] = {}
+    # Only tiles wholly inside the region below the floor carry evidence about that
+    # region. A tile straddling a lit neighbour measures the neighbour's contrast, not
+    # the dark surface's variation, and counting it would let a bright object next to a
+    # flat surface look like detail on it.
+    interior: dict[int, np.ndarray] = {}
+    for tile in tiles:
+        std = _tile_std(y, tile)
+        whole = _tile_entirely(dark, tile)
+        sample = whole if int((dark & whole).sum()) >= max(1, dark_total // 20) else dark
+        interior[tile] = sample
+        sample_total = int((dark & sample).sum())
+        share = float((dark & sample & (std < flat_std)).sum()) / sample_total if sample_total else 0.0
+        scales[str(tile)] = {
+            "detail_free_share": share,
+            "varying_share": 1.0 - share if sample_total else 0.0,
+            "mean_tile_std": float(std[dark & sample].mean()) if sample_total else 0.0,
+            "tile_std_threshold": flat_std,
+            "tiles_wholly_dark": bool(whole is not dark),
+        }
 
     bands: list[dict[str, Any]] = []
     for index in range(band_count):
@@ -131,16 +160,19 @@ def luminance_cause(
                 "dark_pixels": int(band_dark.sum()),
                 "dark_share": float(band_dark.mean()),
                 "geometry_share": None if geometry is None else float(geometry[slab].mean()),
-                "flat_share": float(flat[slab].mean()),
             }
         )
 
     limitations = [
         "Band position is the only separator between sky and unrendered void; a camera pitched far enough to put sky low in frame would swap them.",
         "There is no depth buffer here: occlusion and absence are distinguished only by the engine's coverage mask.",
-        "Detail-free regions are found by local standard deviation, so a deliberately smooth gradient is counted as flat.",
-        "Illumination response requires a control capture with the scene lights disabled at identical exposure; one frame cannot separate light from albedo.",
+        "Variation is measured by local standard deviation, so a deliberately smooth gradient, a soft mist and a featureless fill all read the same way.",
+        "Variation is not readability: fine texture can be invisible at 1080p viewing distance and noise can score higher than craft.",
     ]
+    if illumination_controls:
+        limitations.append(
+            "Mechanism contributions are not additive: tone mapping and overlapping light paths make the shares overlap, so they rank sources rather than partition the light."
+        )
 
     gap_bands: list[int] = []
     sky_bands: list[int] = []
@@ -148,6 +180,7 @@ def luminance_cause(
     geometry_share: float | None = None
     first_geometry: int | None = None
     coverage_state = "undetermined"
+    coverage_measured = geometry is not None
 
     if geometry is not None:
         first_geometry = next((b["index"] for b in bands if (b["geometry_share"] or 0.0) >= 0.02), None)
@@ -167,99 +200,185 @@ def luminance_cause(
             geometry_share = float((dark & geometry).sum()) / dark_total
         coverage_state = "absent" if gap_share >= 0.5 else "present"
 
-    detail_free_share = float((dark & flat).sum()) / dark_total if dark_total else 0.0
+    # --- surface variation, at several scales -------------------------------
+    fine, coarse = str(min(tiles)), str(max(tiles))
+    fine_share = scales[fine]["detail_free_share"]
+    coarse_share = scales[coarse]["detail_free_share"]
+    varying_fine = 1.0 - fine_share if dark_total else 0.0
+    varying_coarse = 1.0 - coarse_share if dark_total else 0.0
 
     if dark_total == 0:
-        detail_state = "undetermined"
-    elif detail_free_share >= 0.5:
-        detail_state = "low_variance"
-    elif detail_free_share <= 0.2:
-        detail_state = "detailed"
+        variation_state = "undetermined"
+        variation_measured = False
+        variation_pattern = "no_dark_pixels"
+        scale_growth = None
     else:
-        detail_state = "undetermined"
+        variation_measured = True
+        # Structure larger than the finest tile raises the spread when the tile grows;
+        # scale-invariant spread is what sensor noise and sub-tile dither look like. The
+        # ratio is evidence about where the variation lives, not about what it is.
+        fine_std = scales[fine]["mean_tile_std"]
+        coarse_std = scales[coarse]["mean_tile_std"]
+        scale_growth = float(coarse_std / fine_std) if fine_std > 1e-9 else None
+        if varying_fine <= 0.2 and varying_coarse <= 0.2:
+            variation_state, variation_pattern = "low_variation", "flat_at_all_scales"
+        elif scale_growth is not None and scale_growth >= 1.5 and varying_coarse >= 0.5:
+            variation_state, variation_pattern = "variation_present", "structure_larger_than_tiles"
+        elif scale_growth is not None and 0.5 <= scale_growth < 1.5 and varying_fine >= 0.5:
+            # Spread that does not grow with the patch size behaves like noise or very
+            # fine texture; pixels cannot separate the two, so no claim is made.
+            variation_state, variation_pattern = "undetermined", "scale_invariant"
+        else:
+            variation_state, variation_pattern = "undetermined", "mixed"
 
+    variation = {
+        "value": variation_state,
+        "evidence_status": "measured" if variation_measured else "not_measured",
+        "assertion_type": "measurement",
+        "scales": scales,
+        "pattern": variation_pattern,
+        "scale_growth": scale_growth,
+        "readability": "not_established",
+        "source": "local standard deviation of luminance at "
+        + ", ".join(f"{t}px" for t in tiles)
+        + " tiles",
+    }
+
+    # --- illumination response, per light mechanism -------------------------
+    controls: dict[str, dict[str, Any]] = {}
+    region = dark & geometry if geometry is not None else dark
+    region_present = bool(region.any())
+    on = float(y[region].mean()) if region_present else None
     contribution: float | None = None
-    if control_rgb is None:
-        illumination_state = "undetermined"
+    illumination_state = "undetermined"
+    illumination_measured = False
+    illumination_partial = False
+
+    if not region_present:
+        illumination_basis = "no pixels below the floor to compare against a control"
+    elif not illumination_controls:
         illumination_basis = (
-            "no lights-off control at identical exposure, so light and albedo cannot be separated"
+            "no light controls captured, so scene light and surface albedo cannot be separated"
         )
     else:
-        region = dark & geometry if geometry is not None else dark
-        if not region.any():
-            illumination_state = "undetermined"
-            illumination_basis = "no pixels below the floor to compare against the control"
-        else:
-            on = float(y[region].mean())
-            off = float(luminance(control_rgb)[region].mean())
-            contribution = (on - off) / max(on, 1e-9)
+        for mechanism, control in illumination_controls.items():
+            if mechanism == "full":
+                continue
+            control_y = luminance(control)
+            if control_y.shape != y.shape:
+                controls[mechanism] = {
+                    "available": False,
+                    "reason": "control frame differs in size from the frame under test",
+                }
+                continue
+            off = float(control_y[region].mean())
+            share = (on - off) / max(on, 1e-9)
+            controls[mechanism] = {
+                "available": True,
+                "contribution": share,
+                "evidence_status": "measured",
+                "assertion_type": "measurement",
+            }
+        controls.setdefault(
+            "indirect",
+            {
+                "available": False,
+                "reason": "a bounce-only capture needs a bake or probe pass, which this pipeline does not run",
+            },
+        )
+        overall = controls.get("all", {})
+        if overall.get("available"):
+            contribution = float(overall["contribution"])
+            illumination_measured = True
             illumination_state = (
                 "low_contribution" if contribution < contribution_min else "adequate_contribution"
             )
             illumination_basis = (
-                f"mean luminance over the dark region rises {contribution:.2f} when scene lights are enabled "
-                f"({off:.4f} -> {on:.4f})"
+                f"mean luminance over the dark region falls {contribution:.2f} when every scene light is disabled "
+                f"({on:.4f} lit, {on * (1.0 - contribution):.4f} unlit)"
             )
+        else:
+            illumination_partial = True
+            illumination_basis = (
+                "individual mechanisms were isolated but no all-lights-off capture exists, so total light "
+                "contribution is unknown"
+            )
+
+    illumination = {
+        "value": illumination_state,
+        "evidence_status": (
+            "measured" if illumination_measured else "partially_measured" if illumination_partial else "not_measured"
+        ),
+        "assertion_type": "measurement",
+        "contribution": contribution,
+        "mechanisms": controls,
+        "additivity": "not_additive",
+        "basis": illumination_basis,
+        "adequacy": "not_established",
+        "source": "paired captures with light mechanisms disabled at identical exposure",
+    }
 
     cannot_distinguish: list[str] = []
     if geometry is None:
         cannot_distinguish.append("whether a surface is present at all")
     elif gap_share >= 0.1 and sky_share >= 0.1:
         cannot_distinguish.append("sky from unrendered void where both are unsegmented")
-    if dark_total and detail_state == "undetermined":
-        cannot_distinguish.append(
-            f"low-variance and detailed pixels are both present ({detail_free_share:.2f} detail-free)"
-        )
-    if dark_total and illumination_state == "undetermined":
+    if dark_total and variation_state == "undetermined" and variation_pattern == "scale_invariant":
+        cannot_distinguish.append("noise from very fine texture from denoiser artefact")
+    elif dark_total and variation_state == "undetermined" and variation_pattern == "mixed":
+        cannot_distinguish.append("flat regions from varying regions within the same frame")
+    if dark_total and not illumination_measured:
         cannot_distinguish.append("a surface too dark to light from light that never reaches it")
 
+    inputs_measured = coverage_measured and variation_measured
     if dark_total == 0:
-        kind, claim = "no_darkness", "measured"
+        kind, evidence_status = "no_darkness", "measured_inputs"
         basis = ["no pixels below the floor"]
     elif geometry is None:
-        kind, claim = "undetermined", "undetermined"
+        kind, evidence_status = "undetermined", "insufficient_inputs"
         basis = ["coverage is unknown: no scene_coverage mask was captured"]
     elif first_geometry is None:
-        kind, claim = "missing_coverage", "measured"
+        kind, evidence_status = "missing_coverage", "measured_inputs"
         basis = [
             f"no band of {band_count} contains rendered geometry",
             f"{dark_total} pixels below the floor sit where nothing was drawn",
         ]
     elif sky_share >= 0.5:
-        kind, claim = "dark_sky", "measured"
+        kind, evidence_status = "dark_sky", "measured_inputs"
         basis = [f"{sky_share:.2f} of dark pixels sit above all rendered geometry"]
     elif gap_share >= 0.5:
-        kind, claim = "missing_coverage", "measured"
+        kind, evidence_status = "missing_coverage", "measured_inputs"
         basis = [
             f"{gap_share:.2f} of pixels below the floor sit in {len(gap_bands)} band(s) with no rendered geometry: {gap_bands}",
             f"rendered geometry first appears in band {first_geometry}",
         ]
     elif illumination_state == "low_contribution":
-        kind, claim = "underlit_surface", "measured"
+        kind, evidence_status = "underlit_surface", "measured_inputs"
         basis = [f"{geometry_share:.2f} of dark pixels lie on rendered geometry", illumination_basis]
-    elif detail_state == "low_variance":
-        kind, claim = "dark_low_detail_surface", "measured"
+    elif variation_state == "low_variation":
+        kind, evidence_status = "dark_low_variation_surface", "measured_inputs"
         basis = [
             f"{geometry_share:.2f} of dark pixels lie on rendered geometry",
-            f"{detail_free_share:.2f} of them are in detail-free tiles",
+            f"{fine_share:.2f} of them are detail-free at {fine}px and {coarse_share:.2f} at {coarse}px",
             f"illumination response is {illumination_state}",
+            "low variation at every scale is not a readability judgment",
         ]
-    elif detail_state == "detailed":
-        kind, claim = "dark_detailed_surface", "measured"
+    elif variation_state == "variation_present":
+        kind, evidence_status = "dark_variation_surface", "measured_inputs"
         basis = [
             f"{geometry_share:.2f} of dark pixels lie on rendered geometry",
-            f"only {detail_free_share:.2f} of them are detail-free, so the darkness has structure",
+            f"{1.0 - fine_share:.2f} of them vary at {fine}px, so the darkness has structure",
             f"illumination response is {illumination_state}",
         ]
     else:
-        kind, claim = "undetermined", "undetermined"
+        kind, evidence_status = "undetermined", "insufficient_inputs"
         basis = [
             f"{geometry_share:.2f} of dark pixels lie on rendered geometry",
-            f"{detail_free_share:.2f} of them are detail-free, which separates neither case",
+            f"variation is {variation_pattern} at the scales measured, which separates neither case",
         ]
 
-    if claim == "measured" and illumination_state == "undetermined" and kind != "missing_coverage":
-        # Coverage and detail are measured; illumination is not. That does not weaken
+    if evidence_status == "measured_inputs" and not illumination_measured and kind != "missing_coverage":
+        # Coverage and variation are measured; illumination is not. That does not weaken
         # the diagnosis, it bounds it: the kind describes the surface, not the lighting.
         limitations = tuple(limitations) + (
             "The diagnosis describes the surface; it does not attribute the darkness to the lighting rig.",
@@ -267,40 +386,33 @@ def luminance_cause(
 
     return MetricOutput(
         value=None if geometry is None else float(gap_share),
-        algorithm_version="lum-cause-2",
-        confidence=0.9 if claim == "measured" else 0.0,
+        algorithm_version="lum-cause-3",
+        confidence=0.0,
         limitations=tuple(limitations) + tuple(cannot_distinguish),
         detail={
             "floor": floor,
             "dark_share": dark_total / float(y.size),
             "bands": bands,
             "coverage": {
-                "state": coverage_state,
+                "value": coverage_state,
+                "evidence_status": "measured" if coverage_measured else "not_measured",
+                "assertion_type": "measurement",
                 "source": "mask_world_occupancy",
                 "gap_bands": gap_bands,
                 "sky_bands": sky_bands,
                 "dark_share_without_geometry": gap_share,
             },
-            "surface_detail": {
-                "state": detail_state,
-                "detail_free_share": detail_free_share,
-                "tile_std_threshold": flat_std,
-                "source": "local standard deviation of luminance",
-            },
-            "illumination_response": {
-                "state": illumination_state,
-                "contribution": contribution,
-                "basis": illumination_basis,
-                "source": "lights-off control capture at identical exposure",
-            },
+            "surface_variation": variation,
+            "illumination_response": illumination,
             "diagnosis": {
-                "kind": kind,
-                "confidence": claim,
+                "value": kind,
+                "evidence_status": evidence_status,
+                "assertion_type": "inference",
                 "basis": basis,
                 "cannot_distinguish": cannot_distinguish,
             },
             "dark_over_geometry_share": geometry_share,
-            "detail_free_dark_share": detail_free_share,
+            "detail_free_dark_share": fine_share,
             **_measure(
                 numerator=dark_total,
                 denominator=int(y.size),
@@ -310,45 +422,91 @@ def luminance_cause(
         },
     )
 
+def warm_share(
+    rgb: np.ndarray,
+    region_mask: np.ndarray | None,
+    band: dict,
+    *,
+    region_semantics: str | None = None,
+) -> MetricOutput:
+    """Warm coverage of the *scene*: warm pixels over a mask that means "the scene".
 
-def warm_share(rgb: np.ndarray, world_mask: np.ndarray | None, band: dict) -> MetricOutput:
-    """Fraction of world pixels inside the warm HSV band.
-
-    Numerator: pixels passing classification. Denominator: every world pixel after
-    sky/UI exclusion. Using the classified set as the denominator would force the
-    ratio to 1.0 and make the metric meaningless.
+    The scene question needs a mask whose meaning is established: the region the art
+    direction is talking about. A world mask is not that. On Emberkeep the world mask
+    selects the whole frame, so this metric and `warm_share_frame` return the identical
+    ratio while claiming to answer different questions. Two identical numbers are not two
+    independent checks, so this one now reports `not_measured` until a mask with declared
+    semantics exists, and names the measurement that does exist.
     """
-    if world_mask is None:
-        return MetricOutput(None, "warm-share-1", 0.0, ("No world mask supplied; sky and UI cannot be excluded.",))
+    if region_mask is None or not region_semantics:
+        return MetricOutput(
+            None,
+            "warm-share-2",
+            0.0,
+            (
+                "No semantic scene-region mask was supplied, so the scene share is not established.",
+                "The world mask selects the whole frame on this production; using it here would duplicate warm_share_frame.",
+            ),
+            detail={
+                "scope": "not_established",
+                "scene_region_mask": "unavailable",
+                "semantic_scope": "not_established",
+                "equivalent_available_measurement": "warm_share_frame",
+                **_measure(
+                    numerator=None,
+                    denominator=None,
+                    denominator_semantics="no denominator exists without a semantic region",
+                    included=[],
+                ),
+            },
+        )
 
     hsv = _rgb_to_hsv(to_float(rgb))
     hue, sat, val = hsv[..., 0] * 360.0, hsv[..., 1], hsv[..., 2]
     low, high = band["hue_deg"]
     warm = (hue >= low) & (hue <= high) & (sat >= band["sat_min"]) & (val >= band["val_min"])
 
-    world = world_mask.astype(bool)
-    total = int(world.sum())
+    region = _match_mask(region_mask, rgb.shape[1], rgb.shape[0])
+    total = int(region.sum())
     if total == 0:
-        return MetricOutput(None, "warm-share-1", 0.0, ("World mask selects no pixels.",))
+        return MetricOutput(
+            None,
+            "warm-share-2",
+            0.0,
+            ("The declared scene region is empty.",),
+            detail={
+                "scope": "scene_region",
+                "scene_region_mask": region_semantics,
+                "semantic_scope": "declared",
+                **_measure(
+                    numerator=None,
+                    denominator=0,
+                    denominator_semantics=f"pixels inside the declared scene region ({region_semantics})",
+                    included=[region_semantics],
+                ),
+            },
+        )
 
-    share = float((warm & world).sum() / total)
+    numerator = int((warm & region).sum())
     return MetricOutput(
-        value=share,
-        algorithm_version="warm-share-1",
+        value=float(numerator / total),
+        algorithm_version="warm-share-2",
         confidence=0.85 if band["sat_min"] > 0 else 0.6,
         limitations=(
             "HSV classification is hue-band based; a warm object under strong blue light is undercounted.",
-            "Depends entirely on the engine-supplied world mask being correct.",
+            f"The result is only as meaningful as the declared region: {region_semantics}.",
         ),
         detail={
-            "world_pixels": total,
-            "warm_pixels": int((warm & world).sum()),
+            "scope": "scene_region",
+            "scene_region_mask": region_semantics,
+            "semantic_scope": "declared",
+            "warm_pixels": numerator,
             **_measure(
-                numerator=int((warm & world).sum()),
+                numerator=numerator,
                 denominator=total,
-                denominator_semantics="pixels selected by the world mask",
-                included=["geometry the engine reports as world"],
-                excluded=["sky and UI, which the world mask should not select"],
+                denominator_semantics=f"pixels inside the declared scene region ({region_semantics})",
+                included=[region_semantics],
+                excluded=["sky, background and UI outside the declared region"],
             ),
         },
     )
@@ -357,11 +515,10 @@ def warm_share(rgb: np.ndarray, world_mask: np.ndarray | None, band: dict) -> Me
 def warm_share_frame(rgb: np.ndarray, band: dict) -> MetricOutput:
     """Whole-frame warm coverage: warm pixels over every pixel that exists.
 
-    Kept beside `warm_share` because the two answer different questions. The world
-    denominator asks "of the scene, how much is warm"; this one asks "of the image the
-    player sees, how much is warm". A small dark scene region dilutes the second and not
-    the first, so neither can stand in for the other until art direction says which
-    one governs the requirement.
+    This is the measurement that actually exists today, so it carries the contract
+    limit. That limit was authored as a share of the scene; applying it to the whole
+    frame dilutes it with sky and empty space, and the report says so rather than letting
+    a small number imply the scene was measured.
     """
     hsv = _rgb_to_hsv(to_float(rgb))
     hue, sat, val = hsv[..., 0] * 360.0, hsv[..., 1], hsv[..., 2]
@@ -372,13 +529,17 @@ def warm_share_frame(rgb: np.ndarray, band: dict) -> MetricOutput:
     numerator = int(warm.sum())
     return MetricOutput(
         value=float(numerator / total) if total else None,
-        algorithm_version="warm-share-frame-1",
+        algorithm_version="warm-share-frame-2",
         confidence=0.85 if band["sat_min"] > 0 else 0.6,
         limitations=(
             "HSV classification is hue-band based; a warm object under strong blue light is undercounted.",
             "Includes background and sky, so it measures the image rather than the scene.",
+            "The contract limit was authored as a share of the scene; until a semantic region exists this frame share is the only available proxy and it dilutes with sky.",
         ),
         detail={
+            "scope": "full_frame",
+            "scene_region_mask": "unavailable",
+            "semantic_scope": "not_established",
             "warm_pixels": numerator,
             **_measure(
                 numerator=numerator,
@@ -668,14 +829,14 @@ def _downsample(rgb: np.ndarray, target: int) -> np.ndarray:
         return np.asarray(resized, dtype=np.uint8)
 
 
-def _detail_free(y: np.ndarray, tile: int, flat_std: float) -> np.ndarray:
-    """Tiles with no local variation: the signature of fill rather than surface."""
+def _tile_std(y: np.ndarray, tile: int) -> np.ndarray:
+    """Per-pixel spread of the tile each pixel falls in, at one spatial scale."""
     height, width = y.shape
     rows = max(1, height // tile)
     cols = max(1, width // tile)
     cropped = y[: rows * tile, : cols * tile]
     blocks = cropped.reshape(rows, tile, cols, tile).transpose(0, 2, 1, 3)
-    per_tile = blocks.reshape(rows, cols, tile * tile).std(axis=2) < flat_std
+    per_tile = blocks.reshape(rows, cols, tile * tile).std(axis=2)
     # Pad the tile grid so the repeated map covers a frame whose height or width
     # is not a whole number of tiles.
     pad_rows = 1 if height > rows * tile else 0
@@ -683,6 +844,26 @@ def _detail_free(y: np.ndarray, tile: int, flat_std: float) -> np.ndarray:
     if pad_rows or pad_cols:
         per_tile = np.pad(per_tile, ((0, pad_rows), (0, pad_cols)), mode="edge")
     return np.repeat(np.repeat(per_tile, tile, axis=0), tile, axis=1)[:height, :width]
+
+
+def _tile_entirely(mask: np.ndarray, tile: int) -> np.ndarray:
+    """Pixels of tiles in which every pixel satisfies the mask."""
+    height, width = mask.shape
+    rows = max(1, height // tile)
+    cols = max(1, width // tile)
+    cropped = mask[: rows * tile, : cols * tile]
+    blocks = cropped.reshape(rows, tile, cols, tile).transpose(0, 2, 1, 3)
+    per_tile = blocks.reshape(rows, cols, tile * tile).all(axis=2)
+    pad_rows = 1 if height > rows * tile else 0
+    pad_cols = 1 if width > cols * tile else 0
+    if pad_rows or pad_cols:
+        per_tile = np.pad(per_tile, ((0, pad_rows), (0, pad_cols)), mode="constant", constant_values=False)
+    return np.repeat(np.repeat(per_tile, tile, axis=0), tile, axis=1)[:height, :width]
+
+
+def _detail_free(y: np.ndarray, tile: int, flat_std: float) -> np.ndarray:
+    """Tiles with no local variation: the signature of fill rather than surface."""
+    return _tile_std(y, tile) < flat_std
 
 
 def _match_mask(mask: np.ndarray, width: int, height: int) -> np.ndarray:

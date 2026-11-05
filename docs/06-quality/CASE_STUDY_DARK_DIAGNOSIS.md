@@ -97,7 +97,58 @@ It does **not** report that the water was underlit, because that was never measu
 5. **A mask is not a claim until its semantics are typed.** "Surface visible" and "surface present" are different assertions, and a mask named for one cannot stand for the other.
 6. **Disclose the arithmetic.** A ratio without numerator, denominator, sources and contract version cannot be challenged, only believed.
 
-## 9. Reproduction
+## 9. Second pass: the instrument's own limits (Diagnostic Semantics Qualification)
+
+The first pass separated the dimensions but kept three of the same mistakes one level down. A review of the metric's own wording found them.
+
+**`surface_detail` was still a readability claim.** Local pixel variance says the image varies; it does not say a viewer can read the surface. Smooth reflective water is low-variance and can be excellent, sensor noise is high-variance and terrible, and fine texture disappears at 1080p despite existing in the file. The dimension is now `surface_variation`, measured at 8, 16 and 32 pixel tiles, and it reports where the variation lives rather than what it means:
+
+| pattern | meaning |
+|---|---|
+| `flat_at_all_scales` | no spread at any patch size |
+| `structure_larger_than_tiles` | spread grows as the patch grows: real structure |
+| `scale_invariant` | same spread at every patch size — noise, very fine texture, or a denoiser artefact; pixels cannot separate them |
+| `mixed` | neither |
+
+`readability` is a field that says `not_established`. Tiles that straddle a lit neighbour no longer count: only tiles wholly inside the region below the floor are evidence about that region, because a bright object beside a flat surface was previously able to look like detail *on* it.
+
+**A measured input is not a measured conclusion.** The composed diagnosis had borrowed the status of its inputs by reporting `confidence: measured`. Each dimension now carries `evidence_status` (`measured` / `partially_measured` / `not_measured`) and `assertion_type` (`measurement`), and the diagnosis carries `evidence_status: measured_inputs` with `assertion_type: inference`. A reader can tell which part was observed and which part was concluded.
+
+**Two identical numbers were counting as two checks.** `warm_share` (world denominator) and `warm_share_frame` returned the same 0.006035 on Emberkeep, because the world mask selects the whole frame. The scene question is now `not_measured` until a mask with declared semantics exists, `warm_share_frame` carries the contract limit alone, and the disclosure states the scope (`full_frame`, `semantic_scope: not_established`) instead of letting a name imply a scene that was never measured.
+
+### The controlled experiment that had been missing
+
+The capture service now produces paired controls on every run: the same frozen frame at identical exposure with one light mechanism held back — `light_control_all`, `light_control_direct`, `light_control_environment`, `light_control_emissive` — plus the untouched frame. They are captured, qualified for repeatability and verified with everything else, and they are kept out of the six-image per-call transport payload.
+
+On the passing Emberkeep frame the dark region below the floor behaves like this:
+
+| mechanism held back | mean luminance falls by |
+|---|---|
+| everything | 0.5425 (0.0145 → 0.0066) |
+| ambient environment | 0.5500 |
+| direct lights | 0.0444 |
+| emissive materials | 0.0326 |
+| indirect / bounce | not measured — needs a bake or probe pass this pipeline does not run |
+
+The shares are **not additive**: disabling ambient alone removes slightly more than disabling everything, because tone mapping and overlapping light paths do not partition the light. They rank sources; they do not divide it.
+
+What this settles: the water is *not* underlit. Half of its luminance comes from scene light, mostly the ambient environment rather than the moon or the lantern. Its diagnosis is `dark_low_variation_surface` with illumination `adequate_contribution` — a lit, smooth, low-variation surface. The earlier story ("present but unlit") is now disproved a second time, from a different direction.
+
+What it does not settle: whether that amount of light is *right*. Adequacy stays `not_established`, because it is an art-direction judgement and the critic owns no such criterion.
+
+## 10. Claims after the second pass
+
+| Claim | Status |
+|---|---|
+| The screenshot pipeline is repeatable on this machine | Demonstrated — three runs, identical frame `29c70bf4ce02a091`, controls qualified too |
+| The original water was absent | **Disproved** — zero background pixels in a magenta render; occupancy 1.000 |
+| The original water was underlit | **Disproved** — 54% of the passing frame's dark-region luminance is scene light |
+| The water is dark, low-variation and receiving light | Supported — coverage present, 1.00 detail-free at every scale, contribution 0.54 |
+| Low variation means poor readability | **Not established** — the metric refuses the claim by construction |
+| `warm_share` measures the scene | **Disproved** — it duplicated the frame share; now `not_measured` |
+| The diagnostic is reliable across arbitrary scenes | **Not established** — validated against its fixtures and this frame only |
+
+## 11. Reproduction
 
 ```
 PYTHONPATH=src .venv/Scripts/python.exe scripts/perception/emberkeep_capture.py

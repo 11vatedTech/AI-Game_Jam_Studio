@@ -20,11 +20,12 @@ def test_warm_share_is_exactly_the_warm_fraction():
     image[20:40, 20:40] = LANTERN  # 400 of 4096 pixels
     mask = np.ones((64, 64), dtype=bool)
 
-    output = metrics.warm_share(image, mask, BAND)
+    output = metrics.warm_share(image, mask, BAND, region_semantics="every pixel")
 
     assert output.value == pytest.approx(400 / 4096)
     assert output.detail["warm_pixels"] == 400
-    assert output.detail["world_pixels"] == 4096
+    assert output.detail["denominator"] == 4096
+    assert output.detail["scope"] == "scene_region"
 
 
 def test_warm_share_excludes_masked_out_pixels():
@@ -33,7 +34,7 @@ def test_warm_share_excludes_masked_out_pixels():
     half_world = np.zeros((64, 64), dtype=bool)
     half_world[:, 32:] = True  # but only the cool half counts as world
 
-    output = metrics.warm_share(image, half_world, BAND)
+    output = metrics.warm_share(image, half_world, BAND, region_semantics="cool half")
     assert output.value == pytest.approx(0.0)
 
 
@@ -44,8 +45,9 @@ def test_warm_share_without_mask_is_not_evaluated():
 
 
 def test_cool_blue_is_not_warm():
-    output = metrics.warm_share(_frame(colour=(20, 60, 220)), np.ones((64, 64), dtype=bool), BAND)
+    output = metrics.warm_share_frame(_frame(colour=(20, 60, 220)), BAND)
     assert output.value == pytest.approx(0.0)
+    assert output.detail["scope"] == "full_frame"
 
 
 def test_luminance_floor_detects_a_dead_black_frame():

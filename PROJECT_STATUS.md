@@ -44,7 +44,7 @@
 
 ## Actual test result
 
-The runtime suite completed **154 passed, 1 skipped in 29.85 s** on the Windows workstation using `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q`. Coverage includes job DAG persistence, exact approval binding, file/workspace confinement, SHA-256 manifests, backup/integrity checks, database schema-version rejection, crash quarantine/reconciliation, fail-closed MCP transport behavior, official-SDK MCP integration, ComfyUI redirect/response bounds, and a complete ComfyUI queue → completion → output retrieval → artifact verification flow.
+The runtime suite completed **159 passed, 1 skipped in 22.74 s** on the Windows workstation using `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q`. Coverage includes job DAG persistence, exact approval binding, file/workspace confinement, SHA-256 manifests, backup/integrity checks, database schema-version rejection, crash quarantine/reconciliation, fail-closed MCP transport behavior, official-SDK MCP integration, ComfyUI redirect/response bounds, and a complete ComfyUI queue → completion → output retrieval → artifact verification flow.
 
 The skipped test is `tests/test_paths.py:19` — symlink creation is unavailable without Windows developer mode. It is an environment limitation, not a runtime defect, and it does **not** skip the MCP SDK protocol test: `tests/test_mcp_sdk.py` now passes with the installed `mcp` dependency (an earlier revision of this document incorrectly attributed the skip to MCP).
 
@@ -64,17 +64,21 @@ Spec: `docs/superpowers/specs/2026-11-05-perception-transport-design.md`; plan: 
 | Protocol eras | `tests/test_perception_mcp.py` (legacy `2025-11-25`) and `tests/test_mcp_sdk.py` (official SDK negotiates `2026-07-28`) | PROVEN for the image contract on both paths |
 | Ledger completeness | `LEDGER_REPORT.json` — `perception.capture` recorded at the engine boundary, outcome `ok`, `gaps: []` | PROVEN |
 | Emberkeep frame passes the critic | `CRITIC_REPORT.json` — PASS, p5 0.01565 vs 0.015 floor, lantern gap 0.46, warm share 0.006, ΔE 2.24 | PROVEN on qualified evidence, thin margin (4%) |
-| The critic names a cause, not just a symptom | `CRITIC_REPORT.json` → `luminance_cause` with separate coverage, detail and illumination dimensions; `tests/test_critic_spatial.py` | PROVEN on synthetic ground truth; illumination on Emberkeep remains `undetermined` |
+| The critic names a cause, not just a symptom | `CRITIC_REPORT.json` → `luminance_cause` with separate coverage, variation and illumination dimensions; `tests/test_critic_spatial.py` | PROVEN on synthetic ground truth and measured on Emberkeep; scene reliability NOT established |
+| Illumination is measured, not inferred from brightness | `light_control_{all,direct,environment,emissive}` in the qualified bundle; contribution 0.54 total, 0.55 ambient, 0.04 direct, 0.03 emissive | PROVEN on this frame; indirect bounce NOT measured |
+| The scene-level warm share is established | `warm_share` → `not_measured`, `semantic_scope: not_established` | **NOT ESTABLISHED** — no semantic scene-region mask exists; only `warm_share_frame` (0.006035) is measured |
 | Every metric discloses its arithmetic | `disclosure` block on each finding: numerator, denominator, source hashes, threshold, contract revision, measurement or inference | PROVEN by `test_every_metric_discloses_what_it_divided_and_what_it_read` |
 | Coverage evidence exists | `mask_world_occupancy` (kind `scene_coverage`) in the bundle, cross-checked against a magenta-background render | PROVEN as a measurement; it is constant for Emberkeep because the flood fills the frame |
 
-Honest limits: repeatability is same-machine only; the mask construction is derived from documented render semantics rather than an official feature; a 1080p capture is not a packaging test; and the game may not grant itself authority, so no capture is `authoritative` until the Studio's three-run qualification says so.
+Honest limits: repeatability is same-machine only, and within a batch; the mask construction is derived from documented render semantics rather than an official feature; a 1080p capture is not a packaging test; and the game may not grant itself authority, so no capture is `authoritative` until the Studio's three-run qualification says so.
+
+One cross-batch gap was found while re-running the evidence: the frame and five of the six masks reproduce exactly across separate invocations, but `mask_lantern_illumination` does not, because it is a difference of two renders taken later in the frozen frame and any time-advancing shader (volumetric fog) shifts it. It is recorded in `CAPTURE_REPORT.json` rather than smoothed over, and no metric depends on that mask.
 
 ### The grade fix, and the diagnosis that was wrong twice
 
 The arrival frame failed `luminance_floor` at p5 0.00163. The first reading was "a dead-black lower third", which is a description of pixels, not a cause.
 
-**Correction, measured.** An earlier version of this document claimed the water plane sat below the terrace slab and never rendered, so the camera looked past the world edge into the sky's ground hemisphere. That is false, and it was checkable. The water plane was already 260 × 260 at y = -1.25 in the failing build, and a magenta-background counterfactual renders zero background pixels anywhere in frame. The camera never sees past the world edge: the flood covers the whole view. The dark lower third was **water that was present, unlit, and visually flat** — near-black albedo, no ripple detail, no light reaching it. The scene-coverage pass agrees: coverage is 1.000 in every band.
+**Correction, measured.** An earlier version of this document claimed the water plane sat below the terrace slab and never rendered, so the camera looked past the world edge into the sky's ground hemisphere. That is false, and it was checkable. The water plane was already 260 × 260 at y = -1.25 in the failing build, and a magenta-background counterfactual renders zero background pixels anywhere in frame. The camera never sees past the world edge: the flood covers the whole view. The dark lower third was **water that was present, near-black and visually flat**. Whether it was also unlit was not measured at that point, and the first version of this document asserted it anyway; the controlled captures below later showed the passing frame's water gets 54% of its luminance from scene light, so "unlit" is not a safe description of the surface either.
 
 What actually moved the metric was therefore material and light, not geometry: water albedo from near-black (0.02, 0.035, 0.045) to a slate mirror (0.20, 0.28, 0.32), stronger ripple normals, ambient 0.26 → 1.4, moon 0.34 → 0.9, exposure 2.05, and a mist-to-ink sky gradient that is mostly invisible from this camera because the flood fills the frame. The waterline change to y = -0.45 stays because it makes the deck read as a quay rather than a floating slab — an art improvement, not the fix, and it is recorded as such.
 
@@ -82,13 +86,27 @@ Measured result: p5 0.00163 → 0.01565, p50 0.00425 → 0.03509, PASS with the 
 
 The cost is honest to state: the palette's own ink is 0.0050 linear, a third of the floor, so at most 5% of any frame may sit at ink. A deep-night grade and this threshold cannot coexist. What passes is a haze-lit blue hour, not the original near-black night, and the 4% margin means the next art change must re-run the critic rather than assume the pass survives.
 
-### What the critic could not do, and now can
+### Milestone: Diagnostic Semantics Qualification
 
 Three different defects produced the same finding: unlit geometry, absent geometry, and exposure that never reached the lower frame. The critic reported the symptom and left the cause to whoever read it — and two different readers (this agent, twice) got it wrong.
 
-`luminance_cause` answers three questions separately, because they fail separately: **coverage** (is a surface at this pixel — needs a `scene_coverage` mask), **surface detail** (does the region carry readable variation — measured from pixels), and **illumination response** (does light reach it — needs a lights-off control at identical exposure, which the capture service does not yet produce). It composes a kind only from what was measured: `missing_coverage`, `dark_sky`, `dark_low_detail_surface`, `dark_detailed_surface`, `underlit_surface`, `no_darkness`, or `undetermined`, with a claim grade of `measured` or `undetermined` rather than a probability. On the current passing frame it reports coverage `present`, detail `low_variance`, illumination `undetermined` — the water is dark and featureless, and whether it is underlit remains unproven. It is always severity `note`: a diagnosis explains a verdict, it never decides one.
+`luminance_cause` (`lum-cause-3`) answers three questions separately, because they fail separately, and states the status of each:
 
-Every metric now carries a disclosure block: numerator, denominator and its semantics, included and excluded regions, SHA-256 of the frame and each mask read, the threshold, the contract revision, and whether the assertion is a `measurement` or an `inference`. `warm_share` keeps its world denominator and is joined by `warm_share_frame` (whole frame) so the two questions sit side by side instead of one silently standing for both; on Emberkeep they coincide (12,515 / 2,073,600) because the world mask selects the whole frame, which is now visible instead of implied.
+| dimension | question | evidence | Emberkeep |
+|---|---|---|---|
+| coverage | is a rendered surface at this pixel? | `scene_coverage` mask | `present`, `measured` |
+| surface variation | does the region vary at viewing scale? | tile spread at 8/16/32 px | `low_variation`, `measured`, readability `not_established` |
+| illumination response | how much luminance is scene light? | paired mechanism controls | `adequate_contribution`, contribution 0.54, `measured` |
+
+It composes a kind only from what was measured: `missing_coverage`, `dark_sky`, `dark_low_variation_surface`, `dark_variation_surface`, `underlit_surface`, `no_darkness`, or `undetermined`. Each dimension reports `evidence_status`; the composed diagnosis reports `evidence_status: measured_inputs` and `assertion_type: inference`, so a conclusion never borrows the status of its inputs. On the passing frame it reads `dark_low_variation_surface` — a lit, smooth surface whose variation sits below threshold at every scale. It is always severity `note`: a diagnosis explains a verdict, it never decides one.
+
+**Variation is not detail.** The dimension was renamed because local variance says the image varies, not that a viewer can read it. Smooth water, deliberate gradients and specular blobs are low-variation and can be correct; noise scores higher than craft. Tiles that straddle a lit neighbour are excluded, so a bright object beside a flat surface can no longer look like detail on it, and `scale_invariant` spread is reported as indistinguishable noise/fine texture rather than as structure.
+
+**The illumination experiment now exists.** Every run captures paired controls at identical camera and exposure with one mechanism held back (`all`, `direct`, `environment`, `emissive`); they are qualified for repeatability and verified with the rest of the bundle, and kept out of the six-image per-call transport. Result on the passing frame: total 0.5425, ambient 0.5500, direct 0.0444, emissive 0.0326. The shares are not additive — ambient alone removes slightly more than everything — so they rank light sources rather than partition light. Indirect bounce is not measured and says so. Adequacy remains `not_established`: it is an art-direction judgement.
+
+**The duplicate warm measurement is gone.** `warm_share` and `warm_share_frame` returned the identical 0.006035 because the world mask selects the whole frame. The scene question is now `not_measured` with `semantic_scope: not_established` until a mask with declared semantics exists; `warm_share_frame` carries the contract limit alone and discloses that the limit was authored as a share of the scene.
+
+Every metric carries a disclosure block: numerator, denominator and its semantics, included and excluded regions, SHA-256 of the frame and each mask and control frame, the threshold, the contract revision, and whether the assertion is a `measurement` or an `inference`; a metric that could not run states why.
 
 The reasoning and the rules extracted from this are preserved in `docs/06-quality/CASE_STUDY_DARK_DIAGNOSIS.md`, and the universal form — `No diagnostic may claim a cause more strongly than its evidence permits` — is now a section of `docs/06-quality/QUALITY_SYSTEM.md`.
 

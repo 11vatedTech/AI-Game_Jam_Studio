@@ -1,0 +1,904 @@
+{
+  "application": {
+    "adapter_version": "1.0.0",
+    "engine_version": "4.7.2-stable (official)",
+    "msaa_3d": 2,
+    "name": "emberkeep",
+    "project_path": "C:\\Users\\11vat\\OneDrive\\AI-game_Jam_Studio\\AI-Game-jam-studio\\Games\\emberkeep\\game",
+    "rendering_method": "forward_plus",
+    "requested_resolution": [
+      1920.0,
+      1080.0
+    ],
+    "resolution": [
+      1920,
+      1080
+    ],
+    "screen_space_aa": 1,
+    "stretch_mode": "canvas_items"
+  },
+  "artifacts": [
+    {
+      "bytes": 757371,
+      "derived_from": null,
+      "height": 1080,
+      "mime": "image/png",
+      "path": "frame.png",
+      "role": "frame",
+      "semantics": "render",
+      "sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+      "width": 1920
+    },
+    {
+      "bytes": 251808,
+      "derived_from": null,
+      "height": 1080,
+      "mime": "image/png",
+      "path": "light_control_all.png",
+      "role": "light_control_all",
+      "semantics": "light_control",
+      "sha256": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+      "width": 1920
+    },
+    {
+      "bytes": 415961,
+      "derived_from": null,
+      "height": 1080,
+      "mime": "image/png",
+      "path": "light_control_direct.png",
+      "role": "light_control_direct",
+      "semantics": "light_control",
+      "sha256": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+      "width": 1920
+    },
+    {
+      "bytes": 668252,
+      "derived_from": null,
+      "height": 1080,
+      "mime": "image/png",
+      "path": "light_control_environment.png",
+      "role": "light_control_environment",
+      "semantics": "light_control",
+      "sha256": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4",
+      "width": 1920
+    },
+    {
+      "bytes": 762036,
+      "derived_from": null,
+      "height": 1080,
+      "mime": "image/png",
+      "path": "light_control_emissive.png",
+      "role": "light_control_emissive",
+      "semantics": "light_control",
+      "sha256": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+      "width": 1920
+    },
+    {
+      "bytes": 4283,
+      "derived_from": null,
+      "height": 1080,
+      "mime": "image/png",
+      "path": "mask_world_visible.png",
+      "role": "mask_world_visible",
+      "semantics": "visible_segmentation",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "width": 1920
+    },
+    {
+      "bytes": 4283,
+      "derived_from": null,
+      "height": 1080,
+      "mime": "image/png",
+      "path": "mask_world_occupancy.png",
+      "role": "mask_world_occupancy",
+      "semantics": "scene_coverage",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "width": 1920
+    },
+    {
+      "bytes": 2357,
+      "derived_from": null,
+      "height": 1080,
+      "mime": "image/png",
+      "path": "mask_lantern_visible.png",
+      "role": "mask_lantern_visible",
+      "semantics": "visible_segmentation",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "width": 1920
+    },
+    {
+      "bytes": 2357,
+      "derived_from": null,
+      "height": 1080,
+      "mime": "image/png",
+      "path": "mask_lantern_silhouette.png",
+      "role": "mask_lantern_silhouette",
+      "semantics": "unoccluded_silhouette",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "width": 1920
+    },
+    {
+      "bytes": 13220,
+      "derived_from": null,
+      "height": 1080,
+      "mime": "image/png",
+      "path": "mask_lantern_illumination.png",
+      "role": "mask_lantern_illumination",
+      "semantics": "illumination_delta",
+      "sha256": "e21fddad35e9ad79721f4dfa49a55b1b781bca1835a49fb2e0de6a014750a2e6",
+      "width": 1920
+    }
+  ],
+  "capture_id": "535fc9e5-d6df-732c-3282-39ad3ee3b2cb",
+  "evidence_grade": "authoritative",
+  "mode": "deterministic",
+  "provenance": {
+    "contract_sha256": "4d594759629c9e7edf04d5a21db31b2658a108b155cb1f67c789a2d4b76ac43c",
+    "duration_ms": 1,
+    "engine": {
+      "executable_sha256": "ab1824f85bfd8e0e4128182c000c4003a3e042245b2967848d089b2a04b22424",
+      "version": "4.7.2-stable (official)"
+    },
+    "finished_at": "2026-11-05T17:31:58Z",
+    "git": {
+      "commit": "3c9d83cee2361a675262801a3287bb83f34a020e",
+      "dirty": true,
+      "tree_sha256": "8c82f0ff27d24c67019dd85d3d2de652a5b28ffdcbcaa1d8057f583350010161",
+      "untracked_or_patch_sha256": "f7508fb4d6faabb1d5ac018a30c9fd10bd8ee80676883866778507eb7f86ca24"
+    },
+    "gpu": null,
+    "host": "windows",
+    "plan_sha256": "afd5b291323c6e52c90dc8c9bfaa1d1bf5e92d1c2d583971a82c9c5f88bb666a",
+    "settings": {
+      "fixed_fps": 60,
+      "paused_for_capture": true,
+      "physics_interpolation_disabled": true,
+      "physics_ticks_per_second": 60,
+      "warmup_frames": 30
+    },
+    "started_at": "2026-11-05T17:31:52.205663+00:00"
+  },
+  "qualification": {
+    "repeatability": {
+      "measured_max_delta": null,
+      "render_contract": "exact_sha256",
+      "runs": 3,
+      "state_digest": "55aec8746e623c268b4b8467a4e556879f221223d2a521cb048b0fad7d4b265f",
+      "status": "qualified",
+      "tolerance": null
+    }
+  },
+  "request": {
+    "camera": {
+      "side": "default"
+    },
+    "physics_tick": 48,
+    "render_frame": 47,
+    "rng_instance_seeds": {},
+    "roles": [
+      "frame",
+      "mask_world_occupancy",
+      "mask_world_visible",
+      "mask_lantern_visible",
+      "mask_lantern_silhouette",
+      "mask_lantern_illumination",
+      "light_control_all",
+      "light_control_direct",
+      "light_control_environment",
+      "light_control_emissive"
+    ],
+    "seed": 20261105,
+    "state": {
+      "lantern_lit": true
+    }
+  },
+  "schema_version": "2.0",
+  "verification": {
+    "checks": [
+      {
+        "detail": null,
+        "name": "frame:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+          "declared": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318"
+        },
+        "name": "frame:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 757371,
+          "declared": 757371
+        },
+        "name": "frame:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "RGB"
+        },
+        "name": "frame:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "frame:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "frame:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "floor": 0.002,
+          "p99_linear_luminance": 0.540561
+        },
+        "name": "frame:blackness",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "light_control_all:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+          "declared": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5"
+        },
+        "name": "light_control_all:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 251808,
+          "declared": 251808
+        },
+        "name": "light_control_all:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "RGB"
+        },
+        "name": "light_control_all:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "light_control_all:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "light_control_all:dimensions",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "light_control_direct:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+          "declared": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62"
+        },
+        "name": "light_control_direct:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 415961,
+          "declared": 415961
+        },
+        "name": "light_control_direct:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "RGB"
+        },
+        "name": "light_control_direct:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "light_control_direct:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "light_control_direct:dimensions",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "light_control_environment:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4",
+          "declared": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4"
+        },
+        "name": "light_control_environment:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 668252,
+          "declared": 668252
+        },
+        "name": "light_control_environment:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "RGB"
+        },
+        "name": "light_control_environment:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "light_control_environment:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "light_control_environment:dimensions",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "light_control_emissive:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+          "declared": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4"
+        },
+        "name": "light_control_emissive:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 762036,
+          "declared": 762036
+        },
+        "name": "light_control_emissive:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "RGB"
+        },
+        "name": "light_control_emissive:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "light_control_emissive:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "light_control_emissive:dimensions",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "mask_world_visible:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+          "declared": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
+        },
+        "name": "mask_world_visible:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 4283,
+          "declared": 4283
+        },
+        "name": "mask_world_visible:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "L"
+        },
+        "name": "mask_world_visible:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "mask_world_visible:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_world_visible:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "non_binary_pixels": 0,
+          "rule": "values must be 0 or 255"
+        },
+        "name": "mask_world_visible:binary",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "mask_world_occupancy:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+          "declared": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
+        },
+        "name": "mask_world_occupancy:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 4283,
+          "declared": 4283
+        },
+        "name": "mask_world_occupancy:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "L"
+        },
+        "name": "mask_world_occupancy:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "mask_world_occupancy:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_world_occupancy:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "non_binary_pixels": 0,
+          "rule": "values must be 0 or 255"
+        },
+        "name": "mask_world_occupancy:binary",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "mask_lantern_visible:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+          "declared": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3"
+        },
+        "name": "mask_lantern_visible:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 2357,
+          "declared": 2357
+        },
+        "name": "mask_lantern_visible:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "L"
+        },
+        "name": "mask_lantern_visible:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "mask_lantern_visible:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_visible:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "non_binary_pixels": 0,
+          "rule": "values must be 0 or 255"
+        },
+        "name": "mask_lantern_visible:binary",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "mask_lantern_silhouette:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+          "declared": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3"
+        },
+        "name": "mask_lantern_silhouette:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 2357,
+          "declared": 2357
+        },
+        "name": "mask_lantern_silhouette:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "L"
+        },
+        "name": "mask_lantern_silhouette:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "mask_lantern_silhouette:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_silhouette:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "non_binary_pixels": 0,
+          "rule": "values must be 0 or 255"
+        },
+        "name": "mask_lantern_silhouette:binary",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "mask_lantern_illumination:exists",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "e21fddad35e9ad79721f4dfa49a55b1b781bca1835a49fb2e0de6a014750a2e6",
+          "declared": "e21fddad35e9ad79721f4dfa49a55b1b781bca1835a49fb2e0de6a014750a2e6"
+        },
+        "name": "mask_lantern_illumination:sha256",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": 13220,
+          "declared": 13220
+        },
+        "name": "mask_lantern_illumination:bytes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "format": "image/png",
+          "mode": "L"
+        },
+        "name": "mask_lantern_illumination:decodes",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": "image/png",
+          "declared": "image/png"
+        },
+        "name": "mask_lantern_illumination:mime",
+        "ok": true
+      },
+      {
+        "detail": {
+          "actual": [
+            1920,
+            1080
+          ],
+          "declared": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_illumination:dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "non_binary_pixels": 0,
+          "rule": "values must be 0 or 255"
+        },
+        "name": "mask_lantern_illumination:binary",
+        "ok": true
+      },
+      {
+        "detail": {
+          "artifact": [
+            1920,
+            1080
+          ],
+          "frame": [
+            1920,
+            1080
+          ]
+        },
+        "name": "frame:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "artifact": [
+            1920,
+            1080
+          ],
+          "frame": [
+            1920,
+            1080
+          ]
+        },
+        "name": "light_control_all:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "artifact": [
+            1920,
+            1080
+          ],
+          "frame": [
+            1920,
+            1080
+          ]
+        },
+        "name": "light_control_direct:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "artifact": [
+            1920,
+            1080
+          ],
+          "frame": [
+            1920,
+            1080
+          ]
+        },
+        "name": "light_control_environment:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "artifact": [
+            1920,
+            1080
+          ],
+          "frame": [
+            1920,
+            1080
+          ]
+        },
+        "name": "light_control_emissive:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "artifact": [
+            1920,
+            1080
+          ],
+          "frame": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_world_visible:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "artifact": [
+            1920,
+            1080
+          ],
+          "frame": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_world_occupancy:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "artifact": [
+            1920,
+            1080
+          ],
+          "frame": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_visible:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "artifact": [
+            1920,
+            1080
+          ],
+          "frame": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_silhouette:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": {
+          "artifact": [
+            1920,
+            1080
+          ],
+          "frame": [
+            1920,
+            1080
+          ]
+        },
+        "name": "mask_lantern_illumination:frame_dimensions",
+        "ok": true
+      },
+      {
+        "detail": null,
+        "name": "roles:declared",
+        "ok": true
+      }
+    ],
+    "status": "verified"
+  }
+}

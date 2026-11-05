@@ -28,6 +28,11 @@ SEVERITY_ORDER = {"blocker": 3, "major": 2, "minor": 1, "note": 0}
 # claim, so the report labels them as inference and never lets them decide a verdict.
 INFERENCE_METRICS = frozenset({"luminance_cause"})
 
+# One capture per mechanism held back, plus `all` for every light disabled. `indirect`
+# is absent on purpose: a bounce-only capture needs a bake or probe pass this pipeline
+# does not run, so the report states that it was not measured.
+LIGHT_CONTROL_MECHANISMS = ("all", "direct", "environment", "emissive")
+
 
 @dataclass
 class Frame:
@@ -41,6 +46,9 @@ class Frame:
     focal_mask_path: Path | None = None
     camera_roll_deg: float | None = None
     timeline_event: str | None = None
+    # Paired light controls: one capture per light mechanism to hold back. Illumination
+    # response is only measurable from these, never from the hero frame alone.
+    light_controls: dict[str, Path] = field(default_factory=dict)
     meta: dict[str, Any] = field(default_factory=dict)
 
 
@@ -119,7 +127,6 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
     previous: Frame | None = None
     for frame in frames:
         rgb = metrics.load_rgb(frame.path)
-        world = _load_mask(frame.mask_path)
         # Coverage, not visibility: the visible-segmentation pass draws the sky and
         # therefore reports "surface" where nothing exists.
         occupancy = _load_mask(frame.occupancy_mask_path)
@@ -131,10 +138,13 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
         values["luminance_floor"] = metrics.luminance_percentiles(rgb)
         # Diagnosis travels with the measurement: a percentile can say a frame is
         # dark, never why. When the cause cannot be established it says so.
-        values["luminance_cause"] = metrics.luminance_cause(rgb, occupancy, floor)
-        values["warm_share"] = metrics.warm_share(rgb, world, direction.threshold("warm_share"))
-        # The same question with the other denominator. Neither governs until the
-        # contract says which one the ceiling means.
+        controls = {name: metrics.load_rgb(path) for name, path in frame.light_controls.items()}
+        values["luminance_cause"] = metrics.luminance_cause(
+            rgb, occupancy, floor, illumination_controls=controls or None
+        )
+        # The scene question stays unmeasured until a semantic region exists; only the
+        # whole-frame share can be stated, and only it carries the ceiling.
+        values["warm_share"] = metrics.warm_share(rgb, None, direction.threshold("warm_share"))
         values["warm_share_frame"] = metrics.warm_share_frame(rgb, direction.threshold("warm_share"))
         values["horizon_roll"] = metrics.horizon_roll(frame.camera_roll_deg)
         values["delta_e_max"] = metrics.palette_drift(rgb, direction.palette)
@@ -155,9 +165,11 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
                 "confidence": output.confidence,
                 "limitations": list(output.limitations),
                 "detail": output.detail,
-                "disclosure": _disclosure(output, sources, direction.thresholds.get(metric_name), direction),
+                "disclosure": _disclosure(
+                    output, sources, direction.thresholds.get(_contract_key(metric_name)), direction
+                ),
             }
-            threshold = direction.thresholds.get(metric_name)
+            threshold = direction.thresholds.get(_contract_key(metric_name))
             if threshold is None:
                 continue
             severity = _severity(metric_name, output.value, threshold)
@@ -176,7 +188,7 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
                     detail={
                         **output.detail,
                         "disclosure": _disclosure(
-                            output, sources, direction.thresholds.get(metric_name), direction
+                            output, sources, direction.thresholds.get(_contract_key(metric_name)), direction
                         ),
                         "cause": values["luminance_cause"].detail
                         if metric_name == "luminance_floor"
@@ -186,7 +198,7 @@ def evaluate(frames: Sequence[Frame], direction: ArtDirection, *, job_id: str = 
                     else {
                         **output.detail,
                         "disclosure": _disclosure(
-                            output, sources, direction.thresholds.get(metric_name), direction
+                            output, sources, direction.thresholds.get(_contract_key(metric_name)), direction
                         ),
                     },
                 )
@@ -243,6 +255,9 @@ def _sources(frame: Frame) -> dict[str, Any]:
     return {
         "frame_sha256": _sha256(frame.path),
         "mask_sha256": {role: _sha256(path) for role, path in masks.items() if path is not None},
+        "light_control_sha256": {
+            name: _sha256(path) for name, path in sorted(frame.light_controls.items())
+        },
     }
 
 
@@ -279,6 +294,11 @@ def _disclosure(
     }
 
 
+def _contract_key(metric: str) -> str:
+    """A measurement may be named after its scope while the contract names the requirement."""
+    return "warm_share" if metric == "warm_share_frame" else metric
+
+
 def _severity(metric: str, value: float | None, threshold: dict) -> str | None:
     """Thresholds decide the verdict; absence of a value is never a pass."""
     if value is None:
@@ -302,10 +322,10 @@ def _severity(metric: str, value: float | None, threshold: dict) -> str | None:
             return "major"
         return None
 
-    if metric in ("silhouette", "warm_share", "horizon_roll", "delta_e_max", "clutter"):
+    if metric in ("silhouette", "warm_share_frame", "horizon_roll", "delta_e_max", "clutter"):
         if metric == "silhouette":
             target, direction = threshold.get("iou_min"), "below"
-        elif metric == "warm_share":
+        elif metric == "warm_share_frame":
             target, direction = threshold.get("ceiling"), "above"
         elif metric == "horizon_roll":
             target, direction = threshold.get("max_deg"), "above"
@@ -377,6 +397,11 @@ def frames_from_directory(directory: Path, names: Iterable[str] | None = None) -
         occupancy_path = _optional(directory / f"{path.stem}.occupancy.png")
         lantern_path = _optional(directory / f"{path.stem}.lantern.png")
         focal_path = _optional(directory / f"{path.stem}.focal.png")
+        controls = {
+            mechanism: candidate
+            for mechanism in LIGHT_CONTROL_MECHANISMS
+            if (candidate := _optional(directory / f"{path.stem}.light_{mechanism}.png")) is not None
+        }
         frames.append(
             Frame(
                 name=path.name,
@@ -387,6 +412,7 @@ def frames_from_directory(directory: Path, names: Iterable[str] | None = None) -
                 focal_mask_path=focal_path,
                 camera_roll_deg=sidecar.get("camera_roll_deg"),
                 timeline_event=sidecar.get("timeline_event"),
+                light_controls=controls,
                 meta=sidecar,
             )
         )

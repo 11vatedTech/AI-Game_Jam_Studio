@@ -18,6 +18,7 @@ const LAYER_TARGET := 1 << 2
 const LAYER_PLAYER := 1 << 3
 const ALL_LAYERS := 0xFFFFF
 const ADAPTER_VERSION := "1.0.0"
+const LIGHT_CONTROL_ORDER := ["all", "direct", "environment", "emissive"]
 
 var _plan: Dictionary = {}
 var _context: Dictionary = {}
@@ -123,6 +124,28 @@ func _capture_entry(entry: Dictionary, capture_mode: String = "deterministic") -
 		var probe := await _render_viewport_image()
 		if probe != null:
 			_mask_size = probe.get_size()
+
+	# Paired light controls. Each one holds back a single mechanism at the exposure and
+	# camera of the frame just captured, so a later reader can ask what the light did
+	# rather than guessing it from brightness.
+	for control_name in LIGHT_CONTROL_ORDER:
+		var mechanism := str(control_name)
+		var control_role := "light_control_" + mechanism
+		if not roles.has(control_role):
+			continue
+		var applied: Dictionary = {"ok": false, "reason": "scene has no capture_light_control"}
+		if parent != null and parent.has_method("capture_light_control"):
+			applied = parent.capture_light_control(mechanism, false)
+		if not applied.get("ok", false):
+			if parent != null and parent.has_method("capture_light_control"):
+				parent.capture_light_control(mechanism, true)
+			return {"ok": false, "error": "light_control_unavailable", "role": control_role, "detail": applied}
+		var controlled := await _render_viewport_image()
+		if parent != null and parent.has_method("capture_light_control"):
+			parent.capture_light_control(mechanism, true)
+		if controlled == null:
+			return {"ok": false, "error": "light_control_capture_returned_null", "role": control_role}
+		artifacts.append(_write_artifact(control_role, "light_control", controlled, capture_id))
 
 	_set_glow(false)
 	if roles.has("mask_world_visible"):

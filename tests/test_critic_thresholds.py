@@ -43,17 +43,18 @@ def test_the_same_frame_fails_or_passes_according_to_the_contract(tmp_path, fram
     assert strict.status == "FAIL"
     assert lenient.status == "PASS"
 
-    strict_warm = [f for f in strict.findings if f.metric == "warm_share"]
-    lenient_warm = [f for f in lenient.findings if f.metric == "warm_share"]
+    # The whole-frame share is the measurement that exists, so it carries the ceiling.
+    strict_warm = [f for f in strict.findings if f.metric == "warm_share_frame"]
+    lenient_warm = [f for f in lenient.findings if f.metric == "warm_share_frame"]
     assert strict_warm and strict_warm[0].severity == "blocker"
     assert not lenient_warm
 
 
 def test_findings_carry_the_evidence_needed_to_disagree_with_them(tmp_path, frames):
     report = critic.evaluate(frames, _direction(tmp_path, 0.05))
-    finding = next(f for f in report.findings if f.metric == "warm_share")
+    finding = next(f for f in report.findings if f.metric == "warm_share_frame")
 
-    assert finding.algorithm_version == "warm-share-1"
+    assert finding.algorithm_version == "warm-share-frame-2"
     assert 0.0 <= finding.confidence <= 1.0
     assert finding.limitations
     assert finding.threshold["ceiling"] == 0.05

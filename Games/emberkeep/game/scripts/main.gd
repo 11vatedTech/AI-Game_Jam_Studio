@@ -124,6 +124,78 @@ func capture_apply_state(values: Dictionary) -> void:
 		state = str(values["state"])
 
 
+# --- lighting controls for the critic ---------------------------------------
+# Illumination response cannot be measured from one frame: a bright surface and a lit
+# surface produce the same pixels. The capture service asks for paired frames with one
+# light mechanism held back at identical exposure, then restores the rig exactly.
+
+var _rig_lights: Array = []
+var _rig_emitters: Array = []
+var _rig_snapshot: Dictionary = {}
+
+
+func _collect_rig() -> void:
+	if not _rig_lights.is_empty():
+		return
+	var stack: Array = [self]
+	while not stack.is_empty():
+		var node: Node = stack.pop_back()
+		stack.append_array(node.get_children())
+		if node is Light3D:
+			_rig_lights.append(node)
+		elif node is MeshInstance3D:
+			var instance := node as MeshInstance3D
+			_collect_emitter(instance.material_override)
+			var mesh := instance.mesh
+			if mesh != null:
+				for index in mesh.get_surface_count():
+					_collect_emitter(mesh.surface_get_material(index))
+
+
+func _collect_emitter(material: Material) -> void:
+	if material is not StandardMaterial3D:
+		return
+	var standard := material as StandardMaterial3D
+	if not standard.emission_enabled:
+		return
+	for existing in _rig_emitters:
+		if existing == standard:
+			return
+	_rig_emitters.append(standard)
+
+
+## Disable one light mechanism (or `all`) and restore it. Returns what was touched so
+## the caller can refuse a control that quietly changed nothing.
+func capture_light_control(mechanism: String, enabled: bool) -> Dictionary:
+	_collect_rig()
+	var touched := 0
+	if mechanism == "direct" or mechanism == "all":
+		for entry in _rig_lights:
+			var light := entry as Light3D
+			var key := "light:%d" % light.get_instance_id()
+			if not _rig_snapshot.has(key):
+				_rig_snapshot[key] = light.visible
+			light.visible = enabled
+			touched += 1
+	if mechanism == "environment" or mechanism == "all":
+		if world_env != null:
+			if not _rig_snapshot.has("environment"):
+				_rig_snapshot["environment"] = world_env.ambient_light_energy
+			world_env.ambient_light_energy = float(_rig_snapshot["environment"]) if enabled else 0.0
+			touched += 1
+	if mechanism == "emissive" or mechanism == "all":
+		for entry in _rig_emitters:
+			var material := entry as StandardMaterial3D
+			var key := "emission:%d" % material.get_instance_id()
+			if not _rig_snapshot.has(key):
+				_rig_snapshot[key] = material.emission_energy_multiplier
+			material.emission_energy_multiplier = float(_rig_snapshot[key]) if enabled else 0.0
+			touched += 1
+	if touched == 0:
+		return {"ok": false, "mechanism": mechanism, "reason": "no_components_found"}
+	return {"ok": true, "mechanism": mechanism, "enabled": enabled, "components": touched}
+
+
 func capture_apply_camera(config: Dictionary) -> void:
 	if camera == null:
 		return

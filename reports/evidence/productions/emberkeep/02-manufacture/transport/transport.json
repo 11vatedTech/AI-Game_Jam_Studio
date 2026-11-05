@@ -76,8 +76,8 @@
       "width": 1920
     },
     {
-      "base64_bytes": 13936,
-      "bytes": 10451,
+      "base64_bytes": 13920,
+      "bytes": 10438,
       "format": "PNG",
       "height": 1080,
       "mime": "image/png",
@@ -86,12 +86,12 @@
       "quality": null,
       "role": "mask_lantern_illumination",
       "scale": 1.0,
-      "sha256": "b570a9e1c28ca429442a0c15e2204476a4fd951cb085458292a76e370809bc3c",
-      "source_sha256": "487a72793712e8e8355dde65b48a8a4f5e6f63d9d2026e17c107823cd50d539c",
+      "sha256": "b1e1dbfed22968d423306d9491dabfb83d028c71e0e3afea76cdd2b6ebad48a6",
+      "source_sha256": "e21fddad35e9ad79721f4dfa49a55b1b781bca1835a49fb2e0de6a014750a2e6",
       "width": 1920
     }
   ],
-  "capture_id": "af1c7c33-87b2-7da2-6d76-7fd5498682aa",
+  "capture_id": "535fc9e5-d6df-732c-3282-39ad3ee3b2cb",
   "profile": {
     "id": "studio-default-v1",
     "mask_format": "PNG",
@@ -109,5 +109,5 @@
       "WEBP"
     ]
   },
-  "total_base64_bytes": 202996
+  "total_base64_bytes": 202980
 }

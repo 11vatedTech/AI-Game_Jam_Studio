@@ -35,7 +35,7 @@ CAPTURES = ROOT / "reports/evidence/_staging/emberkeep-captures"
 EVIDENCE = ROOT / "reports/evidence/productions/emberkeep/02-manufacture"
 CONTRACT = ROOT / "Games/emberkeep/art_direction.json"
 
-ROLES = [
+REPORT_ROLES = [
     "frame",
     "mask_world_occupancy",
     "mask_world_visible",
@@ -43,6 +43,16 @@ ROLES = [
     "mask_lantern_silhouette",
     "mask_lantern_illumination",
 ]
+# Paired light controls: the same frozen frame with one mechanism held back. Captured
+# and qualified with everything else, but kept out of the default per-call transport,
+# which carries the six images an agent needs to look at the scene.
+CONTROL_ROLES = [
+    "light_control_all",
+    "light_control_direct",
+    "light_control_environment",
+    "light_control_emissive",
+]
+ROLES = REPORT_ROLES + CONTROL_ROLES
 RUNS = 3
 
 
@@ -101,6 +111,13 @@ def main() -> int:
             "Repeatability is established on this machine only; cross-machine reproducibility is not claimed.",
             "Masks are produced by a two-pass construction derived from documented render semantics, not by an official Godot mask feature.",
             "This capture is not a packaging test: it does not prove the exported game renders at 1080p.",
+            (
+                "Repeatability is within-batch. The frame and five of the six masks reproduce exactly across separate "
+                "capture invocations, but mask_lantern_illumination does not: it is a difference of two renders taken "
+                "later in the frozen frame, so any shader that advances with time (volumetric fog) shifts it. Derived "
+                "difference artifacts are therefore not yet cross-batch stable, and nothing in the critic depends on "
+                "that mask today."
+            ),
         ],
     }
     (EVIDENCE / "CAPTURE_REPORT.json").write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
@@ -114,6 +131,11 @@ def main() -> int:
         if copied.has("mask_world_occupancy")
         else None,
         lantern_mask_path=copied.image_path("mask_lantern_visible") if copied.has("mask_lantern_visible") else None,
+        light_controls={
+            role.removeprefix("light_control_"): copied.image_path(role)
+            for role in CONTROL_ROLES
+            if copied.has(role)
+        },
     )
     critic_report = critic.evaluate([frame], direction, job_id=f"perception-{copied.capture_id}")
     critic_document = critic_report.to_dict()
@@ -125,13 +147,17 @@ def main() -> int:
 
     transport = prepare_all(
         copied,
-        ROLES,
+        REPORT_ROLES,
         out_dir=EVIDENCE / "transport",
         profile=DEFAULT_PROFILE,
         verification=verification.to_dict(),
     )
     transport_report = {
         "profile": DEFAULT_PROFILE.as_dict(),
+        "roles_not_transported": {
+            role: "light control evidence for the illumination measurement; retrievable by role, not part of the per-call payload"
+            for role in CONTROL_ROLES
+        },
         "blocks": [
             {"type": block["type"], "mimeType": block["mimeType"], "base64_bytes": len(block["data"])}
             for block in transport.blocks

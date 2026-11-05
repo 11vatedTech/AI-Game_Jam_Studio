@@ -38,6 +38,12 @@ ROLE_ENUM = [
     "mask_lantern_visible",
     "mask_lantern_silhouette",
     "mask_lantern_illumination",
+    # Paired controls: the same frame with one light mechanism held back. They are how
+    # illumination becomes measurable instead of inferred from brightness.
+    "light_control_all",
+    "light_control_direct",
+    "light_control_environment",
+    "light_control_emissive",
     "diff",
 ]
 

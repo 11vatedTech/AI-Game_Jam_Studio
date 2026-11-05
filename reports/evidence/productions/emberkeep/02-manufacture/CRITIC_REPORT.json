@@ -4,6 +4,85 @@
   "evidence_grade": "authoritative",
   "findings": [
     {
+      "algorithm_version": "warm-share-2",
+      "confidence": 0.0,
+      "detail": {
+        "denominator": null,
+        "denominator_semantics": "no denominator exists without a semantic region",
+        "disclosure": {
+          "assertion": "measurement",
+          "confidence": 0.0,
+          "contract": {
+            "revision": "1.0.0",
+            "sha256": "4d594759629c9e7edf04d5a21db31b2658a108b155cb1f67c789a2d4b76ac43c"
+          },
+          "denominator": null,
+          "denominator_semantics": "no denominator exists without a semantic region",
+          "evaluated": false,
+          "excluded_regions": [],
+          "included_regions": [],
+          "limitations": [
+            "No semantic scene-region mask was supplied, so the scene share is not established.",
+            "The world mask selects the whole frame on this production; using it here would duplicate warm_share_frame."
+          ],
+          "not_measured_reason": "No semantic scene-region mask was supplied, so the scene share is not established.; The world mask selects the whole frame on this production; using it here would duplicate warm_share_frame.",
+          "numerator": null,
+          "sources": {
+            "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+            "light_control_sha256": {
+              "all": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+              "direct": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+              "emissive": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+              "environment": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4"
+            },
+            "mask_sha256": {
+              "lantern": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+              "scene_coverage": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+              "world_visible": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
+            }
+          },
+          "threshold": {
+            "blocker_above": 0.18,
+            "ceiling": 0.1,
+            "hue_deg": [
+              20,
+              45
+            ],
+            "major_above": 0.1,
+            "sat_min": 0.25,
+            "val_min": 0.2
+          },
+          "value": null
+        },
+        "equivalent_available_measurement": "warm_share_frame",
+        "excluded_regions": [],
+        "included_regions": [],
+        "numerator": null,
+        "scene_region_mask": "unavailable",
+        "scope": "not_established",
+        "semantic_scope": "not_established"
+      },
+      "frame": "frame.png",
+      "limitations": [
+        "No semantic scene-region mask was supplied, so the scene share is not established.",
+        "The world mask selects the whole frame on this production; using it here would duplicate warm_share_frame."
+      ],
+      "metric": "warm_share",
+      "severity": "note",
+      "threshold": {
+        "blocker_above": 0.18,
+        "ceiling": 0.1,
+        "hue_deg": [
+          20,
+          45
+        ],
+        "major_above": 0.1,
+        "sat_min": 0.25,
+        "val_min": 0.2
+      },
+      "value": null
+    },
+    {
       "algorithm_version": "horizon-1",
       "confidence": 0.0,
       "detail": {
@@ -26,6 +105,12 @@
           "numerator": null,
           "sources": {
             "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+            "light_control_sha256": {
+              "all": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+              "direct": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+              "emissive": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+              "environment": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4"
+            },
             "mask_sha256": {
               "lantern": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
               "scene_coverage": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
@@ -54,14 +139,13 @@
       "value": null
     },
     {
-      "algorithm_version": "lum-cause-2",
-      "confidence": 0.9,
+      "algorithm_version": "lum-cause-3",
+      "confidence": 0.0,
       "detail": {
         "bands": [
           {
             "dark_pixels": 38,
             "dark_share": 0.00014660493827160494,
-            "flat_share": 0.08419753086419753,
             "geometry_share": 1.0,
             "index": 0,
             "p5": 0.03369756651203411,
@@ -73,7 +157,6 @@
           {
             "dark_pixels": 10,
             "dark_share": 3.8580246913580246e-05,
-            "flat_share": 0.1580246913580247,
             "geometry_share": 1.0,
             "index": 1,
             "p5": 0.021473603260969802,
@@ -85,7 +168,6 @@
           {
             "dark_pixels": 28,
             "dark_share": 0.0001080246913580247,
-            "flat_share": 0.307283950617284,
             "geometry_share": 1.0,
             "index": 2,
             "p5": 0.019727905019989098,
@@ -97,7 +179,6 @@
           {
             "dark_pixels": 0,
             "dark_share": 0.0,
-            "flat_share": 0.32012345679012344,
             "geometry_share": 1.0,
             "index": 3,
             "p5": 0.019861564756036384,
@@ -109,7 +190,6 @@
           {
             "dark_pixels": 1584,
             "dark_share": 0.006111111111111111,
-            "flat_share": 0.2382716049382716,
             "geometry_share": 1.0,
             "index": 4,
             "p5": 0.018886729246030166,
@@ -121,7 +201,6 @@
           {
             "dark_pixels": 516,
             "dark_share": 0.001990740740740741,
-            "flat_share": 0.4254320987654321,
             "geometry_share": 1.0,
             "index": 5,
             "p5": 0.017123224065079767,
@@ -133,7 +212,6 @@
           {
             "dark_pixels": 87990,
             "dark_share": 0.33946759259259257,
-            "flat_share": 0.6474074074074074,
             "geometry_share": 1.0,
             "index": 6,
             "p5": 0.01421985082844711,
@@ -145,7 +223,6 @@
           {
             "dark_pixels": 135,
             "dark_share": 0.0005208333333333333,
-            "flat_share": 0.5728395061728395,
             "geometry_share": 1.0,
             "index": 7,
             "p5": 0.01983267986428139,
@@ -156,32 +233,34 @@
           }
         ],
         "coverage": {
+          "assertion_type": "measurement",
           "dark_share_without_geometry": 0.0,
+          "evidence_status": "measured",
           "gap_bands": [],
           "sky_bands": [],
           "source": "mask_world_occupancy",
-          "state": "present"
+          "value": "present"
         },
         "dark_over_geometry_share": 1.0,
         "dark_share": 0.04354793595679012,
         "denominator": 2073600,
         "denominator_semantics": "all frame pixels",
-        "detail_free_dark_share": 0.8141216597822837,
+        "detail_free_dark_share": 0.9989258861439313,
         "diagnosis": {
+          "assertion_type": "inference",
           "basis": [
             "1.00 of dark pixels lie on rendered geometry",
-            "0.81 of them are in detail-free tiles",
-            "illumination response is undetermined"
+            "1.00 of them are detail-free at 8px and 1.00 at 32px",
+            "illumination response is adequate_contribution",
+            "low variation at every scale is not a readability judgment"
           ],
-          "cannot_distinguish": [
-            "a surface too dark to light from light that never reaches it"
-          ],
-          "confidence": "measured",
-          "kind": "dark_low_detail_surface"
+          "cannot_distinguish": [],
+          "evidence_status": "measured_inputs",
+          "value": "dark_low_variation_surface"
         },
         "disclosure": {
           "assertion": "inference",
-          "confidence": 0.9,
+          "confidence": 0.0,
           "contract": {
             "revision": "1.0.0",
             "sha256": "4d594759629c9e7edf04d5a21db31b2658a108b155cb1f67c789a2d4b76ac43c"
@@ -196,15 +275,20 @@
           "limitations": [
             "Band position is the only separator between sky and unrendered void; a camera pitched far enough to put sky low in frame would swap them.",
             "There is no depth buffer here: occlusion and absence are distinguished only by the engine's coverage mask.",
-            "Detail-free regions are found by local standard deviation, so a deliberately smooth gradient is counted as flat.",
-            "Illumination response requires a control capture with the scene lights disabled at identical exposure; one frame cannot separate light from albedo.",
-            "The diagnosis describes the surface; it does not attribute the darkness to the lighting rig.",
-            "a surface too dark to light from light that never reaches it"
+            "Variation is measured by local standard deviation, so a deliberately smooth gradient, a soft mist and a featureless fill all read the same way.",
+            "Variation is not readability: fine texture can be invisible at 1080p viewing distance and noise can score higher than craft.",
+            "Mechanism contributions are not additive: tone mapping and overlapping light paths make the shares overlap, so they rank sources rather than partition the light."
           ],
           "not_measured_reason": null,
           "numerator": 90301,
           "sources": {
             "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+            "light_control_sha256": {
+              "all": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+              "direct": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+              "emissive": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+              "environment": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4"
+            },
             "mask_sha256": {
               "lantern": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
               "scene_coverage": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
@@ -217,30 +301,89 @@
         "excluded_regions": [],
         "floor": 0.015,
         "illumination_response": {
-          "basis": "no lights-off control at identical exposure, so light and albedo cannot be separated",
-          "contribution": null,
-          "source": "lights-off control capture at identical exposure",
-          "state": "undetermined"
+          "additivity": "not_additive",
+          "adequacy": "not_established",
+          "assertion_type": "measurement",
+          "basis": "mean luminance over the dark region falls 0.54 when every scene light is disabled (0.0145 lit, 0.0066 unlit)",
+          "contribution": 0.5425012939642312,
+          "evidence_status": "measured",
+          "mechanisms": {
+            "all": {
+              "assertion_type": "measurement",
+              "available": true,
+              "contribution": 0.5425012939642312,
+              "evidence_status": "measured"
+            },
+            "direct": {
+              "assertion_type": "measurement",
+              "available": true,
+              "contribution": 0.044353727142636724,
+              "evidence_status": "measured"
+            },
+            "emissive": {
+              "assertion_type": "measurement",
+              "available": true,
+              "contribution": 0.032551941703436386,
+              "evidence_status": "measured"
+            },
+            "environment": {
+              "assertion_type": "measurement",
+              "available": true,
+              "contribution": 0.5500159178566935,
+              "evidence_status": "measured"
+            },
+            "indirect": {
+              "available": false,
+              "reason": "a bounce-only capture needs a bake or probe pass, which this pipeline does not run"
+            }
+          },
+          "source": "paired captures with light mechanisms disabled at identical exposure",
+          "value": "adequate_contribution"
         },
         "included_regions": [
           "whole frame"
         ],
         "numerator": 90301,
-        "surface_detail": {
-          "detail_free_share": 0.8141216597822837,
-          "source": "local standard deviation of luminance",
-          "state": "low_variance",
-          "tile_std_threshold": 0.002
+        "surface_variation": {
+          "assertion_type": "measurement",
+          "evidence_status": "measured",
+          "pattern": "flat_at_all_scales",
+          "readability": "not_established",
+          "scale_growth": 3.1930335658824305,
+          "scales": {
+            "16": {
+              "detail_free_share": 1.0,
+              "mean_tile_std": 0.00019292669199550674,
+              "tile_std_threshold": 0.002,
+              "tiles_wholly_dark": true,
+              "varying_share": 0.0
+            },
+            "32": {
+              "detail_free_share": 1.0,
+              "mean_tile_std": 0.00031949281680554393,
+              "tile_std_threshold": 0.002,
+              "tiles_wholly_dark": true,
+              "varying_share": 0.0
+            },
+            "8": {
+              "detail_free_share": 0.9989258861439313,
+              "mean_tile_std": 0.00010005933549190502,
+              "tile_std_threshold": 0.002,
+              "tiles_wholly_dark": true,
+              "varying_share": 0.0010741138560687036
+            }
+          },
+          "source": "local standard deviation of luminance at 8px, 16px, 32px tiles",
+          "value": "low_variation"
         }
       },
       "frame": "frame.png",
       "limitations": [
         "Band position is the only separator between sky and unrendered void; a camera pitched far enough to put sky low in frame would swap them.",
         "There is no depth buffer here: occlusion and absence are distinguished only by the engine's coverage mask.",
-        "Detail-free regions are found by local standard deviation, so a deliberately smooth gradient is counted as flat.",
-        "Illumination response requires a control capture with the scene lights disabled at identical exposure; one frame cannot separate light from albedo.",
-        "The diagnosis describes the surface; it does not attribute the darkness to the lighting rig.",
-        "a surface too dark to light from light that never reaches it"
+        "Variation is measured by local standard deviation, so a deliberately smooth gradient, a soft mist and a featureless fill all read the same way.",
+        "Variation is not readability: fine texture can be invisible at 1080p viewing distance and noise can score higher than craft.",
+        "Mechanism contributions are not additive: tone mapping and overlapping light paths make the shares overlap, so they rank sources rather than partition the light."
       ],
       "metric": "luminance_cause",
       "severity": "note",
@@ -289,6 +432,12 @@
             "numerator": 11683,
             "sources": {
               "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+              "light_control_sha256": {
+                "all": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+                "direct": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+                "emissive": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+                "environment": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4"
+              },
               "mask_sha256": {
                 "lantern": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
                 "scene_coverage": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
@@ -381,6 +530,12 @@
             "numerator": null,
             "sources": {
               "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+              "light_control_sha256": {
+                "all": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+                "direct": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+                "emissive": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+                "environment": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4"
+              },
               "mask_sha256": {
                 "lantern": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
                 "scene_coverage": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
@@ -425,6 +580,12 @@
             "numerator": null,
             "sources": {
               "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+              "light_control_sha256": {
+                "all": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+                "direct": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+                "emissive": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+                "environment": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4"
+              },
               "mask_sha256": {
                 "lantern": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
                 "scene_coverage": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
@@ -483,6 +644,12 @@
             "numerator": null,
             "sources": {
               "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+              "light_control_sha256": {
+                "all": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+                "direct": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+                "emissive": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+                "environment": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4"
+              },
               "mask_sha256": {
                 "lantern": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
                 "scene_coverage": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
@@ -503,14 +670,13 @@
           "value": 0.45969540666367914
         },
         "luminance_cause": {
-          "algorithm_version": "lum-cause-2",
-          "confidence": 0.9,
+          "algorithm_version": "lum-cause-3",
+          "confidence": 0.0,
           "detail": {
             "bands": [
               {
                 "dark_pixels": 38,
                 "dark_share": 0.00014660493827160494,
-                "flat_share": 0.08419753086419753,
                 "geometry_share": 1.0,
                 "index": 0,
                 "p5": 0.03369756651203411,
@@ -522,7 +688,6 @@
               {
                 "dark_pixels": 10,
                 "dark_share": 3.8580246913580246e-05,
-                "flat_share": 0.1580246913580247,
                 "geometry_share": 1.0,
                 "index": 1,
                 "p5": 0.021473603260969802,
@@ -534,7 +699,6 @@
               {
                 "dark_pixels": 28,
                 "dark_share": 0.0001080246913580247,
-                "flat_share": 0.307283950617284,
                 "geometry_share": 1.0,
                 "index": 2,
                 "p5": 0.019727905019989098,
@@ -546,7 +710,6 @@
               {
                 "dark_pixels": 0,
                 "dark_share": 0.0,
-                "flat_share": 0.32012345679012344,
                 "geometry_share": 1.0,
                 "index": 3,
                 "p5": 0.019861564756036384,
@@ -558,7 +721,6 @@
               {
                 "dark_pixels": 1584,
                 "dark_share": 0.006111111111111111,
-                "flat_share": 0.2382716049382716,
                 "geometry_share": 1.0,
                 "index": 4,
                 "p5": 0.018886729246030166,
@@ -570,7 +732,6 @@
               {
                 "dark_pixels": 516,
                 "dark_share": 0.001990740740740741,
-                "flat_share": 0.4254320987654321,
                 "geometry_share": 1.0,
                 "index": 5,
                 "p5": 0.017123224065079767,
@@ -582,7 +743,6 @@
               {
                 "dark_pixels": 87990,
                 "dark_share": 0.33946759259259257,
-                "flat_share": 0.6474074074074074,
                 "geometry_share": 1.0,
                 "index": 6,
                 "p5": 0.01421985082844711,
@@ -594,7 +754,6 @@
               {
                 "dark_pixels": 135,
                 "dark_share": 0.0005208333333333333,
-                "flat_share": 0.5728395061728395,
                 "geometry_share": 1.0,
                 "index": 7,
                 "p5": 0.01983267986428139,
@@ -605,51 +764,113 @@
               }
             ],
             "coverage": {
+              "assertion_type": "measurement",
               "dark_share_without_geometry": 0.0,
+              "evidence_status": "measured",
               "gap_bands": [],
               "sky_bands": [],
               "source": "mask_world_occupancy",
-              "state": "present"
+              "value": "present"
             },
             "dark_over_geometry_share": 1.0,
             "dark_share": 0.04354793595679012,
             "denominator": 2073600,
             "denominator_semantics": "all frame pixels",
-            "detail_free_dark_share": 0.8141216597822837,
+            "detail_free_dark_share": 0.9989258861439313,
             "diagnosis": {
+              "assertion_type": "inference",
               "basis": [
                 "1.00 of dark pixels lie on rendered geometry",
-                "0.81 of them are in detail-free tiles",
-                "illumination response is undetermined"
+                "1.00 of them are detail-free at 8px and 1.00 at 32px",
+                "illumination response is adequate_contribution",
+                "low variation at every scale is not a readability judgment"
               ],
-              "cannot_distinguish": [
-                "a surface too dark to light from light that never reaches it"
-              ],
-              "confidence": "measured",
-              "kind": "dark_low_detail_surface"
+              "cannot_distinguish": [],
+              "evidence_status": "measured_inputs",
+              "value": "dark_low_variation_surface"
             },
             "excluded_regions": [],
             "floor": 0.015,
             "illumination_response": {
-              "basis": "no lights-off control at identical exposure, so light and albedo cannot be separated",
-              "contribution": null,
-              "source": "lights-off control capture at identical exposure",
-              "state": "undetermined"
+              "additivity": "not_additive",
+              "adequacy": "not_established",
+              "assertion_type": "measurement",
+              "basis": "mean luminance over the dark region falls 0.54 when every scene light is disabled (0.0145 lit, 0.0066 unlit)",
+              "contribution": 0.5425012939642312,
+              "evidence_status": "measured",
+              "mechanisms": {
+                "all": {
+                  "assertion_type": "measurement",
+                  "available": true,
+                  "contribution": 0.5425012939642312,
+                  "evidence_status": "measured"
+                },
+                "direct": {
+                  "assertion_type": "measurement",
+                  "available": true,
+                  "contribution": 0.044353727142636724,
+                  "evidence_status": "measured"
+                },
+                "emissive": {
+                  "assertion_type": "measurement",
+                  "available": true,
+                  "contribution": 0.032551941703436386,
+                  "evidence_status": "measured"
+                },
+                "environment": {
+                  "assertion_type": "measurement",
+                  "available": true,
+                  "contribution": 0.5500159178566935,
+                  "evidence_status": "measured"
+                },
+                "indirect": {
+                  "available": false,
+                  "reason": "a bounce-only capture needs a bake or probe pass, which this pipeline does not run"
+                }
+              },
+              "source": "paired captures with light mechanisms disabled at identical exposure",
+              "value": "adequate_contribution"
             },
             "included_regions": [
               "whole frame"
             ],
             "numerator": 90301,
-            "surface_detail": {
-              "detail_free_share": 0.8141216597822837,
-              "source": "local standard deviation of luminance",
-              "state": "low_variance",
-              "tile_std_threshold": 0.002
+            "surface_variation": {
+              "assertion_type": "measurement",
+              "evidence_status": "measured",
+              "pattern": "flat_at_all_scales",
+              "readability": "not_established",
+              "scale_growth": 3.1930335658824305,
+              "scales": {
+                "16": {
+                  "detail_free_share": 1.0,
+                  "mean_tile_std": 0.00019292669199550674,
+                  "tile_std_threshold": 0.002,
+                  "tiles_wholly_dark": true,
+                  "varying_share": 0.0
+                },
+                "32": {
+                  "detail_free_share": 1.0,
+                  "mean_tile_std": 0.00031949281680554393,
+                  "tile_std_threshold": 0.002,
+                  "tiles_wholly_dark": true,
+                  "varying_share": 0.0
+                },
+                "8": {
+                  "detail_free_share": 0.9989258861439313,
+                  "mean_tile_std": 0.00010005933549190502,
+                  "tile_std_threshold": 0.002,
+                  "tiles_wholly_dark": true,
+                  "varying_share": 0.0010741138560687036
+                }
+              },
+              "source": "local standard deviation of luminance at 8px, 16px, 32px tiles",
+              "value": "low_variation"
             }
           },
           "disclosure": {
             "assertion": "inference",
-            "confidence": 0.9,
+            "confidence": 0.0,
             "contract": {
               "revision": "1.0.0",
               "sha256": "4d594759629c9e7edf04d5a21db31b2658a108b155cb1f67c789a2d4b76ac43c"
@@ -664,15 +885,20 @@
             "limitations": [
               "Band position is the only separator between sky and unrendered void; a camera pitched far enough to put sky low in frame would swap them.",
               "There is no depth buffer here: occlusion and absence are distinguished only by the engine's coverage mask.",
-              "Detail-free regions are found by local standard deviation, so a deliberately smooth gradient is counted as flat.",
-              "Illumination response requires a control capture with the scene lights disabled at identical exposure; one frame cannot separate light from albedo.",
-              "The diagnosis describes the surface; it does not attribute the darkness to the lighting rig.",
-              "a surface too dark to light from light that never reaches it"
+              "Variation is measured by local standard deviation, so a deliberately smooth gradient, a soft mist and a featureless fill all read the same way.",
+              "Variation is not readability: fine texture can be invisible at 1080p viewing distance and noise can score higher than craft.",
+              "Mechanism contributions are not additive: tone mapping and overlapping light paths make the shares overlap, so they rank sources rather than partition the light."
             ],
             "not_measured_reason": null,
             "numerator": 90301,
             "sources": {
               "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+              "light_control_sha256": {
+                "all": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+                "direct": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+                "emissive": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+                "environment": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4"
+              },
               "mask_sha256": {
                 "lantern": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
                 "scene_coverage": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
@@ -686,10 +912,9 @@
           "limitations": [
             "Band position is the only separator between sky and unrendered void; a camera pitched far enough to put sky low in frame would swap them.",
             "There is no depth buffer here: occlusion and absence are distinguished only by the engine's coverage mask.",
-            "Detail-free regions are found by local standard deviation, so a deliberately smooth gradient is counted as flat.",
-            "Illumination response requires a control capture with the scene lights disabled at identical exposure; one frame cannot separate light from albedo.",
-            "The diagnosis describes the surface; it does not attribute the darkness to the lighting rig.",
-            "a surface too dark to light from light that never reaches it"
+            "Variation is measured by local standard deviation, so a deliberately smooth gradient, a soft mist and a featureless fill all read the same way.",
+            "Variation is not readability: fine texture can be invisible at 1080p viewing distance and noise can score higher than craft.",
+            "Mechanism contributions are not additive: tone mapping and overlapping light paths make the shares overlap, so they rank sources rather than partition the light."
           ],
           "value": 0.0
         },
@@ -732,6 +957,12 @@
             "numerator": null,
             "sources": {
               "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+              "light_control_sha256": {
+                "all": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+                "direct": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+                "emissive": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+                "environment": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4"
+              },
               "mask_sha256": {
                 "lantern": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
                 "scene_coverage": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
@@ -752,20 +983,86 @@
           "value": 0.01565298836353502
         },
         "warm_share": {
-          "algorithm_version": "warm-share-1",
+          "algorithm_version": "warm-share-2",
+          "confidence": 0.0,
+          "detail": {
+            "denominator": null,
+            "denominator_semantics": "no denominator exists without a semantic region",
+            "equivalent_available_measurement": "warm_share_frame",
+            "excluded_regions": [],
+            "included_regions": [],
+            "numerator": null,
+            "scene_region_mask": "unavailable",
+            "scope": "not_established",
+            "semantic_scope": "not_established"
+          },
+          "disclosure": {
+            "assertion": "measurement",
+            "confidence": 0.0,
+            "contract": {
+              "revision": "1.0.0",
+              "sha256": "4d594759629c9e7edf04d5a21db31b2658a108b155cb1f67c789a2d4b76ac43c"
+            },
+            "denominator": null,
+            "denominator_semantics": "no denominator exists without a semantic region",
+            "evaluated": false,
+            "excluded_regions": [],
+            "included_regions": [],
+            "limitations": [
+              "No semantic scene-region mask was supplied, so the scene share is not established.",
+              "The world mask selects the whole frame on this production; using it here would duplicate warm_share_frame."
+            ],
+            "not_measured_reason": "No semantic scene-region mask was supplied, so the scene share is not established.; The world mask selects the whole frame on this production; using it here would duplicate warm_share_frame.",
+            "numerator": null,
+            "sources": {
+              "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+              "light_control_sha256": {
+                "all": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+                "direct": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+                "emissive": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+                "environment": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4"
+              },
+              "mask_sha256": {
+                "lantern": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+                "scene_coverage": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+                "world_visible": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
+              }
+            },
+            "threshold": {
+              "blocker_above": 0.18,
+              "ceiling": 0.1,
+              "hue_deg": [
+                20,
+                45
+              ],
+              "major_above": 0.1,
+              "sat_min": 0.25,
+              "val_min": 0.2
+            },
+            "value": null
+          },
+          "evaluated": false,
+          "limitations": [
+            "No semantic scene-region mask was supplied, so the scene share is not established.",
+            "The world mask selects the whole frame on this production; using it here would duplicate warm_share_frame."
+          ],
+          "value": null
+        },
+        "warm_share_frame": {
+          "algorithm_version": "warm-share-frame-2",
           "confidence": 0.85,
           "detail": {
             "denominator": 2073600,
-            "denominator_semantics": "pixels selected by the world mask",
-            "excluded_regions": [
-              "sky and UI, which the world mask should not select"
-            ],
+            "denominator_semantics": "all frame pixels, background included",
+            "excluded_regions": [],
             "included_regions": [
-              "geometry the engine reports as world"
+              "whole frame"
             ],
             "numerator": 12515,
-            "warm_pixels": 12515,
-            "world_pixels": 2073600
+            "scene_region_mask": "unavailable",
+            "scope": "full_frame",
+            "semantic_scope": "not_established",
+            "warm_pixels": 12515
           },
           "disclosure": {
             "assertion": "measurement",
@@ -775,22 +1072,27 @@
               "sha256": "4d594759629c9e7edf04d5a21db31b2658a108b155cb1f67c789a2d4b76ac43c"
             },
             "denominator": 2073600,
-            "denominator_semantics": "pixels selected by the world mask",
+            "denominator_semantics": "all frame pixels, background included",
             "evaluated": true,
-            "excluded_regions": [
-              "sky and UI, which the world mask should not select"
-            ],
+            "excluded_regions": [],
             "included_regions": [
-              "geometry the engine reports as world"
+              "whole frame"
             ],
             "limitations": [
               "HSV classification is hue-band based; a warm object under strong blue light is undercounted.",
-              "Depends entirely on the engine-supplied world mask being correct."
+              "Includes background and sky, so it measures the image rather than the scene.",
+              "The contract limit was authored as a share of the scene; until a semantic region exists this frame share is the only available proxy and it dilutes with sky."
             ],
             "not_measured_reason": null,
             "numerator": 12515,
             "sources": {
               "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+              "light_control_sha256": {
+                "all": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+                "direct": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+                "emissive": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+                "environment": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4"
+              },
               "mask_sha256": {
                 "lantern": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
                 "scene_coverage": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
@@ -813,58 +1115,8 @@
           "evaluated": true,
           "limitations": [
             "HSV classification is hue-band based; a warm object under strong blue light is undercounted.",
-            "Depends entirely on the engine-supplied world mask being correct."
-          ],
-          "value": 0.0060353973765432094
-        },
-        "warm_share_frame": {
-          "algorithm_version": "warm-share-frame-1",
-          "confidence": 0.85,
-          "detail": {
-            "denominator": 2073600,
-            "denominator_semantics": "all frame pixels, background included",
-            "excluded_regions": [],
-            "included_regions": [
-              "whole frame"
-            ],
-            "numerator": 12515,
-            "warm_pixels": 12515
-          },
-          "disclosure": {
-            "assertion": "measurement",
-            "confidence": 0.85,
-            "contract": {
-              "revision": "1.0.0",
-              "sha256": "4d594759629c9e7edf04d5a21db31b2658a108b155cb1f67c789a2d4b76ac43c"
-            },
-            "denominator": 2073600,
-            "denominator_semantics": "all frame pixels, background included",
-            "evaluated": true,
-            "excluded_regions": [],
-            "included_regions": [
-              "whole frame"
-            ],
-            "limitations": [
-              "HSV classification is hue-band based; a warm object under strong blue light is undercounted.",
-              "Includes background and sky, so it measures the image rather than the scene."
-            ],
-            "not_measured_reason": null,
-            "numerator": 12515,
-            "sources": {
-              "frame_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
-              "mask_sha256": {
-                "lantern": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
-                "scene_coverage": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
-                "world_visible": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
-              }
-            },
-            "threshold": null,
-            "value": 0.0060353973765432094
-          },
-          "evaluated": true,
-          "limitations": [
-            "HSV classification is hue-band based; a warm object under strong blue light is undercounted.",
-            "Includes background and sky, so it measures the image rather than the scene."
+            "Includes background and sky, so it measures the image rather than the scene.",
+            "The contract limit was authored as a share of the scene; until a semantic region exists this frame share is the only available proxy and it dilutes with sky."
           ],
           "value": 0.0060353973765432094
         }
@@ -872,12 +1124,12 @@
     }
   ],
   "gate_eligible": true,
-  "job_id": "perception-af1c7c33-87b2-7da2-6d76-7fd5498682aa",
+  "job_id": "perception-535fc9e5-d6df-732c-3282-39ad3ee3b2cb",
   "severity_counts": {
     "blocker": 0,
     "major": 0,
     "minor": 0,
-    "note": 2
+    "note": 3
   },
   "status": "PASS",
   "threshold_status": "provisional"
