@@ -1,5 +1,25 @@
 {
   "challenges": {
+    "3f858f42-0a03-4ca4-87c4-1e3cf40bdbd0": {
+      "challenge_id": "3f858f42-0a03-4ca4-87c4-1e3cf40bdbd0",
+      "code": "WXB6XJ",
+      "created_at": "2026-11-05T07:26:03.762083+00:00",
+      "expires_at": "2026-11-05T07:29:03.762083+00:00",
+      "identity": {
+        "mcp_client_name": null,
+        "mcp_client_version": null,
+        "model_version": null,
+        "provider_model": null,
+        "provider_model_source": "unknown",
+        "studio_agent_instance": "harness"
+      },
+      "result": {
+        "answered_at": "2026-11-05T07:26:03.822823+00:00",
+        "reason": "match",
+        "verified": true
+      },
+      "used": true
+    },
     "9722d1d9-ea24-41f7-9a55-de197b52171a": {
       "challenge_id": "9722d1d9-ea24-41f7-9a55-de197b52171a",
       "code": "33CGSX",
@@ -15,6 +35,26 @@
       },
       "result": {
         "answered_at": "2026-11-05T07:00:45.698270+00:00",
+        "reason": "mismatch",
+        "verified": false
+      },
+      "used": true
+    },
+    "a0461887-0461-4816-8da7-b1b9afe7ee81": {
+      "challenge_id": "a0461887-0461-4816-8da7-b1b9afe7ee81",
+      "code": "V3YXGZ",
+      "created_at": "2026-11-05T07:26:03.838800+00:00",
+      "expires_at": "2026-11-05T07:29:03.838800+00:00",
+      "identity": {
+        "mcp_client_name": null,
+        "mcp_client_version": null,
+        "model_version": null,
+        "provider_model": null,
+        "provider_model_source": "unknown",
+        "studio_agent_instance": "harness"
+      },
+      "result": {
+        "answered_at": "2026-11-05T07:26:03.876445+00:00",
         "reason": "mismatch",
         "verified": false
       },

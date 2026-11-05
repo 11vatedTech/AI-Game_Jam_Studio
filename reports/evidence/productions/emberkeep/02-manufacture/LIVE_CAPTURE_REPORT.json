@@ -1,27 +1,27 @@
 {
   "artifacts": [
     {
-      "bytes": 392610,
+      "bytes": 704612,
       "height": 1080,
       "role": "frame",
       "semantics": "render",
-      "sha256": "bff900c36c2c8cae0d88438b5536486008c44e3480615b1517daaa3f940669c0",
+      "sha256": "b1fd6b10559c85fd468ee6e1806350548ed6730ec42590d1afb4c028de20b52c",
       "width": 1920
     },
     {
-      "bytes": 2366,
+      "bytes": 2363,
       "height": 1080,
       "role": "mask_lantern_visible",
       "semantics": "visible_segmentation",
-      "sha256": "56892f85b380721a8f9f658dd8216f913c608b2647285b862cd6840e99de9867",
+      "sha256": "5f71d5114d0521c227ec38485330fa17d93c97fe2525435f3444b34873e14706",
       "width": 1920
     }
   ],
-  "capture_id": "64b5a5a9-6363-9532-b30a-0d5985d0ecd9",
+  "capture_id": "127eefca-d3ae-0b34-b564-752667c7ac60",
   "evidence_grade": "supervisory",
   "gate": {
     "code": "EVIDENCE_NOT_AUTHORITATIVE",
-    "message": "Capture 64b5a5a9-6363-9532-b30a-0d5985d0ecd9 is supervisory and cannot satisfy a gate (live observation is supervision only)",
+    "message": "Capture 127eefca-d3ae-0b34-b564-752667c7ac60 is supervisory and cannot satisfy a gate (live observation is supervision only)",
     "rejected": true
   },
   "limitations": [
@@ -30,11 +30,11 @@
   ],
   "mode": "live",
   "state_before_capture": {
-    "fps": 15.0,
+    "fps": 1.0,
     "mode": "live",
     "ok": true,
-    "physics_tick": 22,
-    "render_frame": 18
+    "physics_tick": 21,
+    "render_frame": 28
   },
   "token_acl": {
     "method": "icacls",
@@ -51,16 +51,16 @@
       },
       {
         "detail": {
-          "actual": "bff900c36c2c8cae0d88438b5536486008c44e3480615b1517daaa3f940669c0",
-          "declared": "bff900c36c2c8cae0d88438b5536486008c44e3480615b1517daaa3f940669c0"
+          "actual": "b1fd6b10559c85fd468ee6e1806350548ed6730ec42590d1afb4c028de20b52c",
+          "declared": "b1fd6b10559c85fd468ee6e1806350548ed6730ec42590d1afb4c028de20b52c"
         },
         "name": "frame:sha256",
         "ok": true
       },
       {
         "detail": {
-          "actual": 392610,
-          "declared": 392610
+          "actual": 704612,
+          "declared": 704612
         },
         "name": "frame:bytes",
         "ok": true
@@ -98,7 +98,7 @@
       {
         "detail": {
           "floor": 0.002,
-          "p99_linear_luminance": 0.092241
+          "p99_linear_luminance": 0.534884
         },
         "name": "frame:blackness",
         "ok": true
@@ -110,16 +110,16 @@
       },
       {
         "detail": {
-          "actual": "56892f85b380721a8f9f658dd8216f913c608b2647285b862cd6840e99de9867",
-          "declared": "56892f85b380721a8f9f658dd8216f913c608b2647285b862cd6840e99de9867"
+          "actual": "5f71d5114d0521c227ec38485330fa17d93c97fe2525435f3444b34873e14706",
+          "declared": "5f71d5114d0521c227ec38485330fa17d93c97fe2525435f3444b34873e14706"
         },
         "name": "mask_lantern_visible:sha256",
         "ok": true
       },
       {
         "detail": {
-          "actual": 2366,
-          "declared": 2366
+          "actual": 2363,
+          "declared": 2363
         },
         "name": "mask_lantern_visible:bytes",
         "ok": true

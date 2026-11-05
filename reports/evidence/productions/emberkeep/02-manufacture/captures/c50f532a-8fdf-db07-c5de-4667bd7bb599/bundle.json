@@ -19,25 +19,25 @@
   },
   "artifacts": [
     {
-      "bytes": 447557,
+      "bytes": 757371,
       "derived_from": null,
       "height": 1080,
       "mime": "image/png",
       "path": "frame.png",
       "role": "frame",
       "semantics": "render",
-      "sha256": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
+      "sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
       "width": 1920
     },
     {
-      "bytes": 4921,
+      "bytes": 4283,
       "derived_from": null,
       "height": 1080,
       "mime": "image/png",
       "path": "mask_world_visible.png",
       "role": "mask_world_visible",
       "semantics": "visible_segmentation",
-      "sha256": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
       "width": 1920
     },
     {
@@ -63,18 +63,18 @@
       "width": 1920
     },
     {
-      "bytes": 8687,
+      "bytes": 13573,
       "derived_from": null,
       "height": 1080,
       "mime": "image/png",
       "path": "mask_lantern_illumination.png",
       "role": "mask_lantern_illumination",
       "semantics": "illumination_delta",
-      "sha256": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+      "sha256": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
       "width": 1920
     }
   ],
-  "capture_id": "e183e1d3-4840-a2bb-7754-eda50cf9b36d",
+  "capture_id": "c50f532a-8fdf-db07-c5de-4667bd7bb599",
   "evidence_grade": "authoritative",
   "mode": "deterministic",
   "provenance": {
@@ -84,12 +84,12 @@
       "executable_sha256": "ab1824f85bfd8e0e4128182c000c4003a3e042245b2967848d089b2a04b22424",
       "version": "4.7.2-stable (official)"
     },
-    "finished_at": "2026-11-05T06:52:06Z",
+    "finished_at": "2026-11-05T07:24:48Z",
     "git": {
-      "commit": "ff2bd44ce5545377cbf30be2941a0eaa50182cee",
+      "commit": "254ded1b0440e0008f349121de77ee6de4f56eb4",
       "dirty": true,
-      "tree_sha256": "0685d7c98dc186332d2b160699c54899ddce1a189cb0e0520af723dc9e93cb07",
-      "untracked_or_patch_sha256": "1af44a4ed1904126f8c385ce3a635ec3c18da41c14e8addebcd43001807f2704"
+      "tree_sha256": "d1f70ed5da6c296f09fd0ab7917873473f5d98e1c7b224acff98893f690faffe",
+      "untracked_or_patch_sha256": "29c410f1e63d139daa53a37adacb9f5a2dd030fa2ebc2986d5b779a338db9957"
     },
     "gpu": null,
     "host": "windows",
@@ -101,7 +101,7 @@
       "physics_ticks_per_second": 60,
       "warmup_frames": 30
     },
-    "started_at": "2026-11-05T06:52:01.434619+00:00"
+    "started_at": "2026-11-05T07:24:44.003287+00:00"
   },
   "qualification": {
     "repeatability": {
@@ -142,16 +142,16 @@
       },
       {
         "detail": {
-          "actual": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
-          "declared": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb"
+          "actual": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+          "declared": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318"
         },
         "name": "frame:sha256",
         "ok": true
       },
       {
         "detail": {
-          "actual": 447557,
-          "declared": 447557
+          "actual": 757371,
+          "declared": 757371
         },
         "name": "frame:bytes",
         "ok": true
@@ -189,7 +189,7 @@
       {
         "detail": {
           "floor": 0.002,
-          "p99_linear_luminance": 0.097886
+          "p99_linear_luminance": 0.540561
         },
         "name": "frame:blackness",
         "ok": true
@@ -201,16 +201,16 @@
       },
       {
         "detail": {
-          "actual": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc",
-          "declared": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc"
+          "actual": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+          "declared": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
         },
         "name": "mask_world_visible:sha256",
         "ok": true
       },
       {
         "detail": {
-          "actual": 4921,
-          "declared": 4921
+          "actual": 4283,
+          "declared": 4283
         },
         "name": "mask_world_visible:bytes",
         "ok": true
@@ -378,16 +378,16 @@
       },
       {
         "detail": {
-          "actual": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
-          "declared": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120"
+          "actual": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
+          "declared": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd"
         },
         "name": "mask_lantern_illumination:sha256",
         "ok": true
       },
       {
         "detail": {
-          "actual": 8687,
-          "declared": 8687
+          "actual": 13573,
+          "declared": 13573
         },
         "name": "mask_lantern_illumination:bytes",
         "ok": true

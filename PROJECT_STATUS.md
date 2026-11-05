@@ -63,9 +63,17 @@ Spec: `docs/superpowers/specs/2026-11-05-perception-transport-design.md`; plan: 
 | Masks respect occlusion | `tests/test_perception_godot_fixture.py` — target behind a wall excluded from visibility, present in silhouette | PROVEN by fixture |
 | Protocol eras | `tests/test_perception_mcp.py` (legacy `2025-11-25`) and `tests/test_mcp_sdk.py` (official SDK negotiates `2026-07-28`) | PROVEN for the image contract on both paths |
 | Ledger completeness | `LEDGER_REPORT.json` — `perception.capture` recorded at the engine boundary, outcome `ok`, `gaps: []` | PROVEN |
-| Emberkeep frame passes the critic | `CRITIC_REPORT.json` — `luminance_floor` major: p5 0.0016 vs 0.015 floor | **FAILING** — a real production defect, not a perception defect |
+| Emberkeep frame passes the critic | `CRITIC_REPORT.json` — PASS, p5 0.01565 vs 0.015 floor, lantern gap 0.46, warm share 0.006, ΔE 2.24 | PROVEN on qualified evidence, thin margin (4%) |
 
 Honest limits: repeatability is same-machine only; the mask construction is derived from documented render semantics rather than an official feature; a 1080p capture is not a packaging test; and the game may not grant itself authority, so no capture is `authoritative` until the Studio's three-run qualification says so.
+
+### The grade fix, and what it cost
+
+The arrival frame failed `luminance_floor` at p5 0.00163. The measured cause was not a dark lower third but a structural hole: the water plane sat at y=-1.25, below the terrace slab, so it never rendered. The camera therefore looked past the world edge into the sky's ground hemisphere and the bottom quarter of the frame was background, not water — 25% of pixels at a flat 0.0019. The sky was a flat ink fill, giving the same dead value across the upper band.
+
+Changes, all as authored geometry rather than exposure alone: the waterline moved to y=-0.45 so the standing water is actually in frame; the sky became a mist-to-ink gradient instead of a flat fill; ambient rose 0.26 → 1.4, the moon 0.34 → 0.9, exposure to 2.05; and the water albedo moved from near-black (0.02, 0.035, 0.045) to a slate mirror (0.20, 0.28, 0.32) with stronger ripple normals, so it reads as water instead of black glass. Measured result: p5 0.00163 → 0.01565, p50 0.00425 → 0.03509, PASS with the lantern still the warmest thing in frame (gap 0.46, warm share 0.006).
+
+The cost is honest to state: the palette's own ink is 0.0050 linear, a third of the floor, so at most 5% of any frame may sit at ink. A deep-night grade and this threshold cannot coexist. What passes is a haze-lit blue hour, not the original near-black night, and the 4% margin means the next art change must re-run the critic rather than assume the pass survives.
 
 ## Immediate next work
 

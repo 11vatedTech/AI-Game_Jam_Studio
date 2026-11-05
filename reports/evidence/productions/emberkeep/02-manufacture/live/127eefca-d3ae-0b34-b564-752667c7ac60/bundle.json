@@ -19,29 +19,29 @@
   },
   "artifacts": [
     {
-      "bytes": 392610,
+      "bytes": 704612,
       "derived_from": null,
       "height": 1080,
       "mime": "image/png",
       "path": "frame.png",
       "role": "frame",
       "semantics": "render",
-      "sha256": "bff900c36c2c8cae0d88438b5536486008c44e3480615b1517daaa3f940669c0",
+      "sha256": "b1fd6b10559c85fd468ee6e1806350548ed6730ec42590d1afb4c028de20b52c",
       "width": 1920
     },
     {
-      "bytes": 2366,
+      "bytes": 2363,
       "derived_from": null,
       "height": 1080,
       "mime": "image/png",
       "path": "mask_lantern_visible.png",
       "role": "mask_lantern_visible",
       "semantics": "visible_segmentation",
-      "sha256": "56892f85b380721a8f9f658dd8216f913c608b2647285b862cd6840e99de9867",
+      "sha256": "5f71d5114d0521c227ec38485330fa17d93c97fe2525435f3444b34873e14706",
       "width": 1920
     }
   ],
-  "capture_id": "64b5a5a9-6363-9532-b30a-0d5985d0ecd9",
+  "capture_id": "127eefca-d3ae-0b34-b564-752667c7ac60",
   "evidence_grade": "supervisory",
   "mode": "live",
   "provenance": {
@@ -51,12 +51,12 @@
       "executable_sha256": "ab1824f85bfd8e0e4128182c000c4003a3e042245b2967848d089b2a04b22424",
       "version": "4.7.2-stable (official)"
     },
-    "finished_at": "2026-11-05T07:00:43Z",
+    "finished_at": "2026-11-05T07:26:01Z",
     "git": {
-      "commit": "ff2bd44ce5545377cbf30be2941a0eaa50182cee",
+      "commit": "254ded1b0440e0008f349121de77ee6de4f56eb4",
       "dirty": true,
-      "tree_sha256": "0685d7c98dc186332d2b160699c54899ddce1a189cb0e0520af723dc9e93cb07",
-      "untracked_or_patch_sha256": "03300be0e1b223d89308ef2a224d662244b37214b996119330d63c0aab117d3e"
+      "tree_sha256": "d1f70ed5da6c296f09fd0ab7917873473f5d98e1c7b224acff98893f690faffe",
+      "untracked_or_patch_sha256": "00791c7e651905ee3f26c7a109d4a500a9e2e81f87b5fd036624f64ae6fa2a46"
     },
     "gpu": null,
     "host": "windows",
@@ -68,12 +68,12 @@
       "physics_ticks_per_second": 60,
       "warmup_frames": 0
     },
-    "started_at": "2026-11-05T07:00:40.002703+00:00"
+    "started_at": "2026-11-05T07:25:58.594298+00:00"
   },
   "request": {
     "camera": {},
-    "physics_tick": 34,
-    "render_frame": 29,
+    "physics_tick": 33,
+    "render_frame": 41,
     "rng_instance_seeds": {},
     "roles": [
       "frame",
@@ -92,16 +92,16 @@
       },
       {
         "detail": {
-          "actual": "bff900c36c2c8cae0d88438b5536486008c44e3480615b1517daaa3f940669c0",
-          "declared": "bff900c36c2c8cae0d88438b5536486008c44e3480615b1517daaa3f940669c0"
+          "actual": "b1fd6b10559c85fd468ee6e1806350548ed6730ec42590d1afb4c028de20b52c",
+          "declared": "b1fd6b10559c85fd468ee6e1806350548ed6730ec42590d1afb4c028de20b52c"
         },
         "name": "frame:sha256",
         "ok": true
       },
       {
         "detail": {
-          "actual": 392610,
-          "declared": 392610
+          "actual": 704612,
+          "declared": 704612
         },
         "name": "frame:bytes",
         "ok": true
@@ -139,7 +139,7 @@
       {
         "detail": {
           "floor": 0.002,
-          "p99_linear_luminance": 0.092241
+          "p99_linear_luminance": 0.534884
         },
         "name": "frame:blackness",
         "ok": true
@@ -151,16 +151,16 @@
       },
       {
         "detail": {
-          "actual": "56892f85b380721a8f9f658dd8216f913c608b2647285b862cd6840e99de9867",
-          "declared": "56892f85b380721a8f9f658dd8216f913c608b2647285b862cd6840e99de9867"
+          "actual": "5f71d5114d0521c227ec38485330fa17d93c97fe2525435f3444b34873e14706",
+          "declared": "5f71d5114d0521c227ec38485330fa17d93c97fe2525435f3444b34873e14706"
         },
         "name": "mask_lantern_visible:sha256",
         "ok": true
       },
       {
         "detail": {
-          "actual": 2366,
-          "declared": 2366
+          "actual": 2363,
+          "declared": 2363
         },
         "name": "mask_lantern_visible:bytes",
         "ok": true

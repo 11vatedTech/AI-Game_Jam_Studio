@@ -171,13 +171,28 @@ func _parse_args() -> void:
 func _build_environment() -> void:
 	var world := WorldEnvironment.new()
 	var env := Environment.new()
-	env.background_mode = Environment.BG_COLOR
-	env.background_color = INK
+	env.background_mode = Environment.BG_SKY
+	# The horizon is where the moon's haze lives; a flat ink sky read as a dead
+	# upper half in the arrival frame. The gradient carries mist at the horizon
+	# into ink at the zenith, which is the palette's own vertical story.
+	var sky_material := ProceduralSkyMaterial.new()
+	sky_material.sky_top_color = Color(0.016, 0.026, 0.034)
+	sky_material.sky_horizon_color = MIST * 0.62
+	sky_material.sky_curve = 0.18
+	sky_material.ground_bottom_color = INK * 1.6
+	sky_material.ground_horizon_color = MIST * 0.55
+	sky_material.sun_angle_max = 0.0
+	sky_material.sun_curve = 0.0
+	var sky := Sky.new()
+	sky.sky_material = sky_material
+	env.sky = sky
+	env.background_energy_multiplier = 1.0
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color(0.30, 0.45, 0.55)
-	env.ambient_light_energy = 0.26
+	env.ambient_light_energy = 1.4
 	env.tonemap_mode = Environment.TONE_MAPPER_ACES
 	env.tonemap_white = 4.0
+	env.tonemap_exposure = 2.05
 
 	env.glow_enabled = true
 	env.glow_intensity = 0.55
@@ -228,7 +243,7 @@ func _build_environment() -> void:
 	# Cold key from the horizon: the only non-warm light in the world.
 	var moon := DirectionalLight3D.new()
 	moon.light_color = Color(0.55, 0.75, 0.85)
-	moon.light_energy = 0.34
+	moon.light_energy = 0.9
 	moon.rotation_degrees = Vector3(-38, 152, 0)
 	moon.shadow_enabled = true
 	moon.directional_shadow_max_distance = 60.0
@@ -257,7 +272,10 @@ func _build_deck_and_water() -> void:
 	plane.subdivide_width = 40
 	plane.subdivide_depth = 40
 	water.mesh = plane
-	water.position = Vector3(0, -1.25, 0)
+	# The waterline sits just under the deck. At -1.25 the plane was hidden by the
+	# terrace slab, so the camera saw straight past the world edge into the sky's
+	# ground hemisphere and the lower frame went dead black.
+	water.position = Vector3(0, -0.45, 0)
 	var water_mat := ShaderMaterial.new()
 	water_mat.shader = load("res://shaders/water.gdshader")
 	water.material_override = water_mat

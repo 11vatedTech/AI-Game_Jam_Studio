@@ -312,6 +312,7 @@ class GodotCaptureAdapter:
         live_dir = self.captures_root / "__live"
         live_dir.mkdir(parents=True, exist_ok=True)
         token_file = live_dir / "token.txt"
+        _reclaim_token_file(token_file)
         token_file.write_text(token, encoding="utf-8")
         self.live_acl = self._restrict_token_file(token_file)
 
@@ -352,8 +353,10 @@ class GodotCaptureAdapter:
                 return {"method": "chmod", "ok": False, "error": str(exc)}
         user = os.environ.get("USERNAME", "")
         try:
+            # Modify, not read: a read-only token file cannot be replaced by the
+            # next session, which then fails before it can start the game.
             result = subprocess.run(
-                ["icacls", str(path), "/inheritance:r", "/grant:r", f"{user}:R"],
+                ["icacls", str(path), "/inheritance:r", "/grant:r", f"{user}:M"],
                 capture_output=True,
                 text=True,
                 timeout=30,
@@ -366,6 +369,27 @@ class GodotCaptureAdapter:
             }
         except (OSError, subprocess.SubprocessError) as exc:
             return {"method": "icacls", "ok": False, "error": str(exc)}
+
+
+def _reclaim_token_file(path: Path) -> None:
+    """Remove a token file left read-only by an earlier, stricter ACL.
+
+    The owner always holds WRITE_DAC on a file it created, so resetting the ACL
+    is enough even when the file itself grants no write access.
+    """
+    if not path.exists():
+        return
+    if os.name == "nt":
+        subprocess.run(
+            ["icacls", str(path), "/reset"],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+    try:
+        path.unlink()
+    except OSError:
+        pass
 
 
 def qualify(bundles: Sequence[CaptureBundle], *, runs: int) -> dict:

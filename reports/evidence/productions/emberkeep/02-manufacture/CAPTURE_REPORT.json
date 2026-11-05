@@ -1,19 +1,19 @@
 {
   "artifacts": [
     {
-      "bytes": 447557,
+      "bytes": 757371,
       "height": 1080,
       "role": "frame",
       "semantics": "render",
-      "sha256": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
+      "sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
       "width": 1920
     },
     {
-      "bytes": 4921,
+      "bytes": 4283,
       "height": 1080,
       "role": "mask_world_visible",
       "semantics": "visible_segmentation",
-      "sha256": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
       "width": 1920
     },
     {
@@ -33,15 +33,15 @@
       "width": 1920
     },
     {
-      "bytes": 8687,
+      "bytes": 13573,
       "height": 1080,
       "role": "mask_lantern_illumination",
       "semantics": "illumination_delta",
-      "sha256": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+      "sha256": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
       "width": 1920
     }
   ],
-  "capture_id": "e183e1d3-4840-a2bb-7754-eda50cf9b36d",
+  "capture_id": "c50f532a-8fdf-db07-c5de-4667bd7bb599",
   "copied_verification": {
     "checks": [
       {
@@ -51,16 +51,16 @@
       },
       {
         "detail": {
-          "actual": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
-          "declared": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb"
+          "actual": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+          "declared": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318"
         },
         "name": "frame:sha256",
         "ok": true
       },
       {
         "detail": {
-          "actual": 447557,
-          "declared": 447557
+          "actual": 757371,
+          "declared": 757371
         },
         "name": "frame:bytes",
         "ok": true
@@ -98,7 +98,7 @@
       {
         "detail": {
           "floor": 0.002,
-          "p99_linear_luminance": 0.097886
+          "p99_linear_luminance": 0.540561
         },
         "name": "frame:blackness",
         "ok": true
@@ -110,16 +110,16 @@
       },
       {
         "detail": {
-          "actual": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc",
-          "declared": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc"
+          "actual": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+          "declared": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
         },
         "name": "mask_world_visible:sha256",
         "ok": true
       },
       {
         "detail": {
-          "actual": 4921,
-          "declared": 4921
+          "actual": 4283,
+          "declared": 4283
         },
         "name": "mask_world_visible:bytes",
         "ok": true
@@ -287,16 +287,16 @@
       },
       {
         "detail": {
-          "actual": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
-          "declared": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120"
+          "actual": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
+          "declared": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd"
         },
         "name": "mask_lantern_illumination:sha256",
         "ok": true
       },
       {
         "detail": {
-          "actual": 8687,
-          "declared": 8687
+          "actual": 13573,
+          "declared": 13573
         },
         "name": "mask_lantern_illumination:bytes",
         "ok": true
@@ -420,33 +420,33 @@
   "runs": [
     {
       "artifacts": {
-        "frame": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
-        "mask_lantern_illumination": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+        "frame": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+        "mask_lantern_illumination": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
         "mask_lantern_silhouette": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
         "mask_lantern_visible": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
-        "mask_world_visible": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc"
+        "mask_world_visible": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
       },
-      "capture_id": "e183e1d3-4840-a2bb-7754-eda50cf9b36d"
+      "capture_id": "c50f532a-8fdf-db07-c5de-4667bd7bb599"
     },
     {
       "artifacts": {
-        "frame": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
-        "mask_lantern_illumination": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+        "frame": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+        "mask_lantern_illumination": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
         "mask_lantern_silhouette": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
         "mask_lantern_visible": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
-        "mask_world_visible": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc"
+        "mask_world_visible": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
       },
-      "capture_id": "cef6adf1-d99b-d3ea-1467-5d6dc15e6e23"
+      "capture_id": "7947b183-39ec-5d00-3368-8f173955487a"
     },
     {
       "artifacts": {
-        "frame": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
-        "mask_lantern_illumination": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+        "frame": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+        "mask_lantern_illumination": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
         "mask_lantern_silhouette": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
         "mask_lantern_visible": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
-        "mask_world_visible": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc"
+        "mask_world_visible": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb"
       },
-      "capture_id": "70230134-d93f-b0f4-653e-ed6eb5e98ecc"
+      "capture_id": "a7b03fd6-4463-4878-62cd-567cb5e1cc34"
     }
   ]
 }

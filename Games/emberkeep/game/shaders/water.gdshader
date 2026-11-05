@@ -2,11 +2,11 @@ shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
 
 // EMBERKEEP water: near-black standing water with slow broad ripples and a cold grazing sheen.
-uniform vec4 deep_color : source_color = vec4(0.020, 0.035, 0.045, 1.0);
-uniform vec4 sheen_color : source_color = vec4(0.180, 0.300, 0.330, 1.0);
+uniform vec4 deep_color : source_color = vec4(0.200, 0.280, 0.320, 1.0);
+uniform vec4 sheen_color : source_color = vec4(0.340, 0.460, 0.490, 1.0);
 uniform float ripple_scale = 0.35;
 uniform float ripple_speed = 0.06;
-uniform float sheen_power = 5.0;
+uniform float sheen_power = 4.0;
 
 varying vec3 world_pos;
 
@@ -33,14 +33,14 @@ void fragment() {
 	float dx = noise(p + vec2(0.15, 0.0) + vec2(t, t * 0.7)) - n;
 	float dz = noise(p + vec2(0.0, 0.15) + vec2(t, t * 0.7)) - n;
 
-	vec3 normal_map = normalize(vec3(dx * 2.2, dz * 2.2, 1.0));
+	vec3 normal_map = normalize(vec3(dx * 4.5, dz * 4.5, 1.0));
 	NORMAL = normal_map;
 
 	float facing = clamp(dot(NORMAL, VIEW), 0.0, 1.0);
 	float sheen = pow(1.0 - facing, sheen_power);
 	ALBEDO = mix(deep_color.rgb, sheen_color.rgb, sheen * 0.85);
-	ROUGHNESS = mix(0.06, 0.28, sheen);
+	ROUGHNESS = mix(0.04, 0.22, sheen);
 	METALLIC = 0.0;
-	SPECULAR = 0.65;
+	SPECULAR = 0.85;
 	EMISSION = sheen_color.rgb * sheen * 0.05;
 }

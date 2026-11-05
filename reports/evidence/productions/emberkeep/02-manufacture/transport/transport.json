@@ -1,8 +1,8 @@
 {
   "artifacts": [
     {
-      "base64_bytes": 111292,
-      "bytes": 83468,
+      "base64_bytes": 173740,
+      "bytes": 130303,
       "format": "JPEG",
       "height": 1080,
       "mime": "image/jpeg",
@@ -11,13 +11,13 @@
       "quality": 85,
       "role": "frame",
       "scale": 1.0,
-      "sha256": "6c73d25d7f6744a91e1cc85fe31f073f45f1cdce8733409e2f501105bd0d8b36",
-      "source_sha256": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
+      "sha256": "5d4967c7eb4577aac7016ee0f81b0a9a404d0c4d84cd9cc7bc190da9b2e29da7",
+      "source_sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
       "width": 1920
     },
     {
-      "base64_bytes": 5160,
-      "bytes": 3869,
+      "base64_bytes": 4600,
+      "bytes": 3449,
       "format": "PNG",
       "height": 1080,
       "mime": "image/png",
@@ -26,8 +26,8 @@
       "quality": null,
       "role": "mask_world_visible",
       "scale": 1.0,
-      "sha256": "c6705f029a85d82fcc33a07edfa3d83c29a60538bf206f01522fcad58d78debc",
-      "source_sha256": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc",
+      "sha256": "df78ba07b16aeba44db27cc5bc4a983c1c7394d3a7950caa8f632ea29bf39d6b",
+      "source_sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
       "width": 1920
     },
     {
@@ -61,8 +61,8 @@
       "width": 1920
     },
     {
-      "base64_bytes": 9352,
-      "bytes": 7013,
+      "base64_bytes": 14424,
+      "bytes": 10817,
       "format": "PNG",
       "height": 1080,
       "mime": "image/png",
@@ -71,12 +71,12 @@
       "quality": null,
       "role": "mask_lantern_illumination",
       "scale": 1.0,
-      "sha256": "72ccce5d37888d85899f9242bd2f6eb050a4b3c4eff8f7b7bfdcef30db68586c",
-      "source_sha256": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+      "sha256": "3eee6ceb85f33737765a671078083cc8f61d400acb2e385f487546e92ac89de4",
+      "source_sha256": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
       "width": 1920
     }
   ],
-  "capture_id": "e183e1d3-4840-a2bb-7754-eda50cf9b36d",
+  "capture_id": "c50f532a-8fdf-db07-c5de-4667bd7bb599",
   "profile": {
     "id": "studio-default-v1",
     "mask_format": "PNG",
@@ -94,5 +94,5 @@
       "WEBP"
     ]
   },
-  "total_base64_bytes": 131924
+  "total_base64_bytes": 198884
 }

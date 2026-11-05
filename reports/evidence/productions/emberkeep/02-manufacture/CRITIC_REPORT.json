@@ -4,29 +4,6 @@
   "evidence_grade": "authoritative",
   "findings": [
     {
-      "algorithm_version": "lum-pct-1",
-      "confidence": 0.95,
-      "detail": {
-        "p1": 0.0015423420142050628,
-        "p5": 0.0016287864991197715,
-        "p50": 0.004253871009746882,
-        "p95": 0.0388993773476754,
-        "p99": 0.0978862372412059
-      },
-      "frame": "frame.png",
-      "limitations": [
-        "Linearisation assumes sRGB primaries; a display with a different transfer curve shifts the floor.",
-        "Reports the whole frame; a dark region covering less than 5% of the image will not be seen."
-      ],
-      "metric": "luminance_floor",
-      "severity": "major",
-      "threshold": {
-        "note": "Catches the dead-black lower third seen in the arrival frame: if 5% of pixels are below this linear luminance, the frame has no shadow detail.",
-        "p5_min": 0.015
-      },
-      "value": 0.0016287864991197715
-    },
-    {
       "algorithm_version": "horizon-1",
       "confidence": 0.0,
       "detail": {},
@@ -52,16 +29,16 @@
           "algorithm_version": "clutter-1",
           "confidence": 0.55,
           "detail": {
-            "edge_density": 0.00993139949845679,
+            "edge_density": 0.03521351755401234,
             "focal_region_supplied": false,
-            "saliency": 0.005524763744261366
+            "saliency": 0.013659793244206509
           },
           "evaluated": true,
           "limitations": [
             "Edge density is a proxy for visual noise, not for narrative clarity.",
             "Textured stone reads as clutter even when it is the intended material."
           ],
-          "value": 0.00993139949845679
+          "value": 0.03521351755401234
         },
         "delta_e_max": {
           "algorithm_version": "palette-de2000-1",
@@ -69,34 +46,34 @@
           "detail": {
             "clusters": [
               {
-                "delta_e": 2.7530075379309964,
-                "swatch": "#0B1016",
-                "weight": 0.24799940321180555
+                "delta_e": 5.099411623655501,
+                "swatch": "#1C2B33",
+                "weight": 0.07804361979166667
               },
               {
-                "delta_e": 3.037145659530655,
-                "swatch": "#0B1016",
-                "weight": 0.14031982421875
+                "delta_e": 4.885299624857252,
+                "swatch": "#1C2B33",
+                "weight": 0.0709567599826389
               },
               {
-                "delta_e": 2.1489638311771695,
-                "swatch": "#0B1016",
-                "weight": 0.13832600911458334
+                "delta_e": 6.761716950858267,
+                "swatch": "#1C2B33",
+                "weight": 0.06516520182291667
               },
               {
-                "delta_e": 5.220993661101217,
-                "swatch": "#0B1016",
-                "weight": 0.0938449435763889
+                "delta_e": 4.36317924355938,
+                "swatch": "#1C2B33",
+                "weight": 0.06250678168402778
               },
               {
-                "delta_e": 2.001394807930934,
-                "swatch": "#0B1016",
-                "weight": 0.06475830078125
+                "delta_e": 8.1114500140095,
+                "swatch": "#1C2B33",
+                "weight": 0.0596923828125
               },
               {
-                "delta_e": 3.0764441197413532,
-                "swatch": "#0B1016",
-                "weight": 0.041158040364583336
+                "delta_e": 5.109640940089931,
+                "swatch": "#1C2B33",
+                "weight": 0.05811903211805555
               }
             ]
           },
@@ -106,7 +83,7 @@
             "Lighting intentionally shifts hue and value, so the declared tolerance must stay modest.",
             "Coarse quantisation (5-bit per channel) can merge distinct swatches."
           ],
-          "value": 2.152364755767344
+          "value": 2.239137682349143
         },
         "horizon_roll": {
           "algorithm_version": "horizon-1",
@@ -122,59 +99,59 @@
           "algorithm_version": "lantern-1",
           "confidence": 0.8,
           "detail": {
-            "gap": 0.9029179287317468,
-            "lantern_peak": 0.998718489734051,
-            "outside_peak": 0.09580056100230411
+            "gap": 0.45969540666367914,
+            "lantern_peak": 1.0,
+            "outside_peak": 0.5403045933363209
           },
           "evaluated": true,
           "limitations": [
             "Compares 99th percentiles, so a small specular highlight elsewhere is discounted.",
             "Requires the engine to identify the lantern region honestly."
           ],
-          "value": 0.9029179287317468
+          "value": 0.45969540666367914
         },
         "luminance_floor": {
           "algorithm_version": "lum-pct-1",
           "confidence": 0.95,
           "detail": {
-            "p1": 0.0015423420142050628,
-            "p5": 0.0016287864991197715,
-            "p50": 0.004253871009746882,
-            "p95": 0.0388993773476754,
-            "p99": 0.0978862372412059
+            "p1": 0.014238828182856973,
+            "p5": 0.01565298836353502,
+            "p50": 0.03615601030540315,
+            "p95": 0.3160227215297969,
+            "p99": 0.5405610577964353
           },
           "evaluated": true,
           "limitations": [
             "Linearisation assumes sRGB primaries; a display with a different transfer curve shifts the floor.",
             "Reports the whole frame; a dark region covering less than 5% of the image will not be seen."
           ],
-          "value": 0.0016287864991197715
+          "value": 0.01565298836353502
         },
         "warm_share": {
           "algorithm_version": "warm-share-1",
           "confidence": 0.85,
           "detail": {
-            "warm_pixels": 23743,
-            "world_pixels": 2010386
+            "warm_pixels": 12515,
+            "world_pixels": 2073600
           },
           "evaluated": true,
           "limitations": [
             "HSV classification is hue-band based; a warm object under strong blue light is undercounted.",
             "Depends entirely on the engine-supplied world mask being correct."
           ],
-          "value": 0.011810169788289413
+          "value": 0.0060353973765432094
         }
       }
     }
   ],
   "gate_eligible": true,
-  "job_id": "perception-e183e1d3-4840-a2bb-7754-eda50cf9b36d",
+  "job_id": "perception-c50f532a-8fdf-db07-c5de-4667bd7bb599",
   "severity_counts": {
     "blocker": 0,
-    "major": 1,
+    "major": 0,
     "minor": 0,
     "note": 1
   },
-  "status": "FAIL",
+  "status": "PASS",
   "threshold_status": "provisional"
 }
