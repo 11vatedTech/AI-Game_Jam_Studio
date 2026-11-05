@@ -2,6 +2,7 @@ from __future__ import annotations
 import json, sys, traceback
 from typing import Any
 from ..errors import StudioError
+from ..perception.tools import PERCEPTION_TOOL_NAMES, PERCEPTION_TOOL_SPECS, PerceptionTools, content_blocks
 
 TOOLS=[
  {"name":"studio_status","description":"Get runtime status, configured workspace and registered implementation count.","inputSchema":{"type":"object","properties":{},"additionalProperties":False}},
@@ -15,10 +16,19 @@ TOOLS=[
  {"name":"quality_report","description":"Run deterministic job/artifact integrity gates. Subjective craft review remains explicitly NOT_RUN.","inputSchema":{"type":"object","properties":{"job_id":{"type":"string"}},"required":["job_id"],"additionalProperties":False}},
  {"name":"approval_request","description":"Create a human approval request for a specific exact scope, side-effect class and target.","inputSchema":{"type":"object","properties":{"scope":{"type":"string"},"side_effect":{"type":"string"},"target":{"type":"string"},"reason":{"type":"string"}},"required":["scope","side_effect","target","reason"],"additionalProperties":False}},
  {"name":"workspace_write_text","description":"Create a new file in the controlled workspace. Existing files cannot be overwritten by this operation.","inputSchema":{"type":"object","properties":{"path":{"type":"string"},"content":{"type":"string"}},"required":["path","content"],"additionalProperties":False}}
-]
+]+PERCEPTION_TOOL_SPECS
 
 class MCPServer:
-    def __init__(self, service): self.service=service; self._initialized=False
+    def __init__(self, service): self.service=service; self._initialized=False; self._perception=None
+    @property
+    def perception(self):
+        if self._perception is None: self._perception=PerceptionTools(self.service)
+        return self._perception
+    def perception_call(self,name: str,args: dict) -> list[dict]:
+        handler={"perception_capture":self.perception.capture,"perception_get":self.perception.get,
+                 "perception_crop":self.perception.crop,"perception_probe":self.perception.probe,
+                 "perception_probe_verify":self.perception.probe_verify}[name]
+        return content_blocks(handler(args))
     def tool_call(self,name: str,args: dict) -> Any:
         if not isinstance(args,dict): raise ValueError("Tool arguments must be an object")
         mapping={
@@ -54,7 +64,12 @@ class MCPServer:
             if method=="tools/list": return result({"tools":TOOLS})
             if method=="tools/call":
                 params=msg.get("params",{}); name=params.get("name"); args=params.get("arguments",{})
-                try: output=self.tool_call(name,args); return result({"content":[{"type":"text","text":json.dumps(output,indent=2,sort_keys=True)}],"structuredContent":output,"isError":False})
+                try:
+                    if name in PERCEPTION_TOOL_NAMES:
+                        # Images travel as content blocks with no structuredContent: a
+                        # non-empty structured payload can shadow them in host SDKs.
+                        return result({"content":self.perception_call(name,args),"isError":False})
+                    output=self.tool_call(name,args); return result({"content":[{"type":"text","text":json.dumps(output,indent=2,sort_keys=True)}],"structuredContent":output,"isError":False})
                 except Exception as exc:
                     payload={"code":getattr(exc,"code","TOOL_ERROR"),"message":str(exc),"details":getattr(exc,"details",{})}
                     return result({"content":[{"type":"text","text":json.dumps(payload,indent=2)}],"isError":True})

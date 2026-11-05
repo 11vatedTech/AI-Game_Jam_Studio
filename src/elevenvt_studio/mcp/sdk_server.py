@@ -10,6 +10,7 @@ from __future__ import annotations
 from typing import Any, Literal
 
 from ..errors import StudioError
+from ..perception.tools import PerceptionTools, to_call_tool_result
 
 
 def build_server(service: Any):
@@ -119,6 +120,36 @@ def build_server(service: Any):
     def approvals_list(status: str | None = None) -> list[dict[str, Any]]:
         """Read approval request states; only a human CLI action can approve or reject them."""
         return tool_call(service.policy.list, status)
+
+    # Perception tools return an explicit CallToolResult: text plus image content
+    # blocks and no structuredContent. Returning a plain dict here would publish
+    # identical-looking JSON that a host SDK may prefer over the images.
+    perception = PerceptionTools(service)
+
+    @server.tool(structured_output=False)
+    def perception_capture(mode: str, plan: dict[str, Any] | None = None, roles: list[str] | None = None) -> Any:
+        """Capture the running application and return the images as real image content."""
+        return tool_call(lambda: to_call_tool_result(perception.capture({"mode": mode, "plan": plan, "roles": roles})))
+
+    @server.tool(structured_output=False)
+    def perception_get(capture_id: str, role: str) -> Any:
+        """Return one artifact from an existing capture as an image block."""
+        return tool_call(lambda: to_call_tool_result(perception.get({"capture_id": capture_id, "role": role})))
+
+    @server.tool(structured_output=False)
+    def perception_crop(capture_id: str, role: str, region: list[int], output_size: list[int] | None = None) -> Any:
+        """Return a derivative crop for detail inspection; the original stays authoritative."""
+        return tool_call(lambda: to_call_tool_result(perception.crop({"capture_id": capture_id, "role": role, "region": region, "output_size": output_size})))
+
+    @server.tool(structured_output=False)
+    def perception_probe(agent_instance: str | None = None) -> Any:
+        """Issue a vision challenge whose code appears only inside the returned image."""
+        return tool_call(lambda: to_call_tool_result(perception.probe({"agent_instance": agent_instance})))
+
+    @server.tool(structured_output=False)
+    def perception_probe_verify(challenge_id: str, answer: str) -> Any:
+        """Answer a perception challenge; single use, expires after 180 seconds."""
+        return tool_call(lambda: to_call_tool_result(perception.probe_verify({"challenge_id": challenge_id, "answer": answer})))
 
     @server.resource("studio://runtime/status")
     def runtime_status_resource() -> str:

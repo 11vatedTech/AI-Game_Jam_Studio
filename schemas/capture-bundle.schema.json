@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://11vated.tech/schemas/capture-bundle.schema.json",
+  "title": "Capture bundle",
+  "description": "One capture with provenance, artifacts and verification. A picture is not evidence until this document exists beside it and its checks pass.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "capture_id",
+    "mode",
+    "evidence_grade",
+    "application",
+    "request",
+    "artifacts",
+    "provenance",
+    "verification"
+  ],
+  "properties": {
+    "schema_version": { "const": "2.0" },
+    "capture_id": { "type": "string", "pattern": "^[0-9a-fA-F-]{36}$" },
+    "mode": { "enum": ["deterministic", "live"] },
+    "evidence_grade": {
+      "enum": ["authoritative", "supervisory"],
+      "description": "Computed from mode plus repeatability qualification; never client-supplied."
+    },
+    "application": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "adapter_version", "engine_version", "project_path", "rendering_method", "requested_resolution", "resolution"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "adapter_version": { "type": "string", "minLength": 1 },
+        "engine_version": { "type": "string", "minLength": 1 },
+        "project_path": { "type": "string", "minLength": 1 },
+        "rendering_method": { "type": "string", "minLength": 1 },
+        "requested_resolution": { "$ref": "#/$defs/resolution" },
+        "resolution": { "$ref": "#/$defs/resolution" },
+        "msaa_3d": { "type": "integer", "minimum": 0 },
+        "screen_space_aa": { "type": "integer", "minimum": 0 },
+        "stretch_mode": { "type": "string" }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["roles", "physics_tick", "render_frame"],
+      "properties": {
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/role" }
+        },
+        "physics_tick": { "type": "integer", "minimum": 0 },
+        "render_frame": { "type": "integer", "minimum": 0 },
+        "camera": { "type": "object" },
+        "state": { "type": "object" },
+        "seed": { "type": "integer" },
+        "rng_instance_seeds": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        },
+        "expect_black": { "type": "boolean" }
+      }
+    },
+    "qualification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repeatability"],
+      "properties": {
+        "repeatability": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "runs"],
+          "properties": {
+            "status": { "enum": ["qualified", "unqualified", "not_run"] },
+            "runs": { "type": "integer", "minimum": 0 },
+            "state_digest": { "type": ["string", "null"] },
+            "render_contract": { "enum": ["exact_sha256", "tolerance", null] },
+            "tolerance": { "type": ["object", "null"] },
+            "measured_max_delta": { "type": ["object", "null"] }
+          }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "semantics", "path", "sha256", "width", "height", "mime", "bytes"],
+        "properties": {
+          "role": { "$ref": "#/$defs/role" },
+          "semantics": { "$ref": "#/$defs/semantics" },
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "width": { "type": "integer", "minimum": 1 },
+          "height": { "type": "integer", "minimum": 1 },
+          "mime": { "enum": ["image/png", "image/jpeg", "image/webp"] },
+          "bytes": { "type": "integer", "minimum": 1 },
+          "derived_from": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_sha256", "git", "engine", "host", "started_at", "finished_at"],
+      "properties": {
+        "contract_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "plan_sha256": { "type": ["string", "null"] },
+        "git": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["commit", "dirty"],
+          "properties": {
+            "commit": { "type": "string" },
+            "dirty": { "type": "boolean" },
+            "tree_sha256": { "type": ["string", "null"] },
+            "untracked_or_patch_sha256": { "type": ["string", "null"] }
+          }
+        },
+        "engine": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["version"],
+          "properties": {
+            "version": { "type": "string" },
+            "executable_sha256": { "type": ["string", "null"] }
+          }
+        },
+        "gpu": { "type": ["object", "null"] },
+        "settings": { "type": "object" },
+        "host": { "type": "string", "minLength": 1 },
+        "started_at": { "type": "string", "minLength": 1 },
+        "finished_at": { "type": "string", "minLength": 1 },
+        "duration_ms": { "type": "number", "minimum": 0 }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "checks"],
+      "properties": {
+        "status": { "enum": ["verified", "unverified", "failed"] },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "ok"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "ok": { "type": "boolean" },
+              "detail": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "resolution": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "type": "integer", "minimum": 1 }
+    },
+    "role": {
+      "enum": [
+        "frame",
+        "mask_world_visible",
+        "mask_player_visible",
+        "mask_lantern_visible",
+        "mask_lantern_silhouette",
+        "mask_lantern_illumination",
+        "diff"
+      ]
+    },
+    "semantics": {
+      "enum": [
+        "render",
+        "visible_segmentation",
+        "unoccluded_silhouette",
+        "illumination_delta",
+        "pixel_difference"
+      ]
+    }
+  }
+}
