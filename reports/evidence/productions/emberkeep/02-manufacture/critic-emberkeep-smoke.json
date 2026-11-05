@@ -1,0 +1,820 @@
+{
+  "direction_revision": "1.0.0",
+  "direction_sha256": "4d594759629c9e7edf04d5a21db31b2658a108b155cb1f67c789a2d4b76ac43c",
+  "findings": [
+    {
+      "algorithm_version": "lum-pct-1",
+      "confidence": 0.95,
+      "detail": {
+        "p1": 0.0013033448673587082,
+        "p5": 0.0013033448673587082,
+        "p50": 0.002399864276213146,
+        "p95": 0.036472323079002424,
+        "p99": 0.09151922387136532
+      },
+      "frame": "shot_00_start.png",
+      "limitations": [
+        "Linearisation assumes sRGB primaries; a display with a different transfer curve shifts the floor.",
+        "Reports the whole frame; a dark region covering less than 5% of the image will not be seen."
+      ],
+      "metric": "luminance_floor",
+      "severity": "major",
+      "threshold": {
+        "note": "Catches the dead-black lower third seen in the arrival frame: if 5% of pixels are below this linear luminance, the frame has no shadow detail.",
+        "p5_min": 0.015
+      },
+      "value": 0.0013033448673587082
+    },
+    {
+      "algorithm_version": "warm-share-1",
+      "confidence": 0.0,
+      "detail": {},
+      "frame": "shot_00_start.png",
+      "limitations": [
+        "No world mask supplied; sky and UI cannot be excluded."
+      ],
+      "metric": "warm_share",
+      "severity": "note",
+      "threshold": {
+        "blocker_above": 0.18,
+        "ceiling": 0.1,
+        "hue_deg": [
+          20,
+          45
+        ],
+        "major_above": 0.1,
+        "sat_min": 0.25,
+        "val_min": 0.2
+      },
+      "value": null
+    },
+    {
+      "algorithm_version": "horizon-1",
+      "confidence": 0.0,
+      "detail": {},
+      "frame": "shot_00_start.png",
+      "limitations": [
+        "No camera transform supplied; a horizon estimated from pixels is a guess, so it is refused."
+      ],
+      "metric": "horizon_roll",
+      "severity": "note",
+      "threshold": {
+        "blocker_above": 3.0,
+        "major_above": 1.5,
+        "max_deg": 1.5
+      },
+      "value": null
+    },
+    {
+      "algorithm_version": "lantern-1",
+      "confidence": 0.0,
+      "detail": {},
+      "frame": "shot_00_start.png",
+      "limitations": [
+        "No lantern mask supplied; brightness cannot be attributed."
+      ],
+      "metric": "lantern_dominance",
+      "severity": "note",
+      "threshold": {
+        "brightest_must_be_lantern": true,
+        "min_luminance_gap": 0.08
+      },
+      "value": null
+    },
+    {
+      "algorithm_version": "lum-pct-1",
+      "confidence": 0.95,
+      "detail": {
+        "p1": 0.0036314961102991206,
+        "p5": 0.004602811861752077,
+        "p50": 0.01631064303923243,
+        "p95": 0.26097134212628015,
+        "p99": 0.4615796658676061
+      },
+      "frame": "shot_01_dawn.png",
+      "limitations": [
+        "Linearisation assumes sRGB primaries; a display with a different transfer curve shifts the floor.",
+        "Reports the whole frame; a dark region covering less than 5% of the image will not be seen."
+      ],
+      "metric": "luminance_floor",
+      "severity": "major",
+      "threshold": {
+        "note": "Catches the dead-black lower third seen in the arrival frame: if 5% of pixels are below this linear luminance, the frame has no shadow detail.",
+        "p5_min": 0.015
+      },
+      "value": 0.004602811861752077
+    },
+    {
+      "algorithm_version": "warm-share-1",
+      "confidence": 0.0,
+      "detail": {},
+      "frame": "shot_01_dawn.png",
+      "limitations": [
+        "No world mask supplied; sky and UI cannot be excluded."
+      ],
+      "metric": "warm_share",
+      "severity": "note",
+      "threshold": {
+        "blocker_above": 0.18,
+        "ceiling": 0.1,
+        "hue_deg": [
+          20,
+          45
+        ],
+        "major_above": 0.1,
+        "sat_min": 0.25,
+        "val_min": 0.2
+      },
+      "value": null
+    },
+    {
+      "algorithm_version": "horizon-1",
+      "confidence": 0.0,
+      "detail": {},
+      "frame": "shot_01_dawn.png",
+      "limitations": [
+        "No camera transform supplied; a horizon estimated from pixels is a guess, so it is refused."
+      ],
+      "metric": "horizon_roll",
+      "severity": "note",
+      "threshold": {
+        "blocker_above": 3.0,
+        "major_above": 1.5,
+        "max_deg": 1.5
+      },
+      "value": null
+    },
+    {
+      "algorithm_version": "lantern-1",
+      "confidence": 0.0,
+      "detail": {},
+      "frame": "shot_01_dawn.png",
+      "limitations": [
+        "No lantern mask supplied; brightness cannot be attributed."
+      ],
+      "metric": "lantern_dominance",
+      "severity": "note",
+      "threshold": {
+        "brightest_must_be_lantern": true,
+        "min_luminance_gap": 0.08
+      },
+      "value": null
+    },
+    {
+      "algorithm_version": "lum-pct-1",
+      "confidence": 0.95,
+      "detail": {
+        "p1": 0.0015861713106295149,
+        "p5": 0.0016507011473319976,
+        "p50": 0.011281593639944158,
+        "p95": 0.26919824690783273,
+        "p99": 0.5179171488309089
+      },
+      "frame": "shot_02_gameplay_west.png",
+      "limitations": [
+        "Linearisation assumes sRGB primaries; a display with a different transfer curve shifts the floor.",
+        "Reports the whole frame; a dark region covering less than 5% of the image will not be seen."
+      ],
+      "metric": "luminance_floor",
+      "severity": "major",
+      "threshold": {
+        "note": "Catches the dead-black lower third seen in the arrival frame: if 5% of pixels are below this linear luminance, the frame has no shadow detail.",
+        "p5_min": 0.015
+      },
+      "value": 0.0016507011473319976
+    },
+    {
+      "algorithm_version": "warm-share-1",
+      "confidence": 0.0,
+      "detail": {},
+      "frame": "shot_02_gameplay_west.png",
+      "limitations": [
+        "No world mask supplied; sky and UI cannot be excluded."
+      ],
+      "metric": "warm_share",
+      "severity": "note",
+      "threshold": {
+        "blocker_above": 0.18,
+        "ceiling": 0.1,
+        "hue_deg": [
+          20,
+          45
+        ],
+        "major_above": 0.1,
+        "sat_min": 0.25,
+        "val_min": 0.2
+      },
+      "value": null
+    },
+    {
+      "algorithm_version": "horizon-1",
+      "confidence": 0.0,
+      "detail": {},
+      "frame": "shot_02_gameplay_west.png",
+      "limitations": [
+        "No camera transform supplied; a horizon estimated from pixels is a guess, so it is refused."
+      ],
+      "metric": "horizon_roll",
+      "severity": "note",
+      "threshold": {
+        "blocker_above": 3.0,
+        "major_above": 1.5,
+        "max_deg": 1.5
+      },
+      "value": null
+    },
+    {
+      "algorithm_version": "lantern-1",
+      "confidence": 0.0,
+      "detail": {},
+      "frame": "shot_02_gameplay_west.png",
+      "limitations": [
+        "No lantern mask supplied; brightness cannot be attributed."
+      ],
+      "metric": "lantern_dominance",
+      "severity": "note",
+      "threshold": {
+        "brightest_must_be_lantern": true,
+        "min_luminance_gap": 0.08
+      },
+      "value": null
+    },
+    {
+      "algorithm_version": "lum-pct-1",
+      "confidence": 0.95,
+      "detail": {
+        "p1": 0.0015861713106295149,
+        "p5": 0.0016086447106607737,
+        "p50": 0.009127902396071492,
+        "p95": 0.19498388845475742,
+        "p99": 0.48489763749845105
+      },
+      "frame": "shot_03_beacon_lit.png",
+      "limitations": [
+        "Linearisation assumes sRGB primaries; a display with a different transfer curve shifts the floor.",
+        "Reports the whole frame; a dark region covering less than 5% of the image will not be seen."
+      ],
+      "metric": "luminance_floor",
+      "severity": "major",
+      "threshold": {
+        "note": "Catches the dead-black lower third seen in the arrival frame: if 5% of pixels are below this linear luminance, the frame has no shadow detail.",
+        "p5_min": 0.015
+      },
+      "value": 0.0016086447106607737
+    },
+    {
+      "algorithm_version": "warm-share-1",
+      "confidence": 0.0,
+      "detail": {},
+      "frame": "shot_03_beacon_lit.png",
+      "limitations": [
+        "No world mask supplied; sky and UI cannot be excluded."
+      ],
+      "metric": "warm_share",
+      "severity": "note",
+      "threshold": {
+        "blocker_above": 0.18,
+        "ceiling": 0.1,
+        "hue_deg": [
+          20,
+          45
+        ],
+        "major_above": 0.1,
+        "sat_min": 0.25,
+        "val_min": 0.2
+      },
+      "value": null
+    },
+    {
+      "algorithm_version": "horizon-1",
+      "confidence": 0.0,
+      "detail": {},
+      "frame": "shot_03_beacon_lit.png",
+      "limitations": [
+        "No camera transform supplied; a horizon estimated from pixels is a guess, so it is refused."
+      ],
+      "metric": "horizon_roll",
+      "severity": "note",
+      "threshold": {
+        "blocker_above": 3.0,
+        "major_above": 1.5,
+        "max_deg": 1.5
+      },
+      "value": null
+    },
+    {
+      "algorithm_version": "lantern-1",
+      "confidence": 0.0,
+      "detail": {},
+      "frame": "shot_03_beacon_lit.png",
+      "limitations": [
+        "No lantern mask supplied; brightness cannot be attributed."
+      ],
+      "metric": "lantern_dominance",
+      "severity": "note",
+      "threshold": {
+        "brightest_must_be_lantern": true,
+        "min_luminance_gap": 0.08
+      },
+      "value": null
+    }
+  ],
+  "frames": [
+    {
+      "frame": "shot_00_start.png",
+      "metrics": {
+        "clutter": {
+          "algorithm_version": "clutter-1",
+          "confidence": 0.55,
+          "detail": {
+            "edge_density": 0.00919897762345679,
+            "focal_region_supplied": false,
+            "saliency": 0.004913051782932124
+          },
+          "evaluated": true,
+          "limitations": [
+            "Edge density is a proxy for visual noise, not for narrative clarity.",
+            "Textured stone reads as clutter even when it is the intended material."
+          ],
+          "value": 0.00919897762345679
+        },
+        "delta_e_max": {
+          "algorithm_version": "palette-de2000-1",
+          "confidence": 0.6,
+          "detail": {
+            "clusters": [
+              {
+                "delta_e": 3.023767616444072,
+                "swatch": "#0B1016",
+                "weight": 0.4740125868055556
+              },
+              {
+                "delta_e": 2.148951344119075,
+                "swatch": "#0B1016",
+                "weight": 0.11358642578125
+              },
+              {
+                "delta_e": 2.919170022475435,
+                "swatch": "#0B1016",
+                "weight": 0.053568522135416664
+              },
+              {
+                "delta_e": 1.9197730343250639,
+                "swatch": "#0B1016",
+                "weight": 0.04977077907986111
+              },
+              {
+                "delta_e": 5.140911480986058,
+                "swatch": "#0B1016",
+                "weight": 0.048394097222222224
+              },
+              {
+                "delta_e": 3.141495750674858,
+                "swatch": "#0B1016",
+                "weight": 0.038018120659722224
+              }
+            ]
+          },
+          "evaluated": true,
+          "limitations": [
+            "Compares dominant colours to the palette, not every pixel; a small off-palette highlight is invisible.",
+            "Lighting intentionally shifts hue and value, so the declared tolerance must stay modest.",
+            "Coarse quantisation (5-bit per channel) can merge distinct swatches."
+          ],
+          "value": 2.297543370189549
+        },
+        "horizon_roll": {
+          "algorithm_version": "horizon-1",
+          "confidence": 0.0,
+          "detail": {},
+          "evaluated": false,
+          "limitations": [
+            "No camera transform supplied; a horizon estimated from pixels is a guess, so it is refused."
+          ],
+          "value": null
+        },
+        "lantern_dominance": {
+          "algorithm_version": "lantern-1",
+          "confidence": 0.0,
+          "detail": {},
+          "evaluated": false,
+          "limitations": [
+            "No lantern mask supplied; brightness cannot be attributed."
+          ],
+          "value": null
+        },
+        "luminance_floor": {
+          "algorithm_version": "lum-pct-1",
+          "confidence": 0.95,
+          "detail": {
+            "p1": 0.0013033448673587082,
+            "p5": 0.0013033448673587082,
+            "p50": 0.002399864276213146,
+            "p95": 0.036472323079002424,
+            "p99": 0.09151922387136532
+          },
+          "evaluated": true,
+          "limitations": [
+            "Linearisation assumes sRGB primaries; a display with a different transfer curve shifts the floor.",
+            "Reports the whole frame; a dark region covering less than 5% of the image will not be seen."
+          ],
+          "value": 0.0013033448673587082
+        },
+        "warm_share": {
+          "algorithm_version": "warm-share-1",
+          "confidence": 0.0,
+          "detail": {},
+          "evaluated": false,
+          "limitations": [
+            "No world mask supplied; sky and UI cannot be excluded."
+          ],
+          "value": null
+        }
+      }
+    },
+    {
+      "frame": "shot_01_dawn.png",
+      "metrics": {
+        "clutter": {
+          "algorithm_version": "clutter-1",
+          "confidence": 0.55,
+          "detail": {
+            "edge_density": 0.02305471161265432,
+            "focal_region_supplied": false,
+            "saliency": 0.01023551562930646
+          },
+          "evaluated": true,
+          "limitations": [
+            "Edge density is a proxy for visual noise, not for narrative clarity.",
+            "Textured stone reads as clutter even when it is the intended material."
+          ],
+          "value": 0.02305471161265432
+        },
+        "consistency": {
+          "algorithm_version": "event-delta-1",
+          "confidence": 0.75,
+          "detail": {
+            "mean_abs_luminance_delta": 0.04839011533059432
+          },
+          "evaluated": true,
+          "limitations": [
+            "Global mean delta hides a localised but meaningful change.",
+            "Camera movement alone produces a delta; pair this with a fixed-camera capture."
+          ],
+          "value": 0.04839011533059432
+        },
+        "delta_e_max": {
+          "algorithm_version": "palette-de2000-1",
+          "confidence": 0.6,
+          "detail": {
+            "clusters": [
+              {
+                "delta_e": 3.1183162185044906,
+                "swatch": "#0B1016",
+                "weight": 0.09038628472222222
+              },
+              {
+                "delta_e": 2.0843491090378934,
+                "swatch": "#0B1016",
+                "weight": 0.0727267795138889
+              },
+              {
+                "delta_e": 8.167864958396851,
+                "swatch": "#0B1016",
+                "weight": 0.05324978298611111
+              },
+              {
+                "delta_e": 10.558962775884101,
+                "swatch": "#0B1016",
+                "weight": 0.05082872178819445
+              },
+              {
+                "delta_e": 2.466071352497901,
+                "swatch": "#0B1016",
+                "weight": 0.04511854383680555
+              },
+              {
+                "delta_e": 4.7494984717009165,
+                "swatch": "#0B1016",
+                "weight": 0.04001193576388889
+              }
+            ]
+          },
+          "evaluated": true,
+          "limitations": [
+            "Compares dominant colours to the palette, not every pixel; a small off-palette highlight is invisible.",
+            "Lighting intentionally shifts hue and value, so the declared tolerance must stay modest.",
+            "Coarse quantisation (5-bit per channel) can merge distinct swatches."
+          ],
+          "value": 1.7063788096472001
+        },
+        "horizon_roll": {
+          "algorithm_version": "horizon-1",
+          "confidence": 0.0,
+          "detail": {},
+          "evaluated": false,
+          "limitations": [
+            "No camera transform supplied; a horizon estimated from pixels is a guess, so it is refused."
+          ],
+          "value": null
+        },
+        "lantern_dominance": {
+          "algorithm_version": "lantern-1",
+          "confidence": 0.0,
+          "detail": {},
+          "evaluated": false,
+          "limitations": [
+            "No lantern mask supplied; brightness cannot be attributed."
+          ],
+          "value": null
+        },
+        "luminance_floor": {
+          "algorithm_version": "lum-pct-1",
+          "confidence": 0.95,
+          "detail": {
+            "p1": 0.0036314961102991206,
+            "p5": 0.004602811861752077,
+            "p50": 0.01631064303923243,
+            "p95": 0.26097134212628015,
+            "p99": 0.4615796658676061
+          },
+          "evaluated": true,
+          "limitations": [
+            "Linearisation assumes sRGB primaries; a display with a different transfer curve shifts the floor.",
+            "Reports the whole frame; a dark region covering less than 5% of the image will not be seen."
+          ],
+          "value": 0.004602811861752077
+        },
+        "warm_share": {
+          "algorithm_version": "warm-share-1",
+          "confidence": 0.0,
+          "detail": {},
+          "evaluated": false,
+          "limitations": [
+            "No world mask supplied; sky and UI cannot be excluded."
+          ],
+          "value": null
+        }
+      }
+    },
+    {
+      "frame": "shot_02_gameplay_west.png",
+      "metrics": {
+        "clutter": {
+          "algorithm_version": "clutter-1",
+          "confidence": 0.55,
+          "detail": {
+            "edge_density": 0.028950255594135804,
+            "focal_region_supplied": false,
+            "saliency": 0.013945030471305478
+          },
+          "evaluated": true,
+          "limitations": [
+            "Edge density is a proxy for visual noise, not for narrative clarity.",
+            "Textured stone reads as clutter even when it is the intended material."
+          ],
+          "value": 0.028950255594135804
+        },
+        "consistency": {
+          "algorithm_version": "event-delta-1",
+          "confidence": 0.75,
+          "detail": {
+            "mean_abs_luminance_delta": 0.044125035478918384
+          },
+          "evaluated": true,
+          "limitations": [
+            "Global mean delta hides a localised but meaningful change.",
+            "Camera movement alone produces a delta; pair this with a fixed-camera capture."
+          ],
+          "value": 0.044125035478918384
+        },
+        "delta_e_max": {
+          "algorithm_version": "palette-de2000-1",
+          "confidence": 0.6,
+          "detail": {
+            "clusters": [
+              {
+                "delta_e": 2.592409927883106,
+                "swatch": "#0B1016",
+                "weight": 0.09578450520833333
+              },
+              {
+                "delta_e": 3.2531276437902696,
+                "swatch": "#0B1016",
+                "weight": 0.05209689670138889
+              },
+              {
+                "delta_e": 2.2078113479245904,
+                "swatch": "#0B1016",
+                "weight": 0.05095079210069445
+              },
+              {
+                "delta_e": 4.176195405299428,
+                "swatch": "#0B1016",
+                "weight": 0.049458821614583336
+              },
+              {
+                "delta_e": 2.023843278884695,
+                "swatch": "#0B1016",
+                "weight": 0.04928927951388889
+              },
+              {
+                "delta_e": 6.985476584234128,
+                "swatch": "#0B1016",
+                "weight": 0.03256564670138889
+              }
+            ]
+          },
+          "evaluated": true,
+          "limitations": [
+            "Compares dominant colours to the palette, not every pixel; a small off-palette highlight is invisible.",
+            "Lighting intentionally shifts hue and value, so the declared tolerance must stay modest.",
+            "Coarse quantisation (5-bit per channel) can merge distinct swatches."
+          ],
+          "value": 1.064070337166682
+        },
+        "horizon_roll": {
+          "algorithm_version": "horizon-1",
+          "confidence": 0.0,
+          "detail": {},
+          "evaluated": false,
+          "limitations": [
+            "No camera transform supplied; a horizon estimated from pixels is a guess, so it is refused."
+          ],
+          "value": null
+        },
+        "lantern_dominance": {
+          "algorithm_version": "lantern-1",
+          "confidence": 0.0,
+          "detail": {},
+          "evaluated": false,
+          "limitations": [
+            "No lantern mask supplied; brightness cannot be attributed."
+          ],
+          "value": null
+        },
+        "luminance_floor": {
+          "algorithm_version": "lum-pct-1",
+          "confidence": 0.95,
+          "detail": {
+            "p1": 0.0015861713106295149,
+            "p5": 0.0016507011473319976,
+            "p50": 0.011281593639944158,
+            "p95": 0.26919824690783273,
+            "p99": 0.5179171488309089
+          },
+          "evaluated": true,
+          "limitations": [
+            "Linearisation assumes sRGB primaries; a display with a different transfer curve shifts the floor.",
+            "Reports the whole frame; a dark region covering less than 5% of the image will not be seen."
+          ],
+          "value": 0.0016507011473319976
+        },
+        "warm_share": {
+          "algorithm_version": "warm-share-1",
+          "confidence": 0.0,
+          "detail": {},
+          "evaluated": false,
+          "limitations": [
+            "No world mask supplied; sky and UI cannot be excluded."
+          ],
+          "value": null
+        }
+      }
+    },
+    {
+      "frame": "shot_03_beacon_lit.png",
+      "metrics": {
+        "clutter": {
+          "algorithm_version": "clutter-1",
+          "confidence": 0.55,
+          "detail": {
+            "edge_density": 0.023766034915123458,
+            "focal_region_supplied": false,
+            "saliency": 0.010791400756534557
+          },
+          "evaluated": true,
+          "limitations": [
+            "Edge density is a proxy for visual noise, not for narrative clarity.",
+            "Textured stone reads as clutter even when it is the intended material."
+          ],
+          "value": 0.023766034915123458
+        },
+        "consistency": {
+          "algorithm_version": "event-delta-1",
+          "confidence": 0.75,
+          "detail": {
+            "mean_abs_luminance_delta": 0.04993272675119613
+          },
+          "evaluated": true,
+          "limitations": [
+            "Global mean delta hides a localised but meaningful change.",
+            "Camera movement alone produces a delta; pair this with a fixed-camera capture."
+          ],
+          "value": 0.04993272675119613
+        },
+        "delta_e_max": {
+          "algorithm_version": "palette-de2000-1",
+          "confidence": 0.6,
+          "detail": {
+            "clusters": [
+              {
+                "delta_e": 2.4823342315059826,
+                "swatch": "#0B1016",
+                "weight": 0.17021348741319445
+              },
+              {
+                "delta_e": 1.8831260627559832,
+                "swatch": "#0B1016",
+                "weight": 0.05490451388888889
+              },
+              {
+                "delta_e": 1.6303339886625394,
+                "swatch": "#0B1016",
+                "weight": 0.04073757595486111
+              },
+              {
+                "delta_e": 9.696549784762002,
+                "swatch": "#0B1016",
+                "weight": 0.040093315972222224
+              },
+              {
+                "delta_e": 3.226866775569645,
+                "swatch": "#0B1016",
+                "weight": 0.039801703559027776
+              },
+              {
+                "delta_e": 1.6561523965609115,
+                "swatch": "#0B1016",
+                "weight": 0.032816569010416664
+              }
+            ]
+          },
+          "evaluated": true,
+          "limitations": [
+            "Compares dominant colours to the palette, not every pixel; a small off-palette highlight is invisible.",
+            "Lighting intentionally shifts hue and value, so the declared tolerance must stay modest.",
+            "Coarse quantisation (5-bit per channel) can merge distinct swatches."
+          ],
+          "value": 1.163885610831885
+        },
+        "horizon_roll": {
+          "algorithm_version": "horizon-1",
+          "confidence": 0.0,
+          "detail": {},
+          "evaluated": false,
+          "limitations": [
+            "No camera transform supplied; a horizon estimated from pixels is a guess, so it is refused."
+          ],
+          "value": null
+        },
+        "lantern_dominance": {
+          "algorithm_version": "lantern-1",
+          "confidence": 0.0,
+          "detail": {},
+          "evaluated": false,
+          "limitations": [
+            "No lantern mask supplied; brightness cannot be attributed."
+          ],
+          "value": null
+        },
+        "luminance_floor": {
+          "algorithm_version": "lum-pct-1",
+          "confidence": 0.95,
+          "detail": {
+            "p1": 0.0015861713106295149,
+            "p5": 0.0016086447106607737,
+            "p50": 0.009127902396071492,
+            "p95": 0.19498388845475742,
+            "p99": 0.48489763749845105
+          },
+          "evaluated": true,
+          "limitations": [
+            "Linearisation assumes sRGB primaries; a display with a different transfer curve shifts the floor.",
+            "Reports the whole frame; a dark region covering less than 5% of the image will not be seen."
+          ],
+          "value": 0.0016086447106607737
+        },
+        "warm_share": {
+          "algorithm_version": "warm-share-1",
+          "confidence": 0.0,
+          "detail": {},
+          "evaluated": false,
+          "limitations": [
+            "No world mask supplied; sky and UI cannot be excluded."
+          ],
+          "value": null
+        }
+      }
+    }
+  ],
+  "job_id": "emberkeep-smoke",
+  "severity_counts": {
+    "blocker": 0,
+    "major": 4,
+    "minor": 0,
+    "note": 12
+  },
+  "status": "FAIL",
+  "threshold_status": "provisional"
+}

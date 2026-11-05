@@ -55,9 +55,9 @@ Governing plan: `docs/superpowers/plans/2026-11-05-emberkeep-implementation-plan
 | Phase | State |
 |---|---|
 | P0 Foundations (tracking, evidence storage, status) | **COMPLETE** — 66 source files tracked; 37 evidence files hash-addressed in `reports/evidence/ARTIFACTS.sha256`; this document corrected |
-| P1 Art-direction contract | in progress |
-| P2 Trace ledger + migration to schema 2 | pending |
-| P3 Critic v1 + end-to-end benchmark | pending |
+| P1 Art-direction contract | **COMPLETE** — schema, loader, hash binding, 15 tests |
+| P2 Trace ledger + migration to schema 2 | **COMPLETE** — 10-class taxonomy, gaps CLI, 17 tests |
+| P3 Critic v1 + end-to-end benchmark | **COMPLETE** — 8 metrics, p95 1.16 s at 1080p vs 3 s budget; no native code needed |
 | P4 Godot modularisation | pending |
 | P5 Package + staged acceptance | pending |
 | P6 ACE-Step 1.5 score | pending |
