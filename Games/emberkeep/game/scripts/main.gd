@@ -50,6 +50,7 @@ var capture_token := ""
 var ignoring_input := false
 var message := ""
 var message_timer := 0.0
+var shots_skipped_headless: Array = []
 var fx_player: AudioStreamPlayer
 var ambience_player: AudioStreamPlayer
 var ignite_sfx: AudioStream
@@ -871,6 +872,7 @@ func _run_smoke() -> void:
 
 	var failures: Array = report["steps"].filter(func(s): return not s["ok"])
 	report["ok"] = failures.is_empty()
+	report["shots_skipped_headless"] = shots_skipped_headless
 	report["failures"] = failures
 	print("STUDIO_SMOKE_JSON " + JSON.stringify(report))
 	if shot_dir != "":
@@ -886,6 +888,12 @@ func _settle(seconds: float) -> void:
 
 func _shot(label: String) -> void:
 	if shot_dir == "":
+		return
+	if DisplayServer.get_name() == "headless":
+		# The dummy renderer draws no frames, so frame_post_draw never fires.
+		# Headless smoke verifies gameplay logic; screenshots are a headed concern.
+		shots_skipped_headless.append(label)
+		print("STUDIO_SHOT %s skipped_headless" % label)
 		return
 	await RenderingServer.frame_post_draw
 	var image := get_viewport().get_texture().get_image()

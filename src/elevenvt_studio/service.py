@@ -2,6 +2,7 @@ from __future__ import annotations
 import hashlib, json, os, re, shutil, time, uuid
 from pathlib import Path
 from .adapters.comfyui import ComfyUIAdapter
+from .adapters.media import MediaAdapter
 from .adapters.process import ProcessAdapter
 from .artifacts import ArtifactStore
 from .config import StudioConfig, write_default_config
@@ -35,6 +36,7 @@ class StudioService:
         self.artifacts=ArtifactStore(self.config.artifact_root,self.config.workspace,self.db)
         self.comfyui=ComfyUIAdapter(self.config.comfyui_url)
         self.process=ProcessAdapter(self.config.workspace)
+        self.media=MediaAdapter(self.config.workspace)
         self.jobs=JobEngine(self.db,self)
         self.handlers={
             "studio.status":self._status,
@@ -52,8 +54,16 @@ class StudioService:
             "comfyui.retrieve_outputs":self._comfyui_retrieve,
             "blender.health":self._blender_health,
             "blender.execute_script":self._blender_run,
+            "blender.inspect_scene":self._blender_inspect,
             "godot.health":self._godot_health,
             "godot.validate_project":self._godot_validate,
+            "godot.inspect_scene":self._godot_inspect,
+            "comfyui.validate_workflow":self._comfyui_validate,
+            "comfyui.interrupt":self._comfyui_interrupt,
+            "media.probe":self._media_probe,
+            "media.transcode":self._media_transcode,
+            "unreal.health":self._unreal_health,
+            "unity.health":self._unity_health,
         }
     @property
     def godot_capture(self):
@@ -91,8 +101,12 @@ class StudioService:
         if capability_id not in self.handlers: raise ValidationError(f"No handler is registered for {capability_id}")
         if not isinstance(inputs,dict): raise ValidationError("Capability inputs must be an object")
         approval_id=inputs.get("approval_id")
-        default_target={"comfyui.queue_prompt":self.config.comfyui_url,"blender.execute_script":str(inputs.get("script_path","workspace")),
-                        "godot.validate_project":str(inputs.get("project_path","workspace"))}.get(capability_id,"workspace")
+        default_target={"comfyui.queue_prompt":self.config.comfyui_url,"comfyui.interrupt":self.config.comfyui_url,
+                        "blender.execute_script":str(inputs.get("script_path","workspace")),
+                        "blender.inspect_scene":str(inputs.get("blend_path","workspace")),
+                        "godot.validate_project":str(inputs.get("project_path","workspace")),
+                        "godot.inspect_scene":str(inputs.get("project_path","workspace")),
+                        "media.transcode":str(inputs.get("dst","workspace"))}.get(capability_id,"workspace")
         self.policy.authorize(cap["scope"],cap["side_effect"],str(inputs.get("target",default_target)),approval_id=approval_id)
         inputs=dict(inputs)
         if job_id: inputs.setdefault("job_id",job_id)
@@ -246,6 +260,86 @@ class StudioService:
         result=self.process.run(self.config.godot_executable,["--version"],cwd=self.config.workspace,timeout=15)
         if not result["success"]: raise AdapterUnavailable("Godot version check failed",details=result)
         return result
+    def _comfyui_validate(self,inputs):
+        prompt=inputs.get("prompt")
+        if prompt is None: raise ValidationError("prompt (API-format workflow) is required")
+        return self.comfyui.validate_workflow(prompt)
+    def _comfyui_interrupt(self,inputs):
+        clear=bool(inputs.get("clear_queue",False))
+        return self.comfyui.interrupt(clear_queue=clear)
+    def _media_probe(self,inputs):
+        rel=inputs.get("path","")
+        if not rel: raise ValidationError("path to a workspace media file is required")
+        return self.media.probe(rel)
+    def _media_transcode(self,inputs):
+        src=inputs.get("src",""); dst=inputs.get("dst","")
+        if not src or not dst: raise ValidationError("src and dst workspace paths are required")
+        timeout=max(10,min(int(inputs.get("timeout_seconds",600)),3600))
+        result=self.media.transcode(src,dst,audio_codec=inputs.get("audio_codec"),video_codec=inputs.get("video_codec"),
+                                    container=inputs.get("container"),extra_args=inputs.get("extra_args"),timeout=timeout)
+        verification=self.media.probe(dst)
+        return {**result,"verification":verification}
+    def _blender_inspect(self,inputs):
+        rel=inputs.get("blend_path","")
+        blend=safe_workspace_path(self.config.workspace,rel)
+        if blend.suffix.lower()!=".blend" or not blend.is_file(): raise ValidationError("blend_path must reference an existing .blend file inside the workspace")
+        repo_root=Path(__file__).resolve().parents[2]
+        script=repo_root/"scripts"/"blender"/"inspect_scene.py"
+        if not script.is_file(): raise ValidationError("Studio Blender inspector script is missing from the installation")
+        timeout=max(30,min(int(inputs.get("timeout_seconds",600)),3600))
+        report_name=f"blender-inspect-{uuid.uuid4().hex[:12]}.json"
+        report_path=self.config.evidence_root/report_name
+        result=self.process.run(self.config.blender_executable,["--background","--python",str(script)],
+                                cwd=self.config.workspace,timeout=timeout,
+                                env={"STUDIO_BLEND":str(blend),"STUDIO_OUT":str(report_path)})
+        if not result["success"] or not report_path.is_file():
+            raise AdapterUnavailable("Blender scene inspection failed",details={"process":result})
+        report=json.loads(report_path.read_text(encoding="utf-8"))
+        if not report.get("ok"): raise AdapterUnavailable("Blender inspector reported failure",details={"report":report})
+        return {"blend":rel,"report_path":str(report_path),"report":report,
+                "application_state_verified":True,
+                "note":"Native read-back from Blender; craft quality still needs human review."}
+    def _godot_inspect(self,inputs):
+        project=safe_workspace_path(self.config.workspace,inputs.get("project_path",""),allow_root=True)
+        if not project.is_dir() or not (project/"project.godot").is_file(): raise ValidationError("project_path must contain project.godot")
+        scene=inputs.get("scene","res://main.tscn")
+        tool=project/"tools"/"inspect_scene.gd"
+        if not tool.is_file(): raise ValidationError("Project has no tools/inspect_scene.gd inspector; add it before requesting native inspection")
+        timeout=max(30,min(int(inputs.get("timeout_seconds",600)),3600))
+        out_path=self.config.evidence_root/"godot-inspect.json"
+        result=self.process.run(self.config.godot_executable,["--headless","--path",str(project),"--script","res://tools/inspect_scene.gd",
+                                "--",f"--scene={scene}",f"--out={out_path}"],cwd=self.config.workspace,timeout=timeout)
+        if not result["success"] or not out_path.is_file():
+            raise AdapterUnavailable("Godot scene inspection failed",details={"process":result})
+        report=json.loads(out_path.read_text(encoding="utf-8"))
+        if not report.get("ok"): raise AdapterUnavailable("Godot inspector reported failure",details={"report":report})
+        return {"project":str(project.relative_to(self.config.workspace)),"scene":scene,"report_path":str(out_path),
+                "node_count":report.get("node_count"),"report":report,
+                "application_state_verified":True,
+                "note":"Native read-back from the engine; gameplay and craft review remain separate gates."}
+    def _unreal_health(self,inputs):
+        import shutil as _shutil
+        candidates=[self.config.__dict__.get("unreal_editor",""),r"C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor-Cmd.exe"]
+        exe=next((c for c in candidates if c and (Path(c).is_file() or _shutil.which(c))),None)
+        version_file=Path(r"C:\Program Files\Epic Games\UE_5.8\Engine\Build\Build.version")
+        record={}
+        if version_file.is_file():
+            try: record=json.loads(version_file.read_text(encoding="utf-8"))
+            except (OSError,ValueError): record={"unreadable":True}
+        if not exe: raise AdapterUnavailable("No Unreal Editor installation was found on this workstation",details={"build_version":record})
+        return {"found":True,"executable":exe,"build_version":record,
+                "note":"Health only; editor workflows remain RESEARCH until a project-level operation is proven."}
+    def _unity_health(self,inputs):
+        import shutil as _shutil
+        cli=_shutil.which("unity") or r"C:\Users\11vat\AppData\Local\Unity\bin\unity.exe"
+        if not (cli and Path(cli).is_file()): raise AdapterUnavailable("Unity CLI is not installed on this workstation")
+        import subprocess as _sp
+        try:
+            version=_sp.run([cli,"--version"],capture_output=True,text=True,timeout=30,check=False)
+            editors=_sp.run([cli,"editors"],capture_output=True,text=True,timeout=60,check=False)
+        except OSError as exc: raise AdapterUnavailable(f"Could not launch Unity CLI: {exc}") from exc
+        return {"found":True,"cli":cli,"version":version.stdout.strip(),"editors":editors.stdout.strip(),
+                "note":"Health only; no Unity editor is installed, so editor workflows remain RESEARCH."}
     def _godot_validate(self,inputs):
         project=safe_workspace_path(self.config.workspace,inputs.get("project_path",""),allow_root=True)
         if not project.is_dir() or not (project/"project.godot").is_file(): raise ValidationError("project_path must contain project.godot")

@@ -56,7 +56,7 @@ def write_default_config(home: Path) -> Path:
         policy.write_text(json.dumps({"version":1,"default_decision":"deny","auto_allow":[
             {"scope":"studio.status","side_effect":"READ"},{"scope":"capability.list","side_effect":"READ"},
             {"scope":"workspace.read","side_effect":"READ"},{"scope":"artifact.read","side_effect":"READ"},
-            {"scope":"resource.inspect","side_effect":"READ"},{"scope":"comfyui.inspect","side_effect":"READ"},{"scope":"blender.inspect","side_effect":"READ"},{"scope":"godot.inspect","side_effect":"READ"},{"scope":"workspace.create","side_effect":"CREATE"}],
+            {"scope":"resource.inspect","side_effect":"READ"},{"scope":"comfyui.inspect","side_effect":"READ"},{"scope":"blender.inspect","side_effect":"READ"},{"scope":"godot.inspect","side_effect":"READ"},{"scope":"media.inspect","side_effect":"READ"},{"scope":"unreal.inspect","side_effect":"READ"},{"scope":"unity.inspect","side_effect":"READ"},{"scope":"workspace.create","side_effect":"CREATE"}],
             "approval_required":["MODIFY","DELETE","EXECUTE","NETWORK","CREDENTIAL","PUBLISH"],
             "blocked_scopes":["secrets.export","arbitrary.shell","unrestricted.filesystem"]}, indent=2), encoding="utf-8")
     return config_file

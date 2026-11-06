@@ -35,6 +35,12 @@ The product and documentation are dynamically updated. The exact counts can diff
 10. Installation, update, diagnostics, and recovery experience.
 11. Real end-to-end outcomes: build, play, inspect, modify, retest.
 
+## Adoption decision — 2026-11-06 (DEFER embed; keep as benchmark)
+
+Pinned facts re-verified this round: the Godot editor integration is IvanMurzak/Godot-MCP `v0.34.0` (2026-10-31, Apache-2.0 with separately-licensed RQL/Code-Exec dependencies under PolyForm Shield 1.0.0). It requires the C#/.NET (Mono) Godot editor plus the .NET 8 SDK. The workstation's installed editor is the standard GDScript build (`4.7.2.stable.official.ed1daf0bf`, no Mono binaries present), so the addon cannot load in this editor at all — adoption is blocked on an editor-variant change, not on will.
+
+Decision: **DEFER**. The Studio's native Godot path (typed `godot.inspect_scene` with engine read-back, headless validation, deterministic smoke, packaged export and launch acceptance) covers the proven subset for the installed editor. Re-evaluate if a .NET editor is installed, weighing the PolyForm-licensed dependencies against the local-first rule, and never route through the hosted ai-game.dev service as a baseline dependency.
+
 ## What must be examined at source level
 
 - Desktop/CLI architecture and responsibilities.

@@ -15,16 +15,22 @@ class ProcessAdapter:
     def _tail(stream, limit=50000):
         stream.flush(); stream.seek(0,2); size=stream.tell(); stream.seek(max(0,size-limit))
         return stream.read().decode("utf-8",errors="replace")
-    def run(self, configured: str, args: list[str], *, cwd: Path, timeout: int=900) -> dict:
+    def run(self, configured: str, args: list[str], *, cwd: Path, timeout: int=900, env: dict | None=None) -> dict:
         if not isinstance(args,list) or any(not isinstance(x,str) for x in args): raise ValidationError("Process arguments must be an array of strings")
         cwd=cwd.resolve()
         if cwd != self.workspace and self.workspace not in cwd.parents: raise ValidationError("Process working directory must remain inside the managed workspace")
         exe=self.executable(configured)
         if timeout < 1 or timeout > 7200: raise ValidationError("Process timeout must be between 1 and 7200 seconds")
+        if env is not None:
+            if not isinstance(env,dict) or any(not isinstance(k,str) or not isinstance(v,str) for k,v in env.items()):
+                raise ValidationError("Process environment overrides must be a string-to-string map")
+            import os as _os
+            merged=dict(_os.environ); merged.update(env)
+        else: merged=None
         with tempfile.TemporaryFile() as stdout_file, tempfile.TemporaryFile() as stderr_file:
             try:
                 p=subprocess.run([exe,*args],cwd=cwd,stdin=subprocess.DEVNULL,stdout=stdout_file,stderr=stderr_file,
-                                 timeout=timeout,shell=False,check=False)
+                                 timeout=timeout,shell=False,check=False,env=merged)
                 stdout=self._tail(stdout_file); stderr=self._tail(stderr_file)
                 return {"executable":exe,"argv":[exe,*args],"cwd":str(cwd),"returncode":p.returncode,
                         "stdout":stdout,"stderr":stderr,"success":p.returncode==0}

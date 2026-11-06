@@ -62,10 +62,29 @@ class JobEngine:
                 ordered.append(key); pending.pop(key)
                 for deps in pending.values(): deps.discard(key)
         return ordered
+    def cancel(self, job_id: str, *, reason: str = "") -> dict:
+        """Operator cancellation: a CANCELLED job never starts and a running job
+        stops at the next task boundary; the in-flight task is left for
+        crash-reconciliation rather than force-killed."""
+        now=utc_now()
+        with self.db.connect() as c:
+            job=c.execute("SELECT status FROM jobs WHERE id=?",(job_id,)).fetchone()
+            if not job: raise NotFound(f"Unknown job: {job_id}")
+            if job["status"] in TERMINAL | {"CANCELLED"}:
+                raise ValidationError(f"Job is already {job['status']}; cancellation is for live jobs")
+            c.execute("UPDATE jobs SET status='CANCELLED',updated_at=?,finished_at=? WHERE id=?",(now,now,job_id))
+            self.db.event(c,"job",job_id,"JOB_CANCELLED",{"reason":reason},now)
+        return self.status(job_id)
+    def _is_cancelled(self, job_id: str) -> bool:
+        with self.db.connect() as c:
+            row=c.execute("SELECT status FROM jobs WHERE id=?",(job_id,)).fetchone()
+            return bool(row) and row["status"]=="CANCELLED"
     def run(self, job_id: str, approval_id: str | None=None) -> dict:
         from .locking import ProcessFileLock
         lock_dir=self.service.config.home/"job-locks"
         with ProcessFileLock(lock_dir/(job_id+".lock")):
+            if self._is_cancelled(job_id):
+                return self.status(job_id)
             return self._run_locked(job_id,approval_id)
     def _run_locked(self, job_id: str, approval_id: str | None=None) -> dict:
         early_return = False
@@ -110,6 +129,11 @@ class JobEngine:
         task_map={t["id"]:t for t in tasks}
         task_specs={t["id"]:t for t in spec["tasks"]}
         for task_id in order:
+            if self._is_cancelled(job_id):
+                with self.db.connect() as c:
+                    c.execute("UPDATE jobs SET status='CANCELLED',updated_at=?,finished_at=? WHERE id=?",(utc_now(),utc_now(),job_id))
+                    self.db.event(c,"job",job_id,"JOB_CANCELLED_MID_RUN",{"stopped_before":task_id},utc_now())
+                return self.status(job_id)
             row=task_map[task_id]; deps=json.loads(row["depends_on_json"])
             failed=[d for d in deps if task_map[d]["status"]!="SUCCEEDED"]
             if failed:

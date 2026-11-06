@@ -6,7 +6,7 @@
 
 | Fact | Value | How it was measured |
 |---|---|---|
-| Runtime tests | 162 passed, 1 skipped, 37.6 s | `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q` at `4f9281d` |
+| Runtime tests | 177 passed, 1 skipped, 67.3 s | `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q` — includes 15 new Gate 2 adapter conformance tests |
 | The skip | `tests/test_paths.py:19` — symlink creation unavailable | Windows lacks the privilege without developer mode; not a runtime defect |
 | Python | 3.12.10 in `.venv` | `studio doctor` |
 | Host | RTX 5070 Ti 12 227 MiB, 24 CPUs, 33.7 GB RAM | `studio doctor` |
@@ -32,15 +32,17 @@
 | Artifact integrity | IMPLEMENTED | Sidecar manifest, streaming SHA-256 verify, explicit unknown-by-default rights, human artifact review CLI; domain validators still incomplete |
 | Resource profile | IMPLEMENTED / PARTIAL | OS/CPU/disk and NVIDIA `nvidia-smi`; RAM via optional psutil; not a global reservation daemon |
 | MCP stdio server | TRANSPORT PROVEN / HOST NOT VERIFIED | Production bridge uses official MCP Python SDK v2 (`mcp>=2,<3`) for protocol revision `2026-07-28` and legacy interoperability. **SDK client over real stdio passed 2026-11-06**: negotiated `2026-07-28`, listed 20 tools, called `studio_status`, and performed a create-only workspace write with a registered hash. A **configured Freebuff host** connection remains unproven. The legacy fallback is disabled unless a developer explicitly sets `STUDIO_ALLOW_LEGACY_MCP=1`; it is not a production path |
-| ComfyUI | IMPLEMENTED / LIVE, NOT CERTIFIED | Loopback HTTP health, queue, prompt submit, history, node/model inventory, bounded completion polling, output download and artifact provenance; no WebSocket streaming, cancellation, workflow schema validation or semantic visual QA yet. Verified against a **live** v0.34.0 instance: `flux2_klein` txt2img and `hunyuan3d` image→mesh both produced real assets. |
-| Blender | IMPLEMENTED / NOT CERTIFIED | Version and approval-gated background script process; unrestricted Blender Python is not sandboxed; semantic operations/read-back missing |
-| Godot | IMPLEMENTED / NOT CERTIFIED | Version and approval-gated headless editor check; deterministic + live capture service; package and gameplay validation missing |
+| ComfyUI | IMPLEMENTED / LIVE, NOT CERTIFIED | Loopback HTTP health, queue, prompt submit, history, node/model inventory, bounded completion polling, output download, artifact provenance, **workflow validation** (`comfyui.validate_workflow`, proven live on the 11-node golden graph) and **interrupt/clear** (`comfyui.interrupt`, proven live on an idle queue); no WebSocket streaming, pinned catalogs or semantic visual QA yet. Verified against a **live** v0.34.0 instance: `flux2_klein` txt2img and `hunyuan3d` image→mesh both produced real assets. |
+| Blender | IMPLEMENTED / NOT CERTIFIED | Version, approval-gated background script process, and **native scene read-back** (`blender.inspect_scene`, proven live on Blender 5.2.0 LTS against `lantern.blend`). Unrestricted Blender Python is not sandboxed; broader semantic operation library still missing |
+| Godot | IMPLEMENTED / NOT CERTIFIED | Version, headless editor check, deterministic + live capture service, **native scene read-back** (`godot.inspect_scene`, >100 nodes proven live), **packaged Windows x86_64 export with clean-location launch smoke 3/3 exit 0, state=WON** (`reports/evidence/productions/emberkeep/03-package/PACKAGE_REPORT.json`). Headed packaged screenshots, GPU profiling and human review still open |
 | Perception transport | IMPLEMENTED / MODEL DELIVERY UNPROVEN | Bundle format v2, authoritative/transport artifact split, adaptive encoding with named refusal, image content blocks on both MCP servers, probe with single-use/expiring challenges, derived evidence grade, gate refusal. Structural delivery is tested; **no vision-capable agent is connected in this environment**, so model readback is not demonstrated |
 | Capture masks | FIXTURE-VERIFIED / EMBERKEEP PARTIAL | Visible segmentation respects occlusion by construction (occluders stay as depth writers), silhouette and illumination are separate semantics, and the wall fixture asserts the pixel regions. Emberkeep's lantern is fully unoccluded at the default camera, so its occlusion path is proven by the fixture rather than by the game |
-| Unreal / Unity | RESEARCH ONLY | No executable adapters in this release |
-| DCC-MCP Core / AI Game Dev | RESEARCH / EXTERNAL INTEGRATION CANDIDATES | Not embedded or locally reproduced in this environment |
-| Other creative disciplines | DESIGNED / NOT INTEGRATED | Audio, video, CAD, UI, web/app, writing, scientific and publishing pipelines need real adapters and tests |
-| Security / license / commercial readiness | PARTIAL DESIGN | Full audit, sandbox, SBOM, migration/restore drills, cross-project lock, penetration tests and rights review remain release blockers |
+| Unreal / Unity | HEALTH ONLY / NOT CERTIFIED | `unreal.health` reads UE 5.8.0 build record + editor binary; `unity.health` reports CLI 1.0.0-beta.12 with no editor installed. No editor workflows proven |
+| DCC-MCP Core / AI Game Dev | RESEARCHED / DEFERRED WITH DECISION | DCC-MCP-Core v0.20.53 (MIT) deferred: catalog breadth is not certification, zero-auth default needs hardening. Godot-MCP v0.34.0 deferred: requires Mono/.NET editor; installed editor is GDScript-only. See `docs/02-research/` addenda 2026-11-06 |
+| Media (ffmpeg) | IMPLEMENTED / NOT CERTIFIED | `media.probe` + `media.transcode` (allowlisted codecs, no-overwrite, re-verified) proven live on ffmpeg 8.1.2; first audio/video evidence in the Studio |
+| Job cancellation | IMPLEMENTED | `job cancel` CLI + engine support: CANCELLED jobs never start, live jobs stop at the next task boundary; in-flight tasks left for reconciliation, never force-killed. Covered by unit tests |
+| Other creative disciplines | DESIGNED / FIRST PIPELINE DOCUMENTED | Reusable recipe v1 published (`workflows/pipelines/emberkeep_asset_pipeline.v1.md`); CAD, video, web/app, writing, publishing and the rest still need real adapters and tests |
+| Security / license / commercial readiness | PARTIAL + SBOM BASELINE | Workstation SBOM `reports/validation/sbom-2026-11-06.json` (47 packages, all licenses identified); backup/restore drilled incl. loaded DB; Blender sandbox, cross-project lock, penetration tests and rights review remain release blockers |
 
 ## Hosted CI baseline before the handoff repair
 

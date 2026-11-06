@@ -1,16 +1,16 @@
 {
-  "file_count_excluding_manifest": 177,
-  "file_count_including_manifest": 178,
+  "file_count_excluding_manifest": 355,
+  "file_count_including_manifest": 356,
   "files": [
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "de00b7c03cbbc8ed1577c566fe522d05f28a98b565a10b1adad6978221fd764c",
-      "size_bytes": 979
+      "sha256": "108035589ca9a5ad59e9b222906f5c31f3a552c9292c03eb787f84ed33722429",
+      "size_bytes": 1007
     },
     {
       "path": ".gitignore",
-      "sha256": "001a15c801c83f55fa897883d47004cc25dbe3b18af08680f2b79a11a05f83a0",
-      "size_bytes": 423
+      "sha256": "eec16091ce5030ef90db353f012cc32a0e94f6c14250b0bdea5859e5d5a993e9",
+      "size_bytes": 1208
     },
     {
       "path": ".python-version",
@@ -34,13 +34,313 @@
     },
     {
       "path": "FREEBUFF_EXECUTION_HANDOFF_2026-11-05.md",
-      "sha256": "4fd8e439f187445a49d77400573fe878073a05f6c26b79ed206ac1f40890cd26",
-      "size_bytes": 14553
+      "sha256": "c802caa275d0609b9e12ac1ad1e30565f3f7757cc31985690c56c4bc6492e900",
+      "size_bytes": 14720
     },
     {
       "path": "FREEBUFF_START_HERE.md",
-      "sha256": "88b83d6cd3863216d7fb432ce2beb0d009430830d09934e745265405ad654ec6",
-      "size_bytes": 15285
+      "sha256": "c47fdd008ebed2feadd80ceba7c153ff6b44590402e01aabfd425324eac3c442",
+      "size_bytes": 15421
+    },
+    {
+      "path": "Games/emberkeep/art_direction.json",
+      "sha256": "4d594759629c9e7edf04d5a21db31b2658a108b155cb1f67c789a2d4b76ac43c",
+      "size_bytes": 2918
+    },
+    {
+      "path": "Games/emberkeep/game/assets/audio/ambience.ogg",
+      "sha256": "891cb7d170ff29c39c744e473bf9057ddf7697dec69f87de424a4ae218053ccf",
+      "size_bytes": 410446
+    },
+    {
+      "path": "Games/emberkeep/game/assets/audio/ambience.ogg.import",
+      "sha256": "929270bebe717988e7184d4247795f40cbdb5a79f06413c8d4563efce349ea7c",
+      "size_bytes": 393
+    },
+    {
+      "path": "Games/emberkeep/game/assets/audio/chime.ogg",
+      "sha256": "b1b20c2fd8b43446c0fede2d08a65503d1d7ba7d5cf593dbcc3eef52dea7bfee",
+      "size_bytes": 11130
+    },
+    {
+      "path": "Games/emberkeep/game/assets/audio/chime.ogg.import",
+      "sha256": "53ef46c48d830683557ae81828fe6fdc0b674850d411695dedc06136808a9051",
+      "size_bytes": 384
+    },
+    {
+      "path": "Games/emberkeep/game/assets/audio/dawn.ogg",
+      "sha256": "4c1941953c9559258c253e39ea93dc10f7fa12f4fc008ea8280e20d9a4719e30",
+      "size_bytes": 16360
+    },
+    {
+      "path": "Games/emberkeep/game/assets/audio/dawn.ogg.import",
+      "sha256": "286822ac38cc3fa945aac37b9df860b4ab87b28df9176ffd690a922a5a785478",
+      "size_bytes": 380
+    },
+    {
+      "path": "Games/emberkeep/game/assets/audio/ignite.ogg",
+      "sha256": "8986493e94515bbe6dab59b699d09f56ddcb9d58cd40130fe6090d2d6a9a40fb",
+      "size_bytes": 25344
+    },
+    {
+      "path": "Games/emberkeep/game/assets/audio/ignite.ogg.import",
+      "sha256": "ac51c20779981b900ea7a2a86101b32c602fbff1d8f5dfcbe81dff1144eec6c4",
+      "size_bytes": 387
+    },
+    {
+      "path": "Games/emberkeep/game/assets/backdrop.png",
+      "sha256": "6a0f3cf3fd4d875be53e4cd6a11b983974829e445448244890c6af5f5db5f137",
+      "size_bytes": 1470820
+    },
+    {
+      "path": "Games/emberkeep/game/assets/backdrop.png.import",
+      "sha256": "b808d8654a0011e1b3da6cc142243ccabe5eb63924c2687c99be4bcee8d8c1a8",
+      "size_bytes": 935
+    },
+    {
+      "path": "Games/emberkeep/game/assets/lamplighter.glb",
+      "sha256": "a9b224e1fa7388b0aff08a72c0d364aefdec4d7c8a401f573fb999fa49fae16a",
+      "size_bytes": 71548
+    },
+    {
+      "path": "Games/emberkeep/game/assets/lamplighter.glb.import",
+      "sha256": "48a8db2cb753550ec3ad28099b999c5a616cc2f56632a91648d82efe9889b2cf",
+      "size_bytes": 1155
+    },
+    {
+      "path": "Games/emberkeep/game/assets/lantern_hero.glb",
+      "sha256": "78e46357fde0bade756feea454a1e5389b7729d5d547a1ad5ba4ee2c809ebe8d",
+      "size_bytes": 138392
+    },
+    {
+      "path": "Games/emberkeep/game/assets/lantern_hero.glb.import",
+      "sha256": "c8df41e9cc8a615eec2f14d2180ac57837c06597a3dd9854715c19b7ae2cb8b1",
+      "size_bytes": 1158
+    },
+    {
+      "path": "Games/emberkeep/game/assets/pylon.glb",
+      "sha256": "4193ffa8e491b09a3b2eaedea0e19afa9fce2eaa75781950052af18394a8d201",
+      "size_bytes": 1355496
+    },
+    {
+      "path": "Games/emberkeep/game/assets/pylon.glb.import",
+      "sha256": "f210f863d39c844f5dad72df26d4c70516f86117ad7a48ec7a15046e6e360137",
+      "size_bytes": 1137
+    },
+    {
+      "path": "Games/emberkeep/game/assets/shrine_terrace.glb",
+      "sha256": "e0db72840ab4627f80730fc5112728b916b546308e2c2d8e692c59abf134daa4",
+      "size_bytes": 247276
+    },
+    {
+      "path": "Games/emberkeep/game/assets/shrine_terrace.glb.import",
+      "sha256": "570e73febe54df55cde97f7376179d3a3964adb0d3c54cebd26da4759a569c2b",
+      "size_bytes": 1163
+    },
+    {
+      "path": "Games/emberkeep/game/main.tscn",
+      "sha256": "3a4fd1f487677f5065b1627db8c3cbb5fcc2549fa703952cbd1f963fd5571c56",
+      "size_bytes": 194
+    },
+    {
+      "path": "Games/emberkeep/game/project.godot",
+      "sha256": "bb7bffccf3e058eb2d4807ba253ddaf5ae231d2bb599485cb3ea064dbb10b588",
+      "size_bytes": 962
+    },
+    {
+      "path": "Games/emberkeep/game/scripts/capture/service.gd",
+      "sha256": "c3faea56b16ea0a1355c0058ba34e38165a195998581c8a2e03e6175beb63467",
+      "size_bytes": 30233
+    },
+    {
+      "path": "Games/emberkeep/game/scripts/main.gd",
+      "sha256": "2523144fbd23405d59a21818e83f6d16e852cd3aa9a05e5790f31f3074fb6b12",
+      "size_bytes": 33623
+    },
+    {
+      "path": "Games/emberkeep/game/scripts/main.gd.uid",
+      "sha256": "70649ad85a4eaaebcdf35a8d1b4149dd74339848acc4f5e58fca0ed836591586",
+      "size_bytes": 20
+    },
+    {
+      "path": "Games/emberkeep/game/shaders/water.gdshader",
+      "sha256": "0e752e46e4a072b84bf9fcc5adfbd4f4bf72bf1bd0643e28e741cfe0f7daa238",
+      "size_bytes": 1554
+    },
+    {
+      "path": "Games/emberkeep/game/shaders/water.gdshader.uid",
+      "sha256": "35ef95b0c0a53b9ee2ae0819007b745402517c95751840f26d6f4a683ca4514a",
+      "size_bytes": 19
+    },
+    {
+      "path": "Games/emberkeep/source/assets/environment/environment.author.json",
+      "sha256": "ca4c3091520aaf20489295103854995028481cdb0feb1a479585f714c15dd19d",
+      "size_bytes": 7156
+    },
+    {
+      "path": "Games/emberkeep/source/assets/environment/shrine_terrace.blend",
+      "sha256": "9d44b5b621ba40c955c77848651862b8cb2e1454b43334372854bb4da77b1b0f",
+      "size_bytes": 129170
+    },
+    {
+      "path": "Games/emberkeep/source/assets/environment/shrine_terrace.glb",
+      "sha256": "e0db72840ab4627f80730fc5112728b916b546308e2c2d8e692c59abf134daa4",
+      "size_bytes": 247276
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lamplighter/lamplighter.author.json",
+      "sha256": "3465255b060a8c15301d8f1019bd700386fa132fc2917bfa6d7dd2cb412dec19",
+      "size_bytes": 1728
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lamplighter/lamplighter.blend",
+      "sha256": "a39b2c453e41b2bd79215187c0bf0e606337f2638af448a91f2a506287b2588f",
+      "size_bytes": 120690
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lamplighter/lamplighter.glb",
+      "sha256": "a9b224e1fa7388b0aff08a72c0d364aefdec4d7c8a401f573fb999fa49fae16a",
+      "size_bytes": 71548
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern/lantern.blend",
+      "sha256": "224f6faa51685a44bb4999d40dec8138ea1dec42d3ffd75049d03b77ea8ba220",
+      "size_bytes": 690556
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern/lantern.glb",
+      "sha256": "48d6361694e02c77c98eb0441e2e15a163629a2f90b0d254169f67179ade8722",
+      "size_bytes": 1654764
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern/lantern.ingest.json",
+      "sha256": "1bad968eb11471c9b237a7b8667bbd673567c35b5b5c1fba4669b6ef37992022",
+      "size_bytes": 2545
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern/lantern_front.png",
+      "sha256": "262d075b865d589684f7f9d9464088cc118141188f60d395c402cfb5bec759d4",
+      "size_bytes": 1202195
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern/lantern_side.png",
+      "sha256": "320d9661f4e598f1f24f315ecf826e26224fae6d649b5914675a92cea03e7336",
+      "size_bytes": 1185557
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern/lantern_three_quarter.png",
+      "sha256": "4949312e7d1f918000ef1016c097eb7dd3262d05fdc5c415fe0b1350b2e1570a",
+      "size_bytes": 1176377
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern_hero/lantern.author.json",
+      "sha256": "e33ee3772eeea18b8f4c1a8137afcee597356aedc4b69a58ee4ab0e40cdada38",
+      "size_bytes": 2263
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern_hero/lantern_hero.blend",
+      "sha256": "3a4496e7b99f924a1203464b0f771a53ad93968b76e40ea975dca3e1ffd68725",
+      "size_bytes": 143940
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern_hero/lantern_hero.blend1",
+      "sha256": "eeb79a1c672efd12714353e54572cdee06a368b62072f00022d5972e2692dbe6",
+      "size_bytes": 137453
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern_hero/lantern_hero.glb",
+      "sha256": "78e46357fde0bade756feea454a1e5389b7729d5d547a1ad5ba4ee2c809ebe8d",
+      "size_bytes": 138392
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern_hero/review/lantern_hero_review.blend",
+      "sha256": "276a5d68a8e8c9c28bb92ab8f50c33072c312c11e42725fc351c694af75c5792",
+      "size_bytes": 190783
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern_hero/review/lantern_hero_review.blend1",
+      "sha256": "33899a1cfdfcf1ad74fe41eb6b7d3a1bd30daab9bb80af7c8dbe39d52cd9adb8",
+      "size_bytes": 185091
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern_hero/review/lantern_hero_review.glb",
+      "sha256": "c3d2508701fc1ff3467854eb051925f9d46a1d542bb499db6779918abccf7056",
+      "size_bytes": 127032
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern_hero/review/lantern_hero_review.ingest.json",
+      "sha256": "110bef60743b865bda8a9236589cdf441f508557ef51445f756b7b396c750cb4",
+      "size_bytes": 2674
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern_hero/review/lantern_hero_review_front.png",
+      "sha256": "c8dd30b63ed38a2a8364a72df437aa4b9c86bb3fab09fb76c2306cdf5d087146",
+      "size_bytes": 1144541
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern_hero/review/lantern_hero_review_side.png",
+      "sha256": "23415618ac529ebc28c9408de4f722f82d9dc98d6372f022bebaa04f317acf64",
+      "size_bytes": 1134575
+    },
+    {
+      "path": "Games/emberkeep/source/assets/lantern_hero/review/lantern_hero_review_three_quarter.png",
+      "sha256": "2aa585b6ae78e291ad8127dc3e9d52ce96d52bd17ed7b3f78e0a00073e52f2d0",
+      "size_bytes": 1125953
+    },
+    {
+      "path": "Games/emberkeep/source/assets/pylon/pylon.blend",
+      "sha256": "3394365473dd0212bf21de3856737e69915f3304e8aa18ade6ecf87adac5c8a8",
+      "size_bytes": 596392
+    },
+    {
+      "path": "Games/emberkeep/source/assets/pylon/pylon.blend1",
+      "sha256": "610b73dbbd4fcea791efe65715608c351c7d1f1eb63d45a0e0bea0fad1e46011",
+      "size_bytes": 576649
+    },
+    {
+      "path": "Games/emberkeep/source/assets/pylon/pylon.glb",
+      "sha256": "4193ffa8e491b09a3b2eaedea0e19afa9fce2eaa75781950052af18394a8d201",
+      "size_bytes": 1355496
+    },
+    {
+      "path": "Games/emberkeep/source/assets/pylon/pylon.ingest.json",
+      "sha256": "d7c57efbee67a52d9499aff1f2cd9d387f70cdf01b3335351e77356cf285bdff",
+      "size_bytes": 2741
+    },
+    {
+      "path": "Games/emberkeep/source/assets/pylon/pylon_front.png",
+      "sha256": "8c4941c1e4ffa092c8a8c548fba702f37c42a9684f9fee5de913d60f33d6c9ef",
+      "size_bytes": 1175795
+    },
+    {
+      "path": "Games/emberkeep/source/assets/pylon/pylon_side.png",
+      "sha256": "9938f8a3ebda050b298b0eb661241c806099f8e742ac28d41297e32ec48299b3",
+      "size_bytes": 1190254
+    },
+    {
+      "path": "Games/emberkeep/source/assets/pylon/pylon_three_quarter.png",
+      "sha256": "c88a41c7dec7a7354aa6f9c01fc92db9ce574af47b7ce0d5b7f221981a30bb0f",
+      "size_bytes": 1148924
+    },
+    {
+      "path": "Games/emberkeep/source/audio/ambience.wav",
+      "sha256": "00bb4014ba7f73a94268afcd1039cfa3dc465a87118cf6f0c36ced1347fc664a",
+      "size_bytes": 4233644
+    },
+    {
+      "path": "Games/emberkeep/source/audio/chime.wav",
+      "sha256": "12218be66f4cec572ff335468a2d7892d4f44c16f2536715dff27ffea64a167a",
+      "size_bytes": 141164
+    },
+    {
+      "path": "Games/emberkeep/source/audio/dawn.wav",
+      "sha256": "6a4d66c6d7151815f1130df7d53cee59eee791adb8ecd09bef7d15eb51677cae",
+      "size_bytes": 529244
+    },
+    {
+      "path": "Games/emberkeep/source/audio/ignite.wav",
+      "sha256": "19a4599b520dba3daa5971738a27604ab462d61c2a1e6f0630ae0c7a6f735e38",
+      "size_bytes": 211724
     },
     {
       "path": "LICENSE_POLICY.md",
@@ -49,8 +349,8 @@
     },
     {
       "path": "PROJECT_STATUS.md",
-      "sha256": "cb67c4c633702ff4de49f59caa68f9cc6bed10b65c1cea83279d148b82810bf2",
-      "size_bytes": 20931
+      "sha256": "882c4db05341cf25f6365b7fac310afaa5a399622252eae68b208897b6fa4ca5",
+      "size_bytes": 23013
     },
     {
       "path": "PUSH_TO_GITHUB.md",
@@ -59,8 +359,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "2002f239639d6ecf6831d6c0ae05b47bd669fd949bd4a7157b828bac27f15ed8",
-      "size_bytes": 6409
+      "sha256": "0fd4f309f0b98cb546af7d5e2a1b7a6bdec55cb9b1e32d8291f243d9b0d4e5c7",
+      "size_bytes": 6506
     },
     {
       "path": "VERSION",
@@ -84,8 +384,8 @@
     },
     {
       "path": "catalogs/runtime/capabilities.json",
-      "sha256": "ddc6c0e3d67ea9a25ef364030aaf57f29dd0b71e401eb83515a2c9949a5e96df",
-      "size_bytes": 7355
+      "sha256": "9b6f8a2ba000f174df26f17b471c30fd1b498676358d4190851da64b84122181",
+      "size_bytes": 11420
     },
     {
       "path": "catalogs/standards_catalog.yaml",
@@ -149,13 +449,13 @@
     },
     {
       "path": "docs/02-research/AI_GAME_DEV_BENCHMARK.md",
-      "sha256": "f95fcc027ea28e8ef9374bb24a87dd78f2eff2f18bfa00c0033b7724f769c73f",
-      "size_bytes": 4801
+      "sha256": "9b24486d8e7c0c6927579bc2c835778b4e3548328aba1214324b316855a7f9ab",
+      "size_bytes": 5820
     },
     {
       "path": "docs/02-research/DCC_MCP_CORE_EVALUATION.md",
-      "sha256": "3de769d9ca9169cccde55a5d351037b3ca8902fe8d62f5f35c7889cc8c0b858d",
-      "size_bytes": 5656
+      "sha256": "a80842ceab1a71b6a6e553e29ce469a947e05dfa2078dad9cbeca77f74e1a4f2",
+      "size_bytes": 6897
     },
     {
       "path": "docs/02-research/PRIMARY_SOURCES.md",
@@ -328,6 +628,11 @@
       "size_bytes": 2699
     },
     {
+      "path": "docs/06-quality/CASE_STUDY_DARK_DIAGNOSIS.md",
+      "sha256": "0e46dc9c8a23f6ff8908694ab42f5193bdcfbf470c5b16a2a2bde70bf5f0ae7d",
+      "size_bytes": 13691
+    },
+    {
       "path": "docs/06-quality/ENGINEERING_QA.md",
       "sha256": "d7819ec6898b6f6eb7b51e55000dfde05ea848cdfc68427ce197e17866378f86",
       "size_bytes": 1863
@@ -339,8 +644,8 @@
     },
     {
       "path": "docs/06-quality/QUALITY_SYSTEM.md",
-      "sha256": "b6d2b0019befe49c310581b0153280909e70bb65bf01c7e87a957d3fa8c9cd14",
-      "size_bytes": 2483
+      "sha256": "2399fe302b444a4078bebdf3255462dbf1b15e005847cc7f2b1c95db84830978",
+      "size_bytes": 5413
     },
     {
       "path": "docs/06-quality/VISUAL_AUDIO_REVIEW.md",
@@ -469,13 +774,13 @@
     },
     {
       "path": "docs/13-execution/P0_ACCEPTANCE.md",
-      "sha256": "72d21dab265315c2c6f2f965cf3f9abf61ad47afef90069bed2084d8d37cd81c",
-      "size_bytes": 2378
+      "sha256": "4b11cd9d99d69320227cbf99e9a905dd28a4ad33096e4266f9e1e884cd62ddc3",
+      "size_bytes": 3617
     },
     {
       "path": "docs/14-adapters/ADAPTER_SUPPORT_MATRIX.md",
-      "sha256": "366ff454c830d2f341d5aa2a154ad90a2c9011c8dd6ed8afc22c3f52512de543",
-      "size_bytes": 3523
+      "sha256": "d1618be592ab12f3cbe7e940a565cfa215dc846f748c18db2ac4d0c72af92341",
+      "size_bytes": 4553
     },
     {
       "path": "docs/14-adapters/BLENDER_ADAPTER.md",
@@ -538,6 +843,31 @@
       "size_bytes": 476
     },
     {
+      "path": "docs/games/emberkeep/ART_BIBLE.md",
+      "sha256": "09eae7ae6e76d476a8d692a24084ed26cfc1a00a5e5083615b8c7fa5a6872f18",
+      "size_bytes": 5313
+    },
+    {
+      "path": "docs/superpowers/plans/2026-11-05-emberkeep-implementation-plan.md",
+      "sha256": "2d972051991534570163060883698f0db5c64b47a26d82c507f2a01cd8c2e348",
+      "size_bytes": 21451
+    },
+    {
+      "path": "docs/superpowers/plans/2026-11-05-perception-transport-plan.md",
+      "sha256": "9b09e66d2a56695ce3188034073bd3cdf7d368c66cbdc6d3eb34acd8fd1d0a66",
+      "size_bytes": 4195
+    },
+    {
+      "path": "docs/superpowers/specs/2026-11-05-emberkeep-reference-production-design.md",
+      "sha256": "5bed0e58641561469627a88745c9d2202800eb4baae3ebe576b03bfb30825e39",
+      "size_bytes": 32523
+    },
+    {
+      "path": "docs/superpowers/specs/2026-11-05-perception-transport-design.md",
+      "sha256": "8d4ded58b423669c34ff32a8639108e8a328187cf8f6cd91839d5f645a9c4db0",
+      "size_bytes": 35698
+    },
+    {
       "path": "examples/EXAMPLE_EVIDENCE_PACKAGE.md",
       "sha256": "ec8ba0bd4c5667934a93c7ba476ffee2a688c986f653eb731fe171483867a7c1",
       "size_bytes": 840
@@ -554,8 +884,363 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "fb86b55f351f9647726d384ca874d94a3ab1039723e0366d9a5ab17be9f40c77",
-      "size_bytes": 880
+      "sha256": "32226c901cd928265d2275b27e6a86f028da21f80ac776f8730c055c7c9bbef4",
+      "size_bytes": 1093
+    },
+    {
+      "path": "reports/evidence/ARTIFACTS.sha256",
+      "sha256": "f30fa6b16763ba25d17dfdf621386b803b988976bab9f86a77bd3f64cc53cf80",
+      "size_bytes": 7008
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/CAPTURE_REPORT.json",
+      "sha256": "9c179fb52ceef9337104061f4e9723680990d9b5fe2649b5060c627bad61a5ea",
+      "size_bytes": 23344
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/CRITIC_BENCH.md",
+      "sha256": "09659f2ca1a783d8f46d1c20c46ab56fb752b0d0798d777d08378aeaf33958cf",
+      "size_bytes": 2617
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/CRITIC_REPORT.json",
+      "sha256": "f4ae87d1e3337a3a82bae1c84ddf82b20a3946f6ea56f9d20d6746d2a6be4484",
+      "size_bytes": 48437
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/LEDGER_REPORT.json",
+      "sha256": "73d4c7fde0f613f2185ef9b54c3a1cf25d51429f7d2505bb493fee26c7b9e840",
+      "size_bytes": 545
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/LIVE_CAPTURE_REPORT.json",
+      "sha256": "b23a51bcd815532647030589687569e13a37d33c802912d9891f8768609a60fd",
+      "size_bytes": 4725
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/PROBE_REPORT.json",
+      "sha256": "442a7a841fd05e16d5ea0b0f86355bbd582dd9e4cb34411fd7d3a3cdae7318c7",
+      "size_bytes": 1966
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/TRANSPORT_REPORT.json",
+      "sha256": "71424ea04fcea368918e3dfec02850681d3f096eaff82da338eb0f41e47767d5",
+      "size_bytes": 6485
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/535fc9e5-d6df-732c-3282-39ad3ee3b2cb/bundle.json",
+      "sha256": "74c74c36d18a271f191f02c8271815e32ff085ae619c6e28efb04f439ced161a",
+      "size_bytes": 22366
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/535fc9e5-d6df-732c-3282-39ad3ee3b2cb/frame.png",
+      "sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+      "size_bytes": 757371
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/535fc9e5-d6df-732c-3282-39ad3ee3b2cb/light_control_all.png",
+      "sha256": "a5b4d94f2a13a6dfbb62e270c334c9ea9b47be91b4f666ec2a9f612546a780b5",
+      "size_bytes": 251808
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/535fc9e5-d6df-732c-3282-39ad3ee3b2cb/light_control_direct.png",
+      "sha256": "45e3a718a69f96712649a7e20c8fc7f514cc21a94523a56af8b0502a0d7e9e62",
+      "size_bytes": 415961
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/535fc9e5-d6df-732c-3282-39ad3ee3b2cb/light_control_emissive.png",
+      "sha256": "b336f391205b61b85e7d5265e53d7c8ec218d8d6f797a64a1f0129ab8c68a2e4",
+      "size_bytes": 762036
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/535fc9e5-d6df-732c-3282-39ad3ee3b2cb/light_control_environment.png",
+      "sha256": "20b954662b8b16915133132dc76a65c15f4cfe61c422bb296a3aaeb3cc380fb4",
+      "size_bytes": 668252
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/535fc9e5-d6df-732c-3282-39ad3ee3b2cb/mask_lantern_illumination.png",
+      "sha256": "e21fddad35e9ad79721f4dfa49a55b1b781bca1835a49fb2e0de6a014750a2e6",
+      "size_bytes": 13220
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/535fc9e5-d6df-732c-3282-39ad3ee3b2cb/mask_lantern_silhouette.png",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "size_bytes": 2357
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/535fc9e5-d6df-732c-3282-39ad3ee3b2cb/mask_lantern_visible.png",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "size_bytes": 2357
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/535fc9e5-d6df-732c-3282-39ad3ee3b2cb/mask_world_occupancy.png",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "size_bytes": 4283
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/535fc9e5-d6df-732c-3282-39ad3ee3b2cb/mask_world_visible.png",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "size_bytes": 4283
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/5d4ca9ef-1614-2f41-e47a-61067066e9e2/bundle.json",
+      "sha256": "f5b8c19795f3ab8d4ba3e20a5fd63e56818b03bc1d7d99a6499c6a9d5058b733",
+      "size_bytes": 12444
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/5d4ca9ef-1614-2f41-e47a-61067066e9e2/frame.png",
+      "sha256": "d11968219c7e61299f1baf8c8c678c38136c71e7c3dee2a1f3f255e6e895c945",
+      "size_bytes": 686386
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/5d4ca9ef-1614-2f41-e47a-61067066e9e2/mask_lantern_illumination.png",
+      "sha256": "baecd7d04aa373053c05a41633104dab574f7b73ac66320f0a5deb1f515095d9",
+      "size_bytes": 11722
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/5d4ca9ef-1614-2f41-e47a-61067066e9e2/mask_lantern_silhouette.png",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "size_bytes": 2357
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/5d4ca9ef-1614-2f41-e47a-61067066e9e2/mask_lantern_visible.png",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "size_bytes": 2357
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/5d4ca9ef-1614-2f41-e47a-61067066e9e2/mask_world_visible.png",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "size_bytes": 4283
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/614c6506-a874-b3d0-51f4-a6f5fdc5ff76/bundle.json",
+      "sha256": "c05ac13d848899af1f561f678bf2f7c3e010e9da10f049558a1ff5b62cc3e7f4",
+      "size_bytes": 14515
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/614c6506-a874-b3d0-51f4-a6f5fdc5ff76/frame.png",
+      "sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+      "size_bytes": 757371
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/614c6506-a874-b3d0-51f4-a6f5fdc5ff76/mask_lantern_illumination.png",
+      "sha256": "487a72793712e8e8355dde65b48a8a4f5e6f63d9d2026e17c107823cd50d539c",
+      "size_bytes": 13138
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/614c6506-a874-b3d0-51f4-a6f5fdc5ff76/mask_lantern_silhouette.png",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "size_bytes": 2357
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/614c6506-a874-b3d0-51f4-a6f5fdc5ff76/mask_lantern_visible.png",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "size_bytes": 2357
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/614c6506-a874-b3d0-51f4-a6f5fdc5ff76/mask_world_occupancy.png",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "size_bytes": 4283
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/614c6506-a874-b3d0-51f4-a6f5fdc5ff76/mask_world_visible.png",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "size_bytes": 4283
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/SUPERSEDED.json",
+      "sha256": "429ceaa70cda87b2516163ccb76fed7aa1099b88794457dbc252bd7a7d1570b6",
+      "size_bytes": 2874
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/af1c7c33-87b2-7da2-6d76-7fd5498682aa/bundle.json",
+      "sha256": "323be5605d5d4ebc7dd7d2f4ab70b638f1835553511d0f0ae5abe26c00d46d62",
+      "size_bytes": 14515
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/af1c7c33-87b2-7da2-6d76-7fd5498682aa/frame.png",
+      "sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+      "size_bytes": 757371
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/af1c7c33-87b2-7da2-6d76-7fd5498682aa/mask_lantern_illumination.png",
+      "sha256": "487a72793712e8e8355dde65b48a8a4f5e6f63d9d2026e17c107823cd50d539c",
+      "size_bytes": 13138
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/af1c7c33-87b2-7da2-6d76-7fd5498682aa/mask_lantern_silhouette.png",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "size_bytes": 2357
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/af1c7c33-87b2-7da2-6d76-7fd5498682aa/mask_lantern_visible.png",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "size_bytes": 2357
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/af1c7c33-87b2-7da2-6d76-7fd5498682aa/mask_world_occupancy.png",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "size_bytes": 4283
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/af1c7c33-87b2-7da2-6d76-7fd5498682aa/mask_world_visible.png",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "size_bytes": 4283
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/c50f532a-8fdf-db07-c5de-4667bd7bb599/bundle.json",
+      "sha256": "5537097fba9d7b875d9a037aa614e968493cc18a9cc9753029c74077efac736e",
+      "size_bytes": 12444
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/c50f532a-8fdf-db07-c5de-4667bd7bb599/frame.png",
+      "sha256": "29c70bf4ce02a091c2ac72f7c8f2a1455f798e6e68c2510ddb5fb3e0fd600318",
+      "size_bytes": 757371
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/c50f532a-8fdf-db07-c5de-4667bd7bb599/mask_lantern_illumination.png",
+      "sha256": "bcc63cac6a3954be617a36f808ab2126719e56d57d54033a497e7bb8176469fd",
+      "size_bytes": 13573
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/c50f532a-8fdf-db07-c5de-4667bd7bb599/mask_lantern_silhouette.png",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "size_bytes": 2357
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/c50f532a-8fdf-db07-c5de-4667bd7bb599/mask_lantern_visible.png",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "size_bytes": 2357
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/c50f532a-8fdf-db07-c5de-4667bd7bb599/mask_world_visible.png",
+      "sha256": "bf82bb64d47fa758c078764654d46e020cdae1b05402bfe392e6ebb1634cf3bb",
+      "size_bytes": 4283
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/e183e1d3-4840-a2bb-7754-eda50cf9b36d/bundle.json",
+      "sha256": "4641dd4ddddb7e87fe56c5c6433030b19a3011b369cc310289e0cce4b55b3627",
+      "size_bytes": 12441
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/e183e1d3-4840-a2bb-7754-eda50cf9b36d/frame.png",
+      "sha256": "9adad777ef2153d7fab7c21f1f71fa69c2283408254c4320e71a97e458d44aeb",
+      "size_bytes": 447557
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/e183e1d3-4840-a2bb-7754-eda50cf9b36d/mask_lantern_illumination.png",
+      "sha256": "e804c348ec7a181291fcdccbb376e231131b62b109d9704764d4f9ff51faa120",
+      "size_bytes": 8687
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/e183e1d3-4840-a2bb-7754-eda50cf9b36d/mask_lantern_silhouette.png",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "size_bytes": 2357
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/e183e1d3-4840-a2bb-7754-eda50cf9b36d/mask_lantern_visible.png",
+      "sha256": "84a5d950d1582f9de4791a14772fcf24a5822dbed1f9c08932f24ff5cdb1c0d3",
+      "size_bytes": 2357
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/captures/superseded/e183e1d3-4840-a2bb-7754-eda50cf9b36d/mask_world_visible.png",
+      "sha256": "f636020084ea625f4cf7c7f361f4a067e8f980a0cc1e38fea08d576ecaa067fc",
+      "size_bytes": 4921
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/critic-emberkeep-smoke.json",
+      "sha256": "9f63002d26071560e09f582f4616ac77ccb02f9b3439f6c36f22acfc3a51e72b",
+      "size_bytes": 27152
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/critic_bench.json",
+      "sha256": "2718231f17bcd04d20639a12746a4a59e442634ec70857b8d2e09523d79520b4",
+      "size_bytes": 1722
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/live/127eefca-d3ae-0b34-b564-752667c7ac60/bundle.json",
+      "sha256": "6fe48e93342385e6014de94cb303b4d9b92a0d4770dae10cb53f48cca27cc783",
+      "size_bytes": 5769
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/live/127eefca-d3ae-0b34-b564-752667c7ac60/frame.png",
+      "sha256": "b1fd6b10559c85fd468ee6e1806350548ed6730ec42590d1afb4c028de20b52c",
+      "size_bytes": 704612
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/live/127eefca-d3ae-0b34-b564-752667c7ac60/mask_lantern_visible.png",
+      "sha256": "5f71d5114d0521c227ec38485330fa17d93c97fe2525435f3444b34873e14706",
+      "size_bytes": 2363
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/probes/probes.json",
+      "sha256": "a96cefa6e82fd74136c95228417ea47f625809f61456ecb30e5bf34b3d065eb5",
+      "size_bytes": 2739
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/transport/frame.jpg",
+      "sha256": "5d4967c7eb4577aac7016ee0f81b0a9a404d0c4d84cd9cc7bc190da9b2e29da7",
+      "size_bytes": 130303
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/transport/mask_lantern_illumination.png",
+      "sha256": "b1e1dbfed22968d423306d9491dabfb83d028c71e0e3afea76cdd2b6ebad48a6",
+      "size_bytes": 10438
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/transport/mask_lantern_silhouette.png",
+      "sha256": "30152ba6f3aaa7922a8dff14d959a7fe0f90e329e8ee4651b73d22223e7b43b7",
+      "size_bytes": 2294
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/transport/mask_lantern_visible.png",
+      "sha256": "30152ba6f3aaa7922a8dff14d959a7fe0f90e329e8ee4651b73d22223e7b43b7",
+      "size_bytes": 2294
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/transport/mask_world_occupancy.png",
+      "sha256": "df78ba07b16aeba44db27cc5bc4a983c1c7394d3a7950caa8f632ea29bf39d6b",
+      "size_bytes": 3449
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/transport/mask_world_visible.png",
+      "sha256": "df78ba07b16aeba44db27cc5bc4a983c1c7394d3a7950caa8f632ea29bf39d6b",
+      "size_bytes": 3449
+    },
+    {
+      "path": "reports/evidence/productions/emberkeep/02-manufacture/transport/transport.json",
+      "sha256": "942199a9c1afa00f18f0c81cc74bd9f9542217805fcc6c4ab00ab401e9950c37",
+      "size_bytes": 3564
+    },
+    {
+      "path": "reports/evidence/runs/emberkeep-smoke/runtime_report.json",
+      "sha256": "a52f9ab690d70af1f302ce9e78a71a31f1e0a7cc3308ba7c1b41f88a3f5fda61",
+      "size_bytes": 764
+    },
+    {
+      "path": "reports/evidence/runs/emberkeep-smoke/shot_00_start.png",
+      "sha256": "cf5a840be14d8b2016a84ea85ea58c7b5db16e42c1e01c29604746cb57d1d7f3",
+      "size_bytes": 173855
+    },
+    {
+      "path": "reports/evidence/runs/emberkeep-smoke/shot_01_dawn.png",
+      "sha256": "cc94582072b8cc9387c9d2b113da78fcac7f04872cc7bd131350990518b172e6",
+      "size_bytes": 296125
+    },
+    {
+      "path": "reports/evidence/runs/emberkeep-smoke/shot_02_gameplay_west.png",
+      "sha256": "663f6f81a6d36ce4eb2c40b894cdd1ea9f7ca06145d4cf9f620d80a304f591c5",
+      "size_bytes": 379363
+    },
+    {
+      "path": "reports/evidence/runs/emberkeep-smoke/shot_03_beacon_lit.png",
+      "sha256": "1acbecab9cf26c87a91797213cdead7d0729d7c1a3c9717e5faac64ee8963ef1",
+      "size_bytes": 337389
+    },
+    {
+      "path": "reports/p0/P0-EVIDENCE-2026-11-06.json",
+      "sha256": "e6896cac62f17de70a04ceebcdd7a863dedbb7f673b56a54f71b7ada1433f766",
+      "size_bytes": 10450
     },
     {
       "path": "reports/validation/BUILD-VALIDATION-2026-11-04.json",
@@ -564,8 +1249,13 @@
     },
     {
       "path": "requirements-dev.txt",
-      "sha256": "ec3bbf0ff272f25e14bd70e668c54c33b69f1e4f6ae4f1d1f718886ae61704b5",
-      "size_bytes": 135
+      "sha256": "63654481a12db8b16f58d24a2487c34f525f358c651badff5d6f7fd724a3603c",
+      "size_bytes": 138
+    },
+    {
+      "path": "schemas/art-direction.schema.json",
+      "sha256": "c67fd3e8e5960e1001a635ae304c1f8ee8e6f4baa2c60456488d5d686ae3b102",
+      "size_bytes": 7616
     },
     {
       "path": "schemas/artifact-manifest.schema.json",
@@ -576,6 +1266,11 @@
       "path": "schemas/capability.schema.json",
       "sha256": "f49b5bbd667f9af435636c6312912b390e9a2bb75fb718392b006bb44a156127",
       "size_bytes": 1520
+    },
+    {
+      "path": "schemas/capture-bundle.schema.json",
+      "sha256": "c6159dc44324a6010c7296749428e6858325d4acda053964db13bc0d7676f19d",
+      "size_bytes": 6840
     },
     {
       "path": "schemas/job.schema.json",
@@ -613,14 +1308,59 @@
       "size_bytes": 1250
     },
     {
+      "path": "scripts/audio/synthesize.py",
+      "sha256": "7d46afbe75c20cccbcd2ef21eecb750fa4be09c78918663013dee8bb5dd7f373",
+      "size_bytes": 5599
+    },
+    {
+      "path": "scripts/blender/asset_ingest.py",
+      "sha256": "b5e3b5d77cbd1b2b7c2433d8100fda969a7223825c9a58b8d0ac39e285bb0575",
+      "size_bytes": 15021
+    },
+    {
+      "path": "scripts/blender/author_assets.py",
+      "sha256": "9b48e48132701bc7965a14cd758fa8f3351cbf1e6c10b82c626b65c733a64c03",
+      "size_bytes": 19710
+    },
+    {
+      "path": "scripts/evidence/manifest.py",
+      "sha256": "92eb74f6814d5dc6ce6e325deec8fa60bf0f3100ae38dc104fc4df16c60c4927",
+      "size_bytes": 3968
+    },
+    {
       "path": "scripts/generate_manifest.py",
-      "sha256": "82e63b14fb195dfd3d1ed8ca4c18328d0f127a1252a506d347edf36ce2370a13",
-      "size_bytes": 1768
+      "sha256": "d8199f31725855c5b55d20c8d351b24485795144a99ec5130f64bed6e1e3ea55",
+      "size_bytes": 2735
     },
     {
       "path": "scripts/linux/bootstrap.sh",
       "sha256": "712f5cf744ebe4aed0f6ae3ea72c06db2390e5b10383daae7b934b1e6da8d0d9",
       "size_bytes": 422
+    },
+    {
+      "path": "scripts/perception/emberkeep_capture.py",
+      "sha256": "87936a234e88b58e47a755fa79b07e61162fc4494b63e9041cc9c1de45906b0d",
+      "size_bytes": 7380
+    },
+    {
+      "path": "scripts/perception/live_and_probe.py",
+      "sha256": "0cd564e6fe6ded74671b2eb92f32056dffbc2ca61adcde50af21aad0036fcf76",
+      "size_bytes": 5271
+    },
+    {
+      "path": "scripts/perception/preview_lighting.py",
+      "sha256": "f3cda4018238873b29b7da081c52ada861ca3a6f9cf736c5b5e3608f9cf9129c",
+      "size_bytes": 2991
+    },
+    {
+      "path": "scripts/pipelines/comfy_exec.py",
+      "sha256": "37ec78e9c852ac93d87c593e1e14af7c1c9e2bd5a4ffe70a8198d055bef6f865",
+      "size_bytes": 9112
+    },
+    {
+      "path": "scripts/quality/critic_bench.py",
+      "sha256": "05953a14f418ff3af609c0b73291818fd0039dc48fcbc5001273276c56418a42",
+      "size_bytes": 8291
     },
     {
       "path": "scripts/verify_repo.py",
@@ -629,8 +1369,8 @@
     },
     {
       "path": "scripts/windows/bootstrap.ps1",
-      "sha256": "4ee1904ec19c18b0f199c8ab18619a382f7d4ae55da7d664327d30a6d356bbd0",
-      "size_bytes": 1067
+      "sha256": "ad9cfaf2d6eb9f19526c7eb09de202e0b36cd3bea352c3a7036b51f7023de6e3",
+      "size_bytes": 1091
     },
     {
       "path": "scripts/windows/mcp-config.example.json",
@@ -709,13 +1449,18 @@
     },
     {
       "path": "src/elevenvt_studio/adapters/comfyui.py",
-      "sha256": "5454a50e9d934ccb4d8d9fbbbeb0c0ac50642bc7b21d4cf82c42b7da60bc0938",
-      "size_bytes": 7474
+      "sha256": "476d8df0a976f25226067a265912d07fc034637a8f21c2849602f91bc4836c07",
+      "size_bytes": 11097
+    },
+    {
+      "path": "src/elevenvt_studio/adapters/godot_capture.py",
+      "sha256": "7f5f47260d60fdade369c9a19e09dda69eff01509164e015d505670d4495307e",
+      "size_bytes": 22071
     },
     {
       "path": "src/elevenvt_studio/adapters/process.py",
-      "sha256": "13c28982cf62ed2181e6aa6e4eb5b87ba174be47b29b27978b7cd6d3df002683",
-      "size_bytes": 2406
+      "sha256": "07c06d50c6f7df211b0cb3101afa456c05fe8d6c4d8dda1ad637c815de67dd78",
+      "size_bytes": 2801
     },
     {
       "path": "src/elevenvt_studio/agent/provider.py",
@@ -729,23 +1474,23 @@
     },
     {
       "path": "src/elevenvt_studio/cli.py",
-      "sha256": "78893aaa5c4078875d8b97f7acc969848aee0d1f11a3a394dda50ff54cb95773",
-      "size_bytes": 9501
+      "sha256": "3d954ed4af8685811d29e03045b03dc7ed87032cf435b65ab5b448cc649c8627",
+      "size_bytes": 10836
     },
     {
       "path": "src/elevenvt_studio/config.py",
-      "sha256": "8e78ad1d9f944ba47579c3377cbaa7424255adb6f9e5db36c7f7618d897cc817",
-      "size_bytes": 3712
+      "sha256": "b10b11db9bb1e2e534e57b65af7b597d2f90bf9542430a39796f96fb4f49d62d",
+      "size_bytes": 3854
     },
     {
       "path": "src/elevenvt_studio/data/capabilities.json",
-      "sha256": "ddc6c0e3d67ea9a25ef364030aaf57f29dd0b71e401eb83515a2c9949a5e96df",
-      "size_bytes": 7355
+      "sha256": "9b6f8a2ba000f174df26f17b471c30fd1b498676358d4190851da64b84122181",
+      "size_bytes": 11420
     },
     {
       "path": "src/elevenvt_studio/db.py",
-      "sha256": "0d6a2e2bea6dffb5f142cf8d180c909338e522f7f8a2b09589159bc75dce9c41",
-      "size_bytes": 5482
+      "sha256": "0cd51582ed48e291db9d316951b6c05a1f980602e0a6835726a8f923d7e783f0",
+      "size_bytes": 7378
     },
     {
       "path": "src/elevenvt_studio/errors.py",
@@ -754,8 +1499,13 @@
     },
     {
       "path": "src/elevenvt_studio/jobs.py",
-      "sha256": "57db72329e5d67c7ffdcfec12b9891a32c676f8b8e3e08b202ae1e28b9568569",
-      "size_bytes": 15459
+      "sha256": "dead7027284ae6fb669ec5ef27c7d29992a398d19d09bd9eb0c92f8b07abc0e3",
+      "size_bytes": 17030
+    },
+    {
+      "path": "src/elevenvt_studio/ledger.py",
+      "sha256": "d8416bb04aa7f09848734ecc8a7f1bd9e98be2f343bf47aab1ef0e4442db1f4f",
+      "size_bytes": 7834
     },
     {
       "path": "src/elevenvt_studio/locking.py",
@@ -769,13 +1519,13 @@
     },
     {
       "path": "src/elevenvt_studio/mcp/sdk_server.py",
-      "sha256": "1aedbd4db405c05c4dbcba2f46445cc40dbd063c14442b1628abf43cc6035bc2",
-      "size_bytes": 6323
+      "sha256": "9f864bdda6e2d67d3030c85f6f1bd51e5c01b463d2ef74d0af0d9fed14066c0c",
+      "size_bytes": 8639
     },
     {
       "path": "src/elevenvt_studio/mcp/server.py",
-      "sha256": "16d07329f2aa297f310c65dd888490b628f5f693c789152643920a275e4a5aa2",
-      "size_bytes": 7007
+      "sha256": "8e834406034ef60ec032538e1ce11c548f7c1fabe19bdcd315a447428aed8fdb",
+      "size_bytes": 8050
     },
     {
       "path": "src/elevenvt_studio/observability.py",
@@ -788,14 +1538,64 @@
       "size_bytes": 1920
     },
     {
+      "path": "src/elevenvt_studio/perception/__init__.py",
+      "sha256": "17881ad5f5606fe7d26177ca0c3ffbc7cbc6850e998fd80b89a27724b7b80c68",
+      "size_bytes": 637
+    },
+    {
       "path": "src/elevenvt_studio/perception/bundle.py",
-      "sha256": "1775f41bc7aabd50583e6966e5154bba2e634ad9f2e41cf0e352ed31a6b4ac40",
-      "size_bytes": 15942
+      "sha256": "ee6197d396a523c6da45377b4891a8683666082d67fee6cdab1300e1f069c79f",
+      "size_bytes": 16329
+    },
+    {
+      "path": "src/elevenvt_studio/perception/probe.py",
+      "sha256": "987b3bc7b825b5dbbf5103c31bfa1cac7a32504ad0e3f7d23cbbccbae594e5fb",
+      "size_bytes": 6346
+    },
+    {
+      "path": "src/elevenvt_studio/perception/tools.py",
+      "sha256": "a0f4d1647a8b6940a61beffcfd5be37c1e3e92eb290f3b1644d6ab89b6667052",
+      "size_bytes": 12512
+    },
+    {
+      "path": "src/elevenvt_studio/perception/transport.py",
+      "sha256": "21f377b32730fb3fd0a55044216ff57ea08c097b3c7dc9a09ec13ad48baf8679",
+      "size_bytes": 10915
     },
     {
       "path": "src/elevenvt_studio/policy.py",
       "sha256": "e171fb5003e1cf6a2bd4ab485e3bbbd85e42dc0a290185ad80dbc510757a6c0e",
       "size_bytes": 5594
+    },
+    {
+      "path": "src/elevenvt_studio/quality/__init__.py",
+      "sha256": "d829fb83ee474219e03729b01acd35d7e121c8c46c3aea44fb82b7aaf4e047a6",
+      "size_bytes": 487
+    },
+    {
+      "path": "src/elevenvt_studio/quality/art_direction.py",
+      "sha256": "7ab7531d6964e216d826be4ad37f33867eaccbee2366ebcdd48a9112caec1e65",
+      "size_bytes": 8191
+    },
+    {
+      "path": "src/elevenvt_studio/quality/binding.py",
+      "sha256": "b5795b367c6f4af864a0db0485ef0810f93f82597b5aa2f30a22f6344253880b",
+      "size_bytes": 3581
+    },
+    {
+      "path": "src/elevenvt_studio/quality/critic.py",
+      "sha256": "5cd0824435a88fe30d81ea0e39051752e7728ef68d8c50fd246c12be1954a498",
+      "size_bytes": 17099
+    },
+    {
+      "path": "src/elevenvt_studio/quality/metrics.py",
+      "sha256": "38274c4ca65c6611c0df046a24bf5d3e95f1bfdc6e32da58993cc3d2f4b75045",
+      "size_bytes": 38796
+    },
+    {
+      "path": "src/elevenvt_studio/quality/taxonomy.py",
+      "sha256": "f19504c44250238569a660bfb7ce153c44c43dfa9ec7adab5700ecffa75f0587",
+      "size_bytes": 3956
     },
     {
       "path": "src/elevenvt_studio/registry.py",
@@ -809,8 +1609,8 @@
     },
     {
       "path": "src/elevenvt_studio/service.py",
-      "sha256": "e15ac7d56422d92672a7fbf4d871c97a90572a408edfcd587d8a54ad40581a9c",
-      "size_bytes": 21646
+      "sha256": "fbae0c515df47d5204ede56684bfff849f6618860bf1e3889378cca07a224f33",
+      "size_bytes": 29883
     },
     {
       "path": "templates/ACCEPTANCE_TEST_TEMPLATE.md",
@@ -848,9 +1648,54 @@
       "size_bytes": 318
     },
     {
+      "path": "tests/godot/mask_fixture/main.gd",
+      "sha256": "9c5694fd3df2e3e9c80f92264e1cd41fe566cecfb4bcd6ed52f70bcc99bf09f0",
+      "size_bytes": 4871
+    },
+    {
+      "path": "tests/godot/mask_fixture/main.tscn",
+      "sha256": "48c33cef16d91f694062d8411c71806eede0a530f57f4664f260340e374b4d41",
+      "size_bytes": 161
+    },
+    {
+      "path": "tests/godot/mask_fixture/project.godot",
+      "sha256": "3154aac1d89b8b0a279f2c11e8ada98b4f7c39bce87846d8c65d7a561e00b5e0",
+      "size_bytes": 594
+    },
+    {
+      "path": "tests/perception_support.py",
+      "sha256": "537cb6de1a9bf59f11c33ae9b117f3c90eaf3c502851ca86d5de7a2c29f23a77",
+      "size_bytes": 5315
+    },
+    {
       "path": "tests/test_adapters.py",
       "sha256": "7ce40b60610961fb5f34024d59be1f426777733b9931da31bd031396880badb3",
       "size_bytes": 7767
+    },
+    {
+      "path": "tests/test_art_direction.py",
+      "sha256": "4ed24ea3ab2b2ccb1f27f016b39267893993909303a35238ee1d3b5177830f2b",
+      "size_bytes": 7781
+    },
+    {
+      "path": "tests/test_capture_token.py",
+      "sha256": "4761273eb18c05f12c1bbeb5a261238dbf89af8f31a7ac03252e5cc84dc276ad",
+      "size_bytes": 1898
+    },
+    {
+      "path": "tests/test_critic_spatial.py",
+      "sha256": "90ba885eab99e223da29e03de17bcf376e6a33fa5db5d8bb48849db1800711fc",
+      "size_bytes": 14838
+    },
+    {
+      "path": "tests/test_critic_thresholds.py",
+      "sha256": "b592350443405f206e5ee8fa1912997b7aaecfae27d13db8a0987df9db7a3db5",
+      "size_bytes": 3407
+    },
+    {
+      "path": "tests/test_ledger.py",
+      "sha256": "f5d8713288a7bd551505379ec620e613129dbf45fbdb3ec07f2909c482a59fc5",
+      "size_bytes": 3494
     },
     {
       "path": "tests/test_mcp.py",
@@ -868,24 +1713,69 @@
       "size_bytes": 1136
     },
     {
+      "path": "tests/test_metrics.py",
+      "sha256": "48d9c74e646294cd4ea36397075a852a5330c91c1723f1c9bb83c8dbc30ba9dc",
+      "size_bytes": 4310
+    },
+    {
+      "path": "tests/test_migration_v2.py",
+      "sha256": "573ce4c34c1783524e25e046002f1dd5144157f062fd0047be0b89184d2328cf",
+      "size_bytes": 2461
+    },
+    {
       "path": "tests/test_paths.py",
       "sha256": "15ffc35787c1f4d2b224f0bdd188ddd32bea4a8322006142990be5e65b8776eb",
       "size_bytes": 923
     },
     {
       "path": "tests/test_perception_bundle.py",
-      "sha256": "707cbfaf795ada6ac22f018c0abe4a3d4b108ede28169c81bb336fb2fb9659e5",
-      "size_bytes": 7582
+      "sha256": "555d569372b1728be930328bc3270691bbae4e0feacadb026ec53f1216e603aa",
+      "size_bytes": 7769
+    },
+    {
+      "path": "tests/test_perception_godot_fixture.py",
+      "sha256": "9453c652e75af0579b6dd76c4157dfbacb57ee48ee6c53ab1fd10ffcaca69744",
+      "size_bytes": 3500
+    },
+    {
+      "path": "tests/test_perception_live.py",
+      "sha256": "5ceb2dcf3e56c2a18c6cf07b43b1375a2031be8265bb85e09b03321fd817d778",
+      "size_bytes": 4228
+    },
+    {
+      "path": "tests/test_perception_mcp.py",
+      "sha256": "d66ceeb106163271915ad8c371b75a4b1dbeb1ac60f4d9e91f0422c71725c97c",
+      "size_bytes": 7039
+    },
+    {
+      "path": "tests/test_perception_probe.py",
+      "sha256": "445528a963cb4e73dd7087e4c8f7f6edcb432a469450462ab1d9a43f1984de6d",
+      "size_bytes": 3093
+    },
+    {
+      "path": "tests/test_perception_transport.py",
+      "sha256": "897c4d13ade83dc771fd273a65ea2b79b6284b8afcb31c855c2c31b9db67fd28",
+      "size_bytes": 4356
     },
     {
       "path": "tests/test_recovery.py",
-      "sha256": "7efd874dd67f453e91dff3a6e72e73dae1f69a88fcfac833ac6987f897a2c75a",
-      "size_bytes": 4032
+      "sha256": "49d0eb9ffbeda10f3f633b0e862dd539fead9786073c0d1e2b6966022e0b1aea",
+      "size_bytes": 4156
     },
     {
       "path": "tests/test_runtime.py",
       "sha256": "01adc792deee835e2c230a5241b734a2ffb149dab43ed8c1b0ce1c0b33aef6ac",
       "size_bytes": 6526
+    },
+    {
+      "path": "workflows/generation/flux2_klein_txt2img.api.json",
+      "sha256": "ae02edc62d7c2d546e0d399d20cd9885437e03bf5969a5daf90c538f28fc7e19",
+      "size_bytes": 1843
+    },
+    {
+      "path": "workflows/generation/hunyuan3d_image_to_mesh.api.json",
+      "sha256": "7e33ea94b0d76dd5a6accea8374049b0f9a1367b8cd236cd654fa854ca77f147",
+      "size_bytes": 1951
     }
   ],
   "generated_for": "source and handoff integrity; excludes Git metadata, caches, virtual environments and itself",

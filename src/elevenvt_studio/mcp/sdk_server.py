@@ -82,6 +82,11 @@ def build_server(service: Any):
         return tool_call(service.jobs.status, job_id)
 
     @server.tool()
+    def job_cancel(job_id: str, reason: str = "") -> dict[str, Any]:
+        """Cancel a live job; it stops at the next task boundary instead of being force-killed."""
+        return tool_call(service.jobs.cancel, job_id, reason=reason)
+
+    @server.tool()
     def job_list(status: str | None = None, limit: int = 100) -> list[dict[str, Any]]:
         """List recent jobs, optionally filtered by status."""
         return tool_call(service.jobs.list, status, limit)

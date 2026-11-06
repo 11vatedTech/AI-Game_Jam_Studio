@@ -1,0 +1,305 @@
+{
+  "direct_runtime_dependencies": [
+    "jsonschema",
+    "mcp",
+    "numpy",
+    "pillow",
+    "psutil",
+    "pytest",
+    "scikit-image"
+  ],
+  "generator": "scripts/release/sbom.py",
+  "package_count": 47,
+  "packages": [
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "annotated-types",
+      "version": "0.8.0"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "anyio",
+      "version": "4.16.0"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "attrs",
+      "version": "26.1.0"
+    },
+    {
+      "license": "MIT-0",
+      "license_files": [],
+      "name": "cffi",
+      "version": "2.1.1"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "license_files": [],
+      "name": "click",
+      "version": "8.5.0"
+    },
+    {
+      "license": "BSD License",
+      "license_files": [],
+      "name": "colorama",
+      "version": "0.4.6"
+    },
+    {
+      "license": "Apache-2.0 OR BSD-3-Clause",
+      "license_files": [],
+      "name": "cryptography",
+      "version": "50.0.2"
+    },
+    {
+      "license": "Proprietary project specification; see LICENSE_POLICY.md",
+      "license_files": [],
+      "name": "elevenvt-ai-game-jam-studio",
+      "version": "0.2.0"
+    },
+    {
+      "license": "Proprietary project specification; see LICENSE_POLICY.md",
+      "license_files": [],
+      "name": "elevenvt-ai-game-jam-studio",
+      "version": "0.2.0"
+    },
+    {
+      "license": "MIT License",
+      "license_files": [],
+      "name": "h11",
+      "version": "0.16.0"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "license_files": [],
+      "name": "httpcore2",
+      "version": "2.16.0"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "license_files": [],
+      "name": "httpx2",
+      "version": "2.16.0"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "license_files": [],
+      "name": "idna",
+      "version": "3.20"
+    },
+    {
+      "license": "BSD-2-Clause",
+      "license_files": [],
+      "name": "ImageIO",
+      "version": "2.38.1"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "iniconfig",
+      "version": "2.3.1"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "jsonschema",
+      "version": "4.26.0"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "license_files": [],
+      "name": "lazy-loader",
+      "version": "0.6"
+    },
+    {
+      "license": "MIT License",
+      "license_files": [],
+      "name": "mcp",
+      "version": "2.3.0"
+    },
+    {
+      "license": "MIT License",
+      "license_files": [],
+      "name": "mcp-types",
+      "version": "2.3.0"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "license_files": [],
+      "name": "networkx",
+      "version": "3.7"
+    },
+    {
+      "license": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "license_files": [],
+      "name": "numpy",
+      "version": "2.5.4"
+    },
+    {
+      "license": "Apache-2.0",
+      "license_files": [],
+      "name": "opentelemetry-api",
+      "version": "1.45.2"
+    },
+    {
+      "license": "Apache-2.0 OR BSD-2-Clause",
+      "license_files": [],
+      "name": "packaging",
+      "version": "26.3"
+    },
+    {
+      "license": "MIT-CMU",
+      "license_files": [],
+      "name": "pillow",
+      "version": "13.0.0"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "pip",
+      "version": "26.3"
+    },
+    {
+      "license": "MIT License",
+      "license_files": [],
+      "name": "pluggy",
+      "version": "1.7.0"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "license_files": [
+        "psutil-7.2.2.dist-info/LICENSE"
+      ],
+      "name": "psutil",
+      "version": "7.2.2"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "license_files": [],
+      "name": "pycparser",
+      "version": "3.12"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "pydantic",
+      "version": "2.14.2"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "pydantic_core",
+      "version": "2.50.2"
+    },
+    {
+      "license": "BSD-2-Clause",
+      "license_files": [],
+      "name": "Pygments",
+      "version": "2.21.0"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "PyJWT",
+      "version": "2.15.1"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "pytest",
+      "version": "9.2.0"
+    },
+    {
+      "license": "Apache-2.0",
+      "license_files": [],
+      "name": "python-multipart",
+      "version": "0.0.33"
+    },
+    {
+      "license": "Python Software Foundation License",
+      "license_files": [],
+      "name": "pywin32",
+      "version": "312"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "referencing",
+      "version": "0.37.0"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "rpds-py",
+      "version": "2026.9.1"
+    },
+    {
+      "license": "BSD License",
+      "license_files": [
+        "scikit_image-0.26.0.dist-info/LICENSE.txt"
+      ],
+      "name": "scikit-image",
+      "version": "0.26.0"
+    },
+    {
+      "license": "BSD License",
+      "license_files": [
+        "scipy-1.18.1.dist-info/LICENSE.txt"
+      ],
+      "name": "scipy",
+      "version": "1.18.1"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "license_files": [],
+      "name": "sse-starlette",
+      "version": "3.6.0"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "license_files": [],
+      "name": "starlette",
+      "version": "1.10.0"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "license_files": [],
+      "name": "tifffile",
+      "version": "2026.10.15"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "truststore",
+      "version": "0.10.5"
+    },
+    {
+      "license": "MIT",
+      "license_files": [],
+      "name": "typing-inspection",
+      "version": "0.4.5"
+    },
+    {
+      "license": "PSF-2.0",
+      "license_files": [],
+      "name": "typing_extensions",
+      "version": "4.16.0"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "license_files": [],
+      "name": "uvicorn",
+      "version": "0.54.0"
+    }
+  ],
+  "python": "3.12.10",
+  "unknown_license": []
+}

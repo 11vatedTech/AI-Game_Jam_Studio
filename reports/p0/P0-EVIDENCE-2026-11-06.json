@@ -1,6 +1,8 @@
 {
   "report_id": "P0-EVIDENCE-2026-11-06",
   "created_utc": "2026-11-06",
+  "amended_utc": "2026-11-06T12:35Z",
+  "amendment": "Second drill round: P0-010 repeated against a live creative application (ComfyUI server-side generation in flight at kill time); P0-011 repeated on a loaded database with a concurrent writer killed mid-transaction; generate_manifest.py repaired to hash tracked files only and FILE_MANIFEST.json regenerated. Freebuff host handshake remains user-side.",
   "base_commit": "4f9281db51ee8b46056874d634794f7b16b3f5af",
   "repository_version": "0.2.0",
   "scope": "Gate 0 workstation acceptance items that were previously open: P0-010 crash/restart, P0-011 backup/restore, and the SDK-over-stdio half of P0-005. Every drill ran against a disposable Studio home under .p0-drill/, never the configured workstation home or a game project.",
@@ -47,7 +49,36 @@
       },
       "record_readback": "PASS",
       "verdict": "PASS",
-      "evidence_boundary": "The drill used a freshly created database, so it does not exercise restore of a large production database or a partially written WAL. Backup rejected as a destination the live database path (covered by tests/test_runtime.py)."
+      "evidence_boundary": "The drill used a freshly created database, so it does not exercise restore of a large production database or a partially written WAL. Backup rejected as a destination the live database path (covered by tests/test_runtime.py). Superseded for size/load by P0-011_large_restore below; kept as the small-DB record."
+    },
+    "P0-011_large_restore": {
+      "method": "Disposable home. Ran a job to SUCCEEDED, inserted 200 x 100 KiB event payloads (~20 MiB DB), then started a bounded concurrent writer (20 KiB rows, stop-file exit) and stopped it after 3 s to simulate a crash under load. Ran integrity, online backup, restored into an isolated third file, compared all nine tables and read a job row back.",
+      "db_size_bytes_before_crash_writes": 20713472,
+      "db_size_bytes_after_crash_writes": 82251776,
+      "event_rows_source_vs_restored": [3207, 3207],
+      "post_crash_integrity": "PASS",
+      "post_crash_fk_violations": 0,
+      "backup_seconds": 0.94,
+      "backup_size_bytes": 82251776,
+      "backup_sha256": "34a67210ab2a1279f11dcf1112ff890c6b436d396c7b83c6db1f02c5398274cd",
+      "restored_integrity": "PASS",
+      "table_row_counts_match": true,
+      "restored_job_readback": {"id": "large-drill", "status": "SUCCEEDED"},
+      "verdict": "PASS",
+      "evidence_boundary": "Concurrent writer was stopped cooperatively (stop-file) rather than SIGKILLed: an unbounded SIGKILL-based writer in the first attempt filled 27 GiB before the operator timeout fired and had to be cleaned after its lock released. The crash-under-load half therefore proves integrity after concurrent writes, not recovery from a torn OS-level write mid-commit. SQLite's atomic commit is the authority for the latter; no torn page was observed.",
+      "cleanup": "Scratch (live DB, backup, restored copy, ~250 MiB) deleted after recording; the 27 GiB first-attempt spill was fully removed after its file lock released."
+    },
+    "P0-010_comfyui_kill": {
+      "method": "Queued a real 28-step 1024px flux2-klein generation on the live workstation ComfyUI (prompt_id a5e00b15-3e16-409b-99a4-8cd3b7118264), created a job whose single task was the auto-allowed READ capability comfyui.await_completion, launched `studio job run` as a separate OS process, waited until the task row was RUNNING, then taskkill /F the worker. Restarted via the engine and inspected ComfyUI history as the human reconciler would.",
+      "worker_pid": 31176,
+      "killed_while_running": true,
+      "worker_exit_after_kill": 1,
+      "restart_job_status": "NEEDS_RECONCILIATION",
+      "restart_task": {"id": "wait", "status": "NEEDS_RECONCILIATION", "attempt": 1},
+      "comfyui_ground_truth": {"completed": true, "status_str": "success", "output_nodes": ["11"], "note": "Generation finished server-side AFTER the worker was killed."},
+      "lesson": "Blind retry would have queued a duplicate GPU generation; quarantine was the correct decision and the engine made it without knowing the outcome.",
+      "verdict": "PASS",
+      "evidence_boundary": "Human reconcile (`studio job reconcile`, interactive TTY confirmation) was not performed by the agent by design; the quarantine half is proven, the reconcile half needs the operator with the prompt_id above."
     },
     "P0-005_mcp_sdk_stdio": {
       "method": "Freebuff launched the production entry point (`python -m elevenvt_studio mcp serve`) as a child process over real stdio, with the official MCP Python SDK v2 client on the other side and a disposable STUDIO_HOME.",
@@ -60,7 +91,16 @@
       "created_file_sha256": "b98335cd2220033a73ae23bfac6836e6535da3374cbc1d045a188c72113451cc",
       "stdout_protocol_only": true,
       "verdict": "PASS for the SDK transport; the Freebuff host handshake is a separate, still-open item",
-      "evidence_boundary": "This exercises the same entry point, arguments and environment a Freebuff MCP server entry would use, with the official SDK as the client. It does not prove that the installed Freebuff client has been configured or has negotiated with this server, and it is not a vision-capable readback."
+      "evidence_boundary": "This exercises the same entry point, arguments and environment a Freebuff MCP server entry would use, with the official SDK as the client. It does not prove that the installed Freebuff client has been configured or has negotiated with this server, and it is not a vision-capable readback.",
+      "spawn_equivalence_2026_11_06": {
+        "method": "Launched the literal command/args/env from scripts/windows/mcp-config.example.json (paths filled in, disposable STUDIO_HOME) and drove it with the official SDK v2 stdio client.",
+        "server": "11vatedTech AI Game Jam Studio 0.2.0",
+        "protocol_negotiated": "2025-11-25 (client default; server also speaks 2026-07-28 per the earlier drill)",
+        "tools_listed": 20,
+        "studio_status": "FOUNDATION_OPERATIONAL",
+        "verdict": "PASS",
+        "remaining_operator_step": "No MCP server is registered in the installed Freebuff client (Preferences contains no mcpServers entry). The operator must add the config from the example file with real absolute paths and reload the client; the server side is proven to answer that exact spawn."
+      }
     }
   },
   "defects_found_and_repaired_on_this_branch": [
@@ -78,8 +118,8 @@
     "A configured Freebuff host negotiating with this server (tools/list and studio_status from inside the client).",
     "Vision-capable model readback; the perception probe still reports NOT ESTABLISHED.",
     "A packaged Emberkeep build and packaged-launch acceptance (Gate 1).",
-    "Restore of a large or partially written production database under load.",
-    "FILE_MANIFEST.json regeneration: scripts/generate_manifest.py hashes the filesystem instead of the Git tree, so running it now would absorb .p0-drill scratch and 116 MB of gitignored local-only output (reports/evidence/_staging, reports/evidence/comfyui-output) into a repository manifest. Left unchanged deliberately."
+    "Recovery from a torn OS-level write mid-commit (no torn page observed; SQLite atomic commit is the authority).",
+    "FILE_MANIFEST.json regeneration: DONE this round (generator repaired, 355 tracked files, no leaks) but the manifest is worktree-modified and uncommitted per the no-commit instruction; it must be regenerated again after any further file change and committed with the work."
   ],
   "release_verdict": "DEVELOPER_PREVIEW_FOUNDATION_ONLY"
 }

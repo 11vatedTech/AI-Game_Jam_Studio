@@ -1,0 +1,52 @@
+{
+  "report_id": "EMBERKEEP-PACKAGE-2026-11-06",
+  "gate": "Gate 1 (first packaged release of the reference production)",
+  "base_commit": "4f9281db51ee8b46056874d634794f7b16b3f5af plus uncommitted export_presets.cfg and main.gd headless-smoke guard",
+  "engine": "Godot 4.7.2.stable.official.ed1daf0bf, export templates 4.7.2.stable",
+  "target": "Windows Desktop x86_64 release",
+  "export": {
+    "preset_file": "Games/emberkeep/game/export_presets.cfg",
+    "preset_name": "Windows Desktop",
+    "command": "godot --headless --path . --export-release \"Windows Desktop\"",
+    "editor_import_exit": 0,
+    "artifacts": {
+      "emberkeep.exe": {"size_bytes": 109127680, "sha256": "cafc3b9a9c20ad2e8b0eb20c6f48b8ddd2fadf7916fe30a6f88d08d1a23af85b"},
+      "emberkeep.pck": {"size_bytes": 2760832, "sha256": "8e41651fd22908c97ce6c79de20c6839f2a7a8bcea90d3b2f2954e6355d411a8"}
+    },
+    "note": "Binaries live in gitignored Games/emberkeep/dist/ and were copied to a clean Temp dir for launch testing; hashes above identify the tested build."
+  },
+  "packaged_launch": {
+    "method": "Copied exe+pck to an empty directory (no project sources present) and ran with the game's own smoke flags.",
+    "command": "emberkeep.exe --headless -- --smoke --shot-dir=<clean dir>",
+    "frames_only_command": "emberkeep.exe --headless --quit-after 120",
+    "frames_only_exit": 0,
+    "smoke_runs": [
+      {"run": 1, "exit": 0, "state": "WON"},
+      {"run": 2, "exit": 0, "state": "WON"},
+      {"run": 3, "exit": 0, "state": "WON"}
+    ],
+    "steps_verified": ["warmth_drains", "mote_restores", "ignite_0", "ignite_1", "ignite_2", "win_state"],
+    "failures": []
+  },
+  "headless_screenshot_limitation": {
+    "finding": "The first packaged smoke timed out: _shot() awaits RenderingServer.frame_post_draw, which never fires under the dummy renderer, so the 75 s watchdog quit(2).",
+    "repair": "main.gd _shot() now detects DisplayServer headless, skips capture, records the label in shots_skipped_headless, and continues. Headless smoke verifies gameplay logic; screenshots are a headed concern.",
+    "rule": "A test harness must never wait unboundedly on a renderer signal that a headless driver cannot produce."
+  },
+  "performance_baseline": {
+    "method": "600 headless frames (logic + physics on CPU, dummy renderer; NOT a GPU rendering benchmark)",
+    "wall_seconds": 4.72,
+    "note": "Headed GPU frame-rate profiling on the RTX 5070 Ti remains open; headless timing only proves the simulation is cheap."
+  },
+  "known_non_blockers": [
+    "Exit logs show 4 ObjectDB instances leaked and 2 resources still in use on abrupt --quit-after exit; smoke runs that quit through the game path report no errors.",
+    "Headed screenshots and headed GPU profiling of the packaged build were not run (would open windows on the operator's desktop); in-editor headed capture evidence already exists under 02-manufacture."
+  ],
+  "not_yet_established": [
+    "Human craft review of the packaged build (art/audio quality judgement).",
+    "Human rights review of all source lineage (model licenses, font, audio provenance).",
+    "Headed packaged-build screenshots and GPU frame-rate profile.",
+    "Installer/packaging beyond the raw exe+pck pair."
+  ],
+  "verdict": "PASS for automated packaged acceptance; Gate 1 complete except human craft/rights review and headed GPU profiling."
+}
