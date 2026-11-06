@@ -8,6 +8,8 @@ A production task is a graph of typed nodes and edges. Each node declares: objec
 
 `CREATED → VALIDATING → READY → RUNNING → WAITING_FOR_TOOL / WAITING_FOR_APPROVAL / WAITING_FOR_RESOURCE → VERIFYING → SUCCEEDED | FAILED | CANCELLED | BLOCKED`.
 
+Cancelling a RUNNING job moves it to non-terminal `CANCELLING` (`RUNNING → CANCELLING → CANCELLED` at the next task boundary). The in-flight task is never force-killed; a worker crash first quarantines any RUNNING task to `NEEDS_RECONCILIATION`, and a cancel that lands during the final task wins over the success aggregation.
+
 Terminal states are immutable except through an explicit superseding job or correction event. A retry creates an attempt record under the original job; it does not erase prior failures.
 
 ## Workflow requirements

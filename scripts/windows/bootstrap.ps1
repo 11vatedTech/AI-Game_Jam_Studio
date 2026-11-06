@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 Set-Location $RepoRoot
 if (-not (Get-Command py -ErrorAction SilentlyContinue)) { throw 'Python launcher (py) was not found. Install Python 3.12+ from python.org.' }
-$PyVersion = & py -3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")'
+$PyVersion = & py -3 -c 'import sys; print(sys.version_info.major, sys.version_info.minor, sep=chr(46))'
 $Parts = $PyVersion.Split('.')
 if ([int]$Parts[0] -lt 3 -or ([int]$Parts[0] -eq 3 -and [int]$Parts[1] -lt 11)) { throw "Python 3.11+ required. Found $PyVersion" }
 if (-not (Test-Path '.venv')) { & py -3 -m venv .venv }

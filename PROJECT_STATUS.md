@@ -1,13 +1,13 @@
 # Project Status — Executable Foundation 0.2.0, now proven on the workstation
 
-**Snapshot:** 2026-11-05. **Target:** `11vatedTech/AI-Game_Jam_Studio`. **Truth status:** Installed and running on the user's Windows workstation. The runtime suite passes there, ComfyUI is live and has manufactured assets, and Godot 4.7.2 has produced a playable slice. Adapters remain uncertified in the formal sense; see the workstation evidence below.
+**Snapshot:** 2026-11-06. **Target:** `11vatedTech/AI-Game_Jam_Studio`. **Truth status:** Installed and running on the user's Windows workstation. The runtime suite passes there, ComfyUI is live and has manufactured assets, and Godot 4.7.2 has produced a playable slice. Adapters remain uncertified in the formal sense; see the workstation evidence below.
 
-## Verified on this workstation (2026-11-05)
+## Verified on this workstation (2026-11-06)
 
 | Fact | Value | How it was measured |
 |---|---|---|
-| Runtime tests | 159 passed, 1 skipped, 22.74 s | `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q` |
-| The skip | `tests/test_paths.py:19` — symlink creation unavailable | Windows lacks the privilege without developer mode; not a runtime defect |
+| Runtime tests | 184 passed, 3 skipped | `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q` — includes 24 Gate 2 adapter/cancellation conformance tests (22 pass, 2 live-ComfyUI-gated) plus 9 focused cancellation-race tests green |
+| The skips | `tests/test_paths.py:19` (Windows symlink privilege; not a runtime defect) + 2 live-ComfyUI-gated tests skipped when the app is down | environment-dependent skips, suite stays green with or without the live app |
 | Python | 3.12.10 in `.venv` | `studio doctor` |
 | Host | RTX 5070 Ti 12 227 MiB, 24 CPUs, 33.7 GB RAM | `studio doctor` |
 | ComfyUI | v0.34.0, 939 nodes, `127.0.0.1:8188` | live health + node inventory |
@@ -16,7 +16,7 @@
 | Manufactured assets | pylon 13 999 tris (2.831 × 2.736 × 3.600 m), lamplighter 2 159 tris, architecture kit 4 346 tris / 49 objects, lantern hero ≈4.6k tris | `Games/emberkeep/source/assets/*/*.ingest.json` |
 | Manufactured audio | `ambience.ogg` 48 s, `ignite.ogg`, `chime.ogg`, `dawn.ogg` | `Games/emberkeep/game/assets/audio/` |
 | Playable slice | headless smoke exits 0, `state=WON`, 4 screenshots | `reports/evidence/runs/emberkeep-smoke/runtime_report.json` |
-| Packaged build | **not yet produced** — export templates downloaded but never invoked | no `dist/` artifact exists |
+| Packaged build | **produced 2026-11-06** — Windows x86_64 exe + pck, clean-location launch 3/3 exit 0 `state=WON` | `reports/evidence/productions/emberkeep/03-package/PACKAGE_REPORT.json` |
 
 ## Verified in this build environment
 
@@ -25,22 +25,24 @@
 | Product specification | DESIGNED | `docs/00`–`docs/15`; full design/research/quality/discipline taxonomy retained |
 | Python runtime package | IMPLEMENTED | `src/elevenvt_studio`; Python 3.11+; core has no mandatory third-party dependencies |
 | CLI | IMPLEMENTED | `studio` commands: init/status/doctor/capabilities/job/artifacts/quality/approvals/mcp |
-| SQLite persistence | IMPLEMENTED / HARDENING REQUIRED | Jobs, tasks, events, artifacts, approvals and human reviews persisted; schema version guard (`PRAGMA user_version=1`), integrity check and online backup implemented; future-version DBs are rejected; migration framework and restore drills remain open |
-| DAG job executor | IMPLEMENTED / SEQUENTIAL | DAG validation, output refs, checkpoints, per-job cross-process lock, approval resume and crash/uncertain-side-effect quarantine; human-only `job reconcile` supports evidence-backed retry or mark-succeeded; no parallel scheduler, project locks or cancellation yet |
+| SQLite persistence | IMPLEMENTED / DRILLED | Jobs, tasks, events, artifacts, approvals and human reviews persisted; schema guard and forward migrations to v2 (`PRAGMA user_version`), integrity check and online backup implemented; **restore drill passed 2026-11-06** (all nine tables matched, zero FK violations) — `reports/p0/P0-EVIDENCE-2026-11-06.json`. Large/loaded-database restore and automated backup scheduling remain open |
+| DAG job executor | IMPLEMENTED / SEQUENTIAL | DAG validation, output refs, checkpoints, per-job cross-process lock, approval resume and crash/uncertain-side-effect quarantine; human-only `job reconcile` supports evidence-backed retry or mark-succeeded. **Real process-kill drill passed 2026-11-06**: restart quarantined the RUNNING task as `NEEDS_RECONCILIATION` and never replayed it. **Operator cancellation is implemented**: `RUNNING → CANCELLING → CANCELLED` at the task boundary via atomic compare-and-swap writes; crash-after-cancel quarantines instead of stranding tasks; guarded by barrier-tested race coverage. No parallel scheduler or project locks yet |
 | Policy/approvals | IMPLEMENTED / HARDENING REQUIRED | Versioned default-deny policy, exact scope/side-effect/target binding, expiry, pending-only decision, CLI-only human approval; audit hardening remains |
 | Workspace confinement | IMPLEMENTED / TESTED | Relative paths, traversal and symlink checks; no-overwrite file creation; OS-specific edge cases need Windows validation |
 | Artifact integrity | IMPLEMENTED | Sidecar manifest, streaming SHA-256 verify, explicit unknown-by-default rights, human artifact review CLI; domain validators still incomplete |
 | Resource profile | IMPLEMENTED / PARTIAL | OS/CPU/disk and NVIDIA `nvidia-smi`; RAM via optional psutil; not a global reservation daemon |
-| MCP stdio server | IMPLEMENTED / HOST NOT YET VERIFIED | Production bridge uses official MCP Python SDK v2 (`mcp>=2,<3`) for protocol revision `2026-07-28` and legacy interoperability; CI has SDK integration tests; Freebuff workstation connection must still be reproduced. The legacy fallback is disabled unless a developer explicitly sets `STUDIO_ALLOW_LEGACY_MCP=1`; it is not a production path. |
-| ComfyUI | IMPLEMENTED / LIVE, NOT CERTIFIED | Loopback HTTP health, queue, prompt submit, history, node/model inventory, bounded completion polling, output download and artifact provenance; no WebSocket streaming, cancellation, workflow schema validation or semantic visual QA yet. Verified against a **live** v0.34.0 instance: `flux2_klein` txt2img and `hunyuan3d` image→mesh both produced real assets. |
-| Blender | IMPLEMENTED / NOT CERTIFIED | Version and approval-gated background script process; unrestricted Blender Python is not sandboxed; semantic operations/read-back missing |
-| Godot | IMPLEMENTED / NOT CERTIFIED | Version and approval-gated headless editor check; deterministic + live capture service; package and gameplay validation missing |
+| MCP stdio server | TRANSPORT PROVEN / HOST NOT VERIFIED | Production bridge uses official MCP Python SDK v2 (`mcp>=2,<3`) for protocol revision `2026-07-28` and legacy interoperability. **SDK client over real stdio passed 2026-11-06**: negotiated `2026-07-28`, listed 20 tools, called `studio_status`, and performed a create-only workspace write with a registered hash. A **configured Freebuff host** connection remains unproven. The legacy fallback is disabled unless a developer explicitly sets `STUDIO_ALLOW_LEGACY_MCP=1`; it is not a production path |
+| ComfyUI | IMPLEMENTED / LIVE, NOT CERTIFIED | Loopback HTTP health, queue, prompt submit, history, node/model inventory, bounded completion polling, output download, artifact provenance, **workflow validation** (`comfyui.validate_workflow`, proven live on the 11-node golden graph) and **interrupt/clear** (`comfyui.interrupt`, proven live on an idle queue); no WebSocket streaming, pinned catalogs or semantic visual QA yet. Verified against a **live** v0.34.0 instance: `flux2_klein` txt2img and `hunyuan3d` image→mesh both produced real assets. |
+| Blender | IMPLEMENTED / NOT CERTIFIED | Version, approval-gated background script process, and **native scene read-back** (`blender.inspect_scene`, proven live on Blender 5.2.0 LTS against `lantern.blend`). Unrestricted Blender Python is not sandboxed; broader semantic operation library still missing |
+| Godot | IMPLEMENTED / NOT CERTIFIED | Version, headless editor check, deterministic + live capture service, **native scene read-back** (`godot.inspect_scene`, >100 nodes proven live), **packaged Windows x86_64 export with clean-location launch smoke 3/3 exit 0, state=WON** (`reports/evidence/productions/emberkeep/03-package/PACKAGE_REPORT.json`). Headed packaged screenshots, GPU profiling and human review still open |
 | Perception transport | IMPLEMENTED / MODEL DELIVERY UNPROVEN | Bundle format v2, authoritative/transport artifact split, adaptive encoding with named refusal, image content blocks on both MCP servers, probe with single-use/expiring challenges, derived evidence grade, gate refusal. Structural delivery is tested; **no vision-capable agent is connected in this environment**, so model readback is not demonstrated |
 | Capture masks | FIXTURE-VERIFIED / EMBERKEEP PARTIAL | Visible segmentation respects occlusion by construction (occluders stay as depth writers), silhouette and illumination are separate semantics, and the wall fixture asserts the pixel regions. Emberkeep's lantern is fully unoccluded at the default camera, so its occlusion path is proven by the fixture rather than by the game |
-| Unreal / Unity | RESEARCH ONLY | No executable adapters in this release |
-| DCC-MCP Core / AI Game Dev | RESEARCH / EXTERNAL INTEGRATION CANDIDATES | Not embedded or locally reproduced in this environment |
-| Other creative disciplines | DESIGNED / NOT INTEGRATED | Audio, video, CAD, UI, web/app, writing, scientific and publishing pipelines need real adapters and tests |
-| Security / license / commercial readiness | PARTIAL DESIGN | Full audit, sandbox, SBOM, migration/restore drills, cross-project lock, penetration tests and rights review remain release blockers |
+| Unreal / Unity | HEALTH ONLY / NOT CERTIFIED | `unreal.health` reads UE 5.8.0 build record + editor binary; `unity.health` reports CLI 1.0.0-beta.12 with no editor installed. No editor workflows proven |
+| DCC-MCP Core / AI Game Dev | RESEARCHED / DEFERRED WITH DECISION | DCC-MCP-Core v0.20.53 (MIT) deferred: catalog breadth is not certification, zero-auth default needs hardening. Godot-MCP v0.34.0 deferred: requires Mono/.NET editor; installed editor is GDScript-only. See `docs/02-research/` addenda 2026-11-06 |
+| Media (ffmpeg) | IMPLEMENTED / NOT CERTIFIED | `media.probe` + `media.transcode` (allowlisted codecs, allowlisted tuning flags only for `extra_args`, no-overwrite, re-verified) proven live on ffmpeg 8.1.2; first audio/video evidence in the Studio |
+| Job cancellation | IMPLEMENTED | `job cancel` CLI + engine + MCP support: unstarted jobs go straight to CANCELLED and never start; cancelling a RUNNING job enters non-terminal CANCELLING and applies terminal CANCELLED at the next task boundary. In-flight tasks are never force-killed; crash-after-cancel quarantines to NEEDS_RECONCILIATION and a late cancel wins over success aggregation. Covered by unit tests |
+| Other creative disciplines | DESIGNED / FIRST PIPELINE DOCUMENTED | Reusable recipe v1 published (`workflows/pipelines/emberkeep_asset_pipeline.v1.md`); CAD, video, web/app, writing, publishing and the rest still need real adapters and tests |
+| Security / license / commercial readiness | PARTIAL + SBOM BASELINE | Workstation SBOM `reports/validation/sbom-2026-11-06.json` (47 packages, all licenses identified); backup/restore drilled incl. loaded DB; Blender sandbox, cross-project lock, penetration tests and rights review remain release blockers |
 
 ## Hosted CI baseline before the handoff repair
 
@@ -48,7 +50,7 @@ The base commit `4924961684530eaad536dfc576d177409745dc0d` triggered Actions run
 
 ## Actual test result
 
-The runtime suite completed **159 passed, 1 skipped in 22.74 s** on the Windows workstation using `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q`. Coverage includes job DAG persistence, exact approval binding, file/workspace confinement, SHA-256 manifests, backup/integrity checks, database schema-version rejection, crash quarantine/reconciliation, fail-closed MCP transport behavior, official-SDK MCP integration, ComfyUI redirect/response bounds, and a complete ComfyUI queue → completion → output retrieval → artifact verification flow.
+The runtime suite completed **162 passed, 1 skipped in 37.6 s** on the Windows workstation using `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q` at `4f9281d`. Coverage includes job DAG persistence, exact approval binding, file/workspace confinement, SHA-256 manifests, backup/integrity checks, database schema-version rejection, crash quarantine/reconciliation, fail-closed MCP transport behavior, official-SDK MCP integration, ComfyUI redirect/response bounds, and a complete ComfyUI queue → completion → output retrieval → artifact verification flow.
 
 The skipped test is `tests/test_paths.py:19` — symlink creation is unavailable without Windows developer mode. It is an environment limitation, not a runtime defect, and it does **not** skip the MCP SDK protocol test: `tests/test_mcp_sdk.py` now passes with the installed `mcp` dependency (an earlier revision of this document incorrectly attributed the skip to MCP).
 

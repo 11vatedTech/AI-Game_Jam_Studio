@@ -220,6 +220,113 @@
         "workspace.create"
       ],
       "evidence": "managed output files, artifact manifests, SHA-256 hashes; semantic and rights status remain NOT_RUN/UNKNOWN"
+    },
+    {
+      "id": "comfyui.validate_workflow",
+      "domain": "image_generation",
+      "description": "Validate an API-format ComfyUI workflow graph without executing it: node structure, link integrity, placeholder resolution and node-class inventory match.",
+      "side_effect": "READ",
+      "scope": "comfyui.inspect",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "network.loopback.read"
+      ],
+      "evidence": "structural validation report; not a semantic quality judgement"
+    },
+    {
+      "id": "comfyui.interrupt",
+      "domain": "image_generation",
+      "description": "Interrupt the currently executing ComfyUI prompt and clear the queue; server-side work already done is preserved and reported.",
+      "side_effect": "EXECUTE",
+      "scope": "comfyui.execute",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "network.loopback.read",
+        "queue.cancel"
+      ],
+      "evidence": "interrupt/call response plus post-interrupt queue state"
+    },
+    {
+      "id": "blender.inspect_scene",
+      "domain": "3d",
+      "description": "Open a .blend file headless and read back native scene state: objects, transforms, mesh statistics, materials and images. Never modifies the file.",
+      "side_effect": "READ",
+      "scope": "blender.inspect",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "process.launch.readonly"
+      ],
+      "evidence": "machine-readable scene JSON plus Blender version"
+    },
+    {
+      "id": "godot.inspect_scene",
+      "domain": "game_development",
+      "description": "Launch a project scene headless through its own inspector tool and read back the native node tree, transforms, meshes and lights. Instantiating the scene executes its _ready() path.",
+      "side_effect": "EXECUTE",
+      "scope": "godot.execute",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "process.launch",
+        "project.inspect"
+      ],
+      "evidence": "machine-readable scene JSON plus engine version"
+    },
+    {
+      "id": "media.probe",
+      "domain": "audio_video",
+      "description": "Probe a workspace media file with ffprobe and report format, duration, streams and codecs as machine-readable JSON.",
+      "side_effect": "READ",
+      "scope": "media.inspect",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "process.launch.readonly"
+      ],
+      "evidence": "ffprobe JSON report; not a quality judgement"
+    },
+    {
+      "id": "media.transcode",
+      "domain": "audio_video",
+      "description": "Transcode a workspace media file to an allowlisted codec/container with ffmpeg. Never overwrites an existing destination.",
+      "side_effect": "EXECUTE",
+      "scope": "media.transcode",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "process.launch",
+        "workspace.create"
+      ],
+      "evidence": "output file plus ffprobe re-verification; semantic quality remains NOT_RUN"
+    },
+    {
+      "id": "unreal.health",
+      "domain": "game_development",
+      "description": "Verify the installed Unreal Engine build version and editor binary presence from authoritative on-disk records.",
+      "side_effect": "READ",
+      "scope": "unreal.inspect",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "host.read"
+      ],
+      "evidence": "Build.version record plus UnrealEditor-Cmd presence; editor workflows remain RESEARCH"
+    },
+    {
+      "id": "unity.health",
+      "domain": "game_development",
+      "description": "Verify the Unity CLI version and the installed-editor inventory on this workstation.",
+      "side_effect": "READ",
+      "scope": "unity.inspect",
+      "status": "IMPLEMENTED",
+      "version": "0.2.0",
+      "permissions": [
+        "host.read"
+      ],
+      "evidence": "CLI version plus editor inventory; editor workflows remain RESEARCH until an editor is installed"
     }
   ]
 }

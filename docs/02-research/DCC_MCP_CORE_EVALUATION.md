@@ -30,6 +30,14 @@ The README also describes three notable shared contracts: (1) shared asset-impor
 - Typed action/capability registry and diagnostics. The upstream README also describes a shared asset-import contract, discovery decision schema, write-then-read-back postconditions, declarative recipes, and recovery/undo metadata for marketplace Skills.
 - Persistence, artifact, job, workflow, and scheduler facilities documented in its guide.
 
+## Adoption decision — 2026-11-06 (DEFER, do not embed)
+
+Pinned facts re-verified this round: tag `v0.20.53` (`84b940465d652d4d5981e043da9ee95ac0d5d3c7`), MIT license, gateway with configurable bearer-token auth and audit records, zero-auth default preserved for local single-workstation mode, no TLS termination in the gateway itself, and registration-time trust that carries over to other endpoints.
+
+Decision: **DEFER**. Three evidence-backed reasons: (1) the catalog breadth is a coverage map, not per-adapter certification — embedding it would violate the same rule we apply to ourselves; (2) the zero-auth local default plus gateway-without-TLS needs hardening work before it meets the Studio's default-deny posture; (3) the workstation's installed applications (ComfyUI, Blender, Godot, ffmpeg) are now driven through typed native-API adapters with live conformance tests, so there is no proven gap that embedding would close today.
+
+Re-evaluation condition: pin one release, install on this workstation, run its Blender and Godot adapters against disposable projects, and compare failure behavior, permission boundaries and lifecycle handling against the native adapters. Only then decide ADOPT, WRAP or REJECT per application.
+
 ## Adopt only after proving
 
 1. Windows 11 install/start/uninstall and no hidden hosted dependency.

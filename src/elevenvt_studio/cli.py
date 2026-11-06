@@ -30,6 +30,7 @@ def build_parser():
     create=js.add_parser("create"); create.add_argument("spec",type=Path)
     run=js.add_parser("run"); run.add_argument("job_id"); run.add_argument("--approval-id")
     status=js.add_parser("status"); status.add_argument("job_id")
+    cancel=js.add_parser("cancel",help="Cancel a live job; it stops at the next task boundary"); cancel.add_argument("job_id"); cancel.add_argument("--reason",default="")
     reconcile=js.add_parser("reconcile",help="Human-only recovery of an uncertain in-flight task")
     reconcile.add_argument("job_id"); reconcile.add_argument("task_id")
     reconcile.add_argument("--action",choices=["retry","mark_succeeded"],required=True)
@@ -77,6 +78,9 @@ def main(argv=None):
             if args.job_command=="create": _print(service.jobs.create(json.loads(args.spec.read_text(encoding="utf-8"))))
             elif args.job_command=="run": _print(service.jobs.run(args.job_id,args.approval_id))
             elif args.job_command=="status": _print(service.jobs.status(args.job_id))
+            elif args.job_command=="cancel":
+                _require_human_confirmation("CANCEL",args.job_id)
+                _print(service.jobs.cancel(args.job_id,reason=args.reason))
             elif args.job_command=="reconcile":
                 _require_human_confirmation("RECONCILE",args.job_id)
                 outputs=None
