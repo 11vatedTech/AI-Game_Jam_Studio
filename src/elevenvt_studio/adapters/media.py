@@ -7,6 +7,7 @@ overwrites: the destination must not exist.
 """
 from __future__ import annotations
 import json
+import re
 import shutil
 import subprocess
 import tempfile
@@ -17,6 +18,31 @@ from ..errors import AdapterUnavailable, ValidationError
 AUDIO_CODECS = {"aac", "mp3", "libopus", "vorbis", "flac", "pcm_s16le", "wav"}
 VIDEO_CODECS = {"libx264", "libx265", "libvpx-vp9", "libaom-av1", "mpeg4"}
 CONTAINERS = {"mp3", "ogg", "oga", "wav", "flac", "m4a", "mp4", "webm", "mkv"}
+
+#: Conservative allowlist of ffmpeg output-tuning flags accepted via
+#: ``extra_args``. Each entry maps the flag to a full-match pattern for its
+#: single value token. Anything else -- a second ``-i``, an output protocol
+#: or bare path, ``-y``, filter scripts, maps, or metadata -- is rejected so
+#: the managed-workspace and no-overwrite guarantees cannot be bypassed
+#: through this passthrough. Values are strictly numeric or token-shaped, so
+#: a value can never smuggle another flag or shell metacharacter (argv is
+#: executed without a shell regardless).
+SAFE_EXTRA_ARGS = {
+    "-b:a": r"\d+[kM]?",
+    "-b:v": r"\d+[kM]?",
+    "-maxrate": r"\d+[kM]?",
+    "-bufsize": r"\d+[kM]?",
+    "-r": r"\d+(\.\d+)?",
+    "-s": r"\d+x\d+",
+    "-ar": r"\d+",
+    "-ac": r"[1-8]",
+    "-t": r"[\d:.]+",
+    "-ss": r"[\d:.]+",
+    "-preset": r"[A-Za-z0-9-]+",
+    "-crf": r"\d{1,2}",
+    "-qp": r"\d{1,2}",
+    "-movflags": r"[A-Za-z0-9_+]+",
+}
 
 
 class MediaAdapter:
@@ -117,6 +143,14 @@ class MediaAdapter:
                 raise ValidationError("extra_args must be a non-empty array of strings")
             if len(extra_args) > 24:
                 raise ValidationError("extra_args is limited to 24 tokens")
+            if len(extra_args) % 2:
+                raise ValidationError("extra_args must be flag/value pairs from the safe tuning allowlist")
+            for flag, value in zip(extra_args[::2], extra_args[1::2]):
+                pattern = SAFE_EXTRA_ARGS.get(flag)
+                if pattern is None or not re.fullmatch(pattern, value):
+                    raise ValidationError(f"extra_args flag is not allowlisted: {flag}")
+                if flag in ("-crf", "-qp") and not 0 <= int(value) <= 63:
+                    raise ValidationError(f"extra_args value out of range for {flag}: {value}")
             args += extra_args
         args.append(str(dst))
         exe = self._executable(self.ffmpeg)

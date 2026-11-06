@@ -1,6 +1,6 @@
 {
-  "file_count_excluding_manifest": 355,
-  "file_count_including_manifest": 356,
+  "file_count_excluding_manifest": 366,
+  "file_count_including_manifest": 367,
   "files": [
     {
       "path": ".github/workflows/ci.yml",
@@ -138,6 +138,11 @@
       "size_bytes": 1163
     },
     {
+      "path": "Games/emberkeep/game/export_presets.cfg",
+      "sha256": "6766059b54862e89f5cd698247d7a30da706f5ce7f8f3dcbb6913440217e7109",
+      "size_bytes": 1013
+    },
+    {
       "path": "Games/emberkeep/game/main.tscn",
       "sha256": "3a4fd1f487677f5065b1627db8c3cbb5fcc2549fa703952cbd1f963fd5571c56",
       "size_bytes": 194
@@ -151,6 +156,11 @@
       "path": "Games/emberkeep/game/scripts/capture/service.gd",
       "sha256": "c3faea56b16ea0a1355c0058ba34e38165a195998581c8a2e03e6175beb63467",
       "size_bytes": 30233
+    },
+    {
+      "path": "Games/emberkeep/game/scripts/capture/service.gd.uid",
+      "sha256": "d27b2f7443caab4927da98b8fea61b0dc0d8be91760cde4e7744b7e3260827ad",
+      "size_bytes": 20
     },
     {
       "path": "Games/emberkeep/game/scripts/main.gd",
@@ -171,6 +181,11 @@
       "path": "Games/emberkeep/game/shaders/water.gdshader.uid",
       "sha256": "35ef95b0c0a53b9ee2ae0819007b745402517c95751840f26d6f4a683ca4514a",
       "size_bytes": 19
+    },
+    {
+      "path": "Games/emberkeep/game/tools/inspect_scene.gd",
+      "sha256": "e1d1e647790c5c7af447d20f1f1650376fe0d19ef445e64f8cd5ec9f9e7d47b1",
+      "size_bytes": 2825
     },
     {
       "path": "Games/emberkeep/source/assets/environment/environment.author.json",
@@ -349,8 +364,8 @@
     },
     {
       "path": "PROJECT_STATUS.md",
-      "sha256": "882c4db05341cf25f6365b7fac310afaa5a399622252eae68b208897b6fa4ca5",
-      "size_bytes": 23013
+      "sha256": "0a45b8aebd89b70bbfdc8b04ba74b61697b3e60d05028977117eae1bcc900059",
+      "size_bytes": 23251
     },
     {
       "path": "PUSH_TO_GITHUB.md",
@@ -509,8 +524,8 @@
     },
     {
       "path": "docs/03-architecture/PRODUCTION_ORCHESTRATION.md",
-      "sha256": "06bab847c5560227050f49a45874b69fe1b609015ca5edaf50a6aa73ec9b2682",
-      "size_bytes": 2500
+      "sha256": "f1f48fa6b465be97f82f2d7b64e03baa91f09b0d5e2cbec9e371ea29493d9d21",
+      "size_bytes": 2832
     },
     {
       "path": "docs/03-architecture/PROJECT_CONTEXT_AND_MEMORY.md",
@@ -1213,6 +1228,11 @@
       "size_bytes": 3564
     },
     {
+      "path": "reports/evidence/productions/emberkeep/03-package/PACKAGE_REPORT.json",
+      "sha256": "82f6f91ee9cbc2dcfcc22bf292420192eb560de70ecd89245dc4ddb7aec019d0",
+      "size_bytes": 3381
+    },
+    {
       "path": "reports/evidence/runs/emberkeep-smoke/runtime_report.json",
       "sha256": "a52f9ab690d70af1f302ce9e78a71a31f1e0a7cc3308ba7c1b41f88a3f5fda61",
       "size_bytes": 764
@@ -1248,6 +1268,16 @@
       "size_bytes": 2875
     },
     {
+      "path": "reports/validation/sbom-2026-11-06.json",
+      "sha256": "92a6db77a92c9a5e443997b79d4ea81e8f887e11982e38cf8bf7ac87dc8ef495",
+      "size_bytes": 6683
+    },
+    {
+      "path": "reports/work-unit-2026-11-06.md",
+      "sha256": "b84ccb558e07be6ab22ac059f4527811a5cab7447b5cee154a69e52221df069d",
+      "size_bytes": 5331
+    },
+    {
       "path": "requirements-dev.txt",
       "sha256": "63654481a12db8b16f58d24a2487c34f525f358c651badff5d6f7fd724a3603c",
       "size_bytes": 138
@@ -1274,8 +1304,8 @@
     },
     {
       "path": "schemas/job.schema.json",
-      "sha256": "deab92c4a54a8143c736a44bdd5748a4736d473f5ccb4b38b8ed53b816a64dda",
-      "size_bytes": 1193
+      "sha256": "d56d5bb0b81812227c5c14e98fa558ab629e890228cbdc6cb1bf3955280c72b4",
+      "size_bytes": 1207
     },
     {
       "path": "schemas/quality-report.schema.json",
@@ -1323,6 +1353,11 @@
       "size_bytes": 19710
     },
     {
+      "path": "scripts/blender/inspect_scene.py",
+      "sha256": "26f76d967ec39436d2b443103281a7a9973d49b35364f40db89f95c3940791c2",
+      "size_bytes": 2695
+    },
+    {
       "path": "scripts/evidence/manifest.py",
       "sha256": "92eb74f6814d5dc6ce6e325deec8fa60bf0f3100ae38dc104fc4df16c60c4927",
       "size_bytes": 3968
@@ -1361,6 +1396,11 @@
       "path": "scripts/quality/critic_bench.py",
       "sha256": "05953a14f418ff3af609c0b73291818fd0039dc48fcbc5001273276c56418a42",
       "size_bytes": 8291
+    },
+    {
+      "path": "scripts/release/sbom.py",
+      "sha256": "5c4dd380d0aa9c6b2828bb23d54e7de1d9c2c15b4689bc0a9c09f0fa04022484",
+      "size_bytes": 2867
     },
     {
       "path": "scripts/verify_repo.py",
@@ -1458,6 +1498,11 @@
       "size_bytes": 22071
     },
     {
+      "path": "src/elevenvt_studio/adapters/media.py",
+      "sha256": "3c817971da1a224763c6ac4fabf989aa61ff524bf0dacff5c0edfe92e916c9a3",
+      "size_bytes": 8407
+    },
+    {
       "path": "src/elevenvt_studio/adapters/process.py",
       "sha256": "07c06d50c6f7df211b0cb3101afa456c05fe8d6c4d8dda1ad637c815de67dd78",
       "size_bytes": 2801
@@ -1499,8 +1544,8 @@
     },
     {
       "path": "src/elevenvt_studio/jobs.py",
-      "sha256": "dead7027284ae6fb669ec5ef27c7d29992a398d19d09bd9eb0c92f8b07abc0e3",
-      "size_bytes": 17030
+      "sha256": "a36eb35740cdebad8883beb5883f82f2aa5a0322c39caff10a3cc0f609c76af1",
+      "size_bytes": 19563
     },
     {
       "path": "src/elevenvt_studio/ledger.py",
@@ -1609,8 +1654,8 @@
     },
     {
       "path": "src/elevenvt_studio/service.py",
-      "sha256": "fbae0c515df47d5204ede56684bfff849f6618860bf1e3889378cca07a224f33",
-      "size_bytes": 29883
+      "sha256": "01e48c6ae297ca17e36d9e25b5efec6b097deccb56dfac3bfe29d9e2103fee4c",
+      "size_bytes": 30056
     },
     {
       "path": "templates/ACCEPTANCE_TEST_TEMPLATE.md",
@@ -1691,6 +1736,11 @@
       "path": "tests/test_critic_thresholds.py",
       "sha256": "b592350443405f206e5ee8fa1912997b7aaecfae27d13db8a0987df9db7a3db5",
       "size_bytes": 3407
+    },
+    {
+      "path": "tests/test_gate2_adapters.py",
+      "sha256": "c7bcb1ccf17eaf40a4778b348d300770c2fadb1732dc072d45c764dc0d08f44f",
+      "size_bytes": 17339
     },
     {
       "path": "tests/test_ledger.py",
@@ -1776,6 +1826,11 @@
       "path": "workflows/generation/hunyuan3d_image_to_mesh.api.json",
       "sha256": "7e33ea94b0d76dd5a6accea8374049b0f9a1367b8cd236cd654fa854ca77f147",
       "size_bytes": 1951
+    },
+    {
+      "path": "workflows/pipelines/emberkeep_asset_pipeline.v1.md",
+      "sha256": "e9a52290ea9324ae817f64b913619051de8242c72e41565585230732214eb703",
+      "size_bytes": 2029
     }
   ],
   "generated_for": "source and handoff integrity; excludes Git metadata, caches, virtual environments and itself",

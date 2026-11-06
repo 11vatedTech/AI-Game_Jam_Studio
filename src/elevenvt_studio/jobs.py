@@ -7,6 +7,13 @@ from .policy import utc_now
 
 TERMINAL={"SUCCEEDED","FAILED","CANCELLED","NEEDS_RECONCILIATION"}
 
+#: Non-terminal cancellation request. A RUNNING job enters CANCELLING when the
+#: operator cancels; the in-flight task is never force-killed, the next task
+#: boundary applies terminal CANCELLED, and a worker crash first quarantines
+#: any RUNNING task to NEEDS_RECONCILIATION instead of dropping the cancel.
+CANCELLING="CANCELLING"
+CANCELLED_STATES={CANCELLING,"CANCELLED"}
+
 def _resolve_refs(value, outputs):
     if isinstance(value,dict):
         if set(value)=={"$ref"}:
@@ -63,28 +70,37 @@ class JobEngine:
                 for deps in pending.values(): deps.discard(key)
         return ordered
     def cancel(self, job_id: str, *, reason: str = "") -> dict:
-        """Operator cancellation: a CANCELLED job never starts and a running job
-        stops at the next task boundary; the in-flight task is left for
+        """Operator cancellation: a job that never started goes straight to
+        terminal CANCELLED and never starts; a RUNNING job enters non-terminal
+        CANCELLING and stops at the next task boundary, where terminal
+        CANCELLED is applied. The in-flight task is left for
         crash-reconciliation rather than force-killed."""
         now=utc_now()
         with self.db.connect() as c:
             job=c.execute("SELECT status FROM jobs WHERE id=?",(job_id,)).fetchone()
             if not job: raise NotFound(f"Unknown job: {job_id}")
-            if job["status"] in TERMINAL | {"CANCELLED"}:
+            if job["status"] in TERMINAL:
                 raise ValidationError(f"Job is already {job['status']}; cancellation is for live jobs")
-            c.execute("UPDATE jobs SET status='CANCELLED',updated_at=?,finished_at=? WHERE id=?",(now,now,job_id))
-            self.db.event(c,"job",job_id,"JOB_CANCELLED",{"reason":reason},now)
+            if job["status"]==CANCELLING:
+                raise ValidationError("Job is already CANCELLING; it stops at the next task boundary")
+            if job["status"]=="RUNNING":
+                c.execute("UPDATE jobs SET status='CANCELLING',updated_at=? WHERE id=?",(now,job_id))
+                self.db.event(c,"job",job_id,"JOB_CANCELLING",{"reason":reason},now)
+            else:
+                c.execute("UPDATE jobs SET status='CANCELLED',updated_at=?,finished_at=? WHERE id=?",(now,now,job_id))
+                self.db.event(c,"job",job_id,"JOB_CANCELLED",{"reason":reason},now)
         return self.status(job_id)
     def _is_cancelled(self, job_id: str) -> bool:
         with self.db.connect() as c:
             row=c.execute("SELECT status FROM jobs WHERE id=?",(job_id,)).fetchone()
-            return bool(row) and row["status"]=="CANCELLED"
+            return bool(row) and row["status"] in CANCELLED_STATES
     def run(self, job_id: str, approval_id: str | None=None) -> dict:
         from .locking import ProcessFileLock
         lock_dir=self.service.config.home/"job-locks"
         with ProcessFileLock(lock_dir/(job_id+".lock")):
-            if self._is_cancelled(job_id):
-                return self.status(job_id)
+            # Never short-circuit here: a CANCELLING job must enter the locked
+            # section so a crash-after-cancel quarantines RUNNING tasks to
+            # NEEDS_RECONCILIATION instead of returning with them stuck.
             return self._run_locked(job_id,approval_id)
     def _run_locked(self, job_id: str, approval_id: str | None=None) -> dict:
         early_return = False
@@ -102,7 +118,10 @@ class JobEngine:
                     early_return = True
                 else:
                     stale=[r["id"] for r in task_states if r["status"]=="RUNNING"]
-                    if job["status"]=="RUNNING" and stale:
+                    # Fresh read on this connection: a cancel may have landed
+                    # after run() began (cancel() never takes the run lock).
+                    live=c.execute("SELECT status FROM jobs WHERE id=?",(job_id,)).fetchone()["status"]
+                    if live in ("RUNNING",CANCELLING) and stale:
                         now=utc_now()
                         for task_id in stale:
                             payload={"code":"WORKER_CRASH_RECOVERY_REQUIRED","message":"A previous worker stopped while this task was RUNNING. The external side effect may or may not have occurred; inspect the target application before deciding to mark complete or retry."}
@@ -113,9 +132,22 @@ class JobEngine:
                         self.db.event(c,"job",job_id,"JOB_RECOVERY_BLOCKED",{"tasks":stale},now)
                         early_return = True
                     elif task_states and all(r["status"]=="SUCCEEDED" for r in task_states):
-                        now=utc_now(); c.execute("UPDATE jobs SET status='SUCCEEDED',updated_at=?,finished_at=? WHERE id=?",(now,now,job_id))
-                        self.db.event(c,"job",job_id,"JOB_RECOVERED_AS_SUCCEEDED",{},now)
+                        now=utc_now()
+                        if live in CANCELLED_STATES:
+                            # Every task finished but the operator cancelled:
+                            # the cancellation wins, never a SUCCEEDED overwrite.
+                            c.execute("UPDATE jobs SET status='CANCELLED',updated_at=?,finished_at=? WHERE id=?",(now,now,job_id))
+                            self.db.event(c,"job",job_id,"JOB_CANCELLED",{"reason":"cancel requested before completion check"},now)
+                        else:
+                            c.execute("UPDATE jobs SET status='SUCCEEDED',updated_at=?,finished_at=? WHERE id=?",(now,now,job_id))
+                            self.db.event(c,"job",job_id,"JOB_RECOVERED_AS_SUCCEEDED",{},now)
                         early_return = True
+                    elif live==CANCELLING:
+                        # Cancel landed while no task was in flight (or after a
+                        # crash at a task boundary): hold CANCELLING so the run
+                        # loop converts it to terminal CANCELLED without
+                        # executing anything further.
+                        pass
                     else:
                         c.execute("UPDATE jobs SET status='RUNNING',started_at=COALESCE(started_at,?),updated_at=?,finished_at=NULL WHERE id=?",(utc_now(),utc_now(),job_id))
                         self.db.event(c,"job",job_id,"JOB_RUNNING",{},utc_now())
@@ -165,7 +197,12 @@ class JobEngine:
                 break
         with self.db.connect() as c:
             states=[r[0] for r in c.execute("SELECT status FROM tasks WHERE job_id=?",(job_id,)).fetchall()]
-            status=("SUCCEEDED" if states and all(s=="SUCCEEDED" for s in states) else
+            live=c.execute("SELECT status FROM jobs WHERE id=?",(job_id,)).fetchone()["status"]
+            # A cancel that landed during the final task wins over the
+            # task-state aggregation: never overwrite a cancellation with
+            # SUCCEEDED.
+            status=("CANCELLED" if live in CANCELLED_STATES else
+                    "SUCCEEDED" if states and all(s=="SUCCEEDED" for s in states) else
                     "NEEDS_RECONCILIATION" if "NEEDS_RECONCILIATION" in states else
                     "BLOCKED" if "BLOCKED" in states and "FAILED" not in states else "FAILED")
             c.execute("UPDATE jobs SET status=?,updated_at=?,finished_at=? WHERE id=?",(status,utc_now(),utc_now(),job_id))

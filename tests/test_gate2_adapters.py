@@ -276,7 +276,7 @@ def test_job_cancel_mid_run_stops_at_boundary(service):
     try:
         assert started.wait(timeout=60)
         cancelled = service.jobs.cancel(job["id"], reason="operator stop")
-        assert cancelled["status"] == "CANCELLED"
+        assert cancelled["status"] == "CANCELLING"
     finally:
         release.set()
     thread.join(timeout=60)
@@ -290,3 +290,111 @@ def test_job_cancel_rejects_terminal_jobs(service):
     service.jobs.run(job["id"])
     with pytest.raises(ValidationError):
         service.jobs.cancel(job["id"])
+
+
+def test_job_cancel_running_is_nonterminal_request(service):
+    job = service.jobs.create({"name": "cancel-nonterminal", "tasks": [
+        {"id": "t1", "capability": "studio.status", "inputs": {}}]})
+    with service.db.connect() as c:
+        c.execute("UPDATE jobs SET status='RUNNING' WHERE id=?", (job["id"],))
+    requested = service.jobs.cancel(job["id"], reason="operator stop")
+    assert requested["status"] == "CANCELLING"
+    with pytest.raises(ValidationError):
+        service.jobs.cancel(job["id"], reason="operator stop again")
+    result = service.jobs.run(job["id"])
+    assert result["status"] == "CANCELLED"
+    assert all(t["attempt"] == 0 for t in result["tasks"])
+
+
+def test_cancel_then_crash_quarantines_for_reconciliation(service):
+    job = service.jobs.create({"name": "cancel-crash", "tasks": [
+        {"id": "t1", "capability": "studio.status", "inputs": {}}]})
+    with service.db.connect() as c:
+        c.execute("UPDATE jobs SET status='CANCELLING' WHERE id=?", (job["id"],))
+        c.execute("UPDATE tasks SET status='RUNNING',attempt=1 WHERE job_id=? AND id='t1'",
+                  (job["id"],))
+    result = service.jobs.run(job["id"])
+    assert result["status"] == "NEEDS_RECONCILIATION"
+    assert result["tasks"][0]["status"] == "NEEDS_RECONCILIATION"
+    assert result["tasks"][0]["error"]["code"] == "WORKER_CRASH_RECOVERY_REQUIRED"
+
+
+def test_cancel_applied_after_completion_never_reports_succeeded(service):
+    job = service.jobs.create({"name": "cancel-after-tasks", "tasks": [
+        {"id": "t1", "capability": "studio.status", "inputs": {}}]})
+    with service.db.connect() as c:
+        c.execute("UPDATE tasks SET status='SUCCEEDED',outputs_json='{}' "
+                  "WHERE job_id=? AND id='t1'", (job["id"],))
+        c.execute("UPDATE jobs SET status='CANCELLING' WHERE id=?", (job["id"],))
+    result = service.jobs.run(job["id"])
+    assert result["status"] == "CANCELLED"
+
+
+def test_cancel_during_final_task_never_reports_succeeded(service):
+    job = service.jobs.create({"name": "cancel-final-task", "tasks": [
+        {"id": "t1", "capability": "studio.status", "inputs": {}}]})
+    original = service.invoke
+
+    def cancel_then_run(capability_id, inputs, **kwargs):
+        service.jobs.cancel(kwargs["job_id"], reason="operator stop")
+        return original(capability_id, inputs, **kwargs)
+
+    service.invoke = cancel_then_run
+    try:
+        result = service.jobs.run(job["id"])
+    finally:
+        service.invoke = original
+    assert result["status"] == "CANCELLED"
+    assert result["tasks"][0]["status"] == "SUCCEEDED"
+
+
+def test_media_extra_args_rejects_workspace_escape(service, tmp_path):
+    from elevenvt_studio.adapters.media import MediaAdapter
+    media = MediaAdapter(tmp_path)
+    (tmp_path / "tone.wav").write_bytes(b"RIFF" + b"\0" * 44)
+    for evil in (["-i", "other.wav"], ["-y"], ["pipe:1"],
+                 ["-filter_complex", "aevalsrc=0"], ["-map", "0"],
+                 ["-b:a"], ["-b:a", "128k", "-f", "mp3"],
+                 ["-b:a", ";rm -rf"], ["-c:a", "libopus"],
+                 ["-movflags", "faststart", "-ss"]):
+        with pytest.raises(ValidationError):
+            media.transcode("tone.wav", "out.ogg", extra_args=evil)
+    assert not (tmp_path / "out.ogg").exists()
+
+
+@pytest.mark.skipif(shutil.which("ffmpeg") is None, reason="ffmpeg not installed")
+def test_media_extra_args_accepts_safe_tuning(service, tmp_path):
+    from elevenvt_studio.adapters.media import MediaAdapter
+    service.config = replace(service.config, workspace=tmp_path)
+    service.media = MediaAdapter(service.config.workspace)
+    media = service.media
+    tone = tmp_path / "tone.wav"
+    media._run(media._executable("ffmpeg"),
+               ["-hide_banner", "-v", "error", "-f", "lavfi",
+                "-i", "sine=frequency=440:duration=1", str(tone)], 60)
+    request = service.policy.request("media.transcode", "EXECUTE", "tone-tuned.ogg",
+                                     "Safe tuning conformance")
+    service.policy.decide(request["id"], True, "test-reviewer")
+    out = service.invoke("media.transcode",
+                         {"src": "tone.wav", "dst": "tone-tuned.ogg",
+                          "audio_codec": "libopus", "extra_args": ["-b:a", "96k"],
+                          "approval_id": request["id"]})
+    assert out["verification"]["stream_count"] >= 1
+
+
+@pytest.mark.skipif(not Path(GODOT).is_file(), reason="Godot not installed")
+def test_godot_inspect_writes_unique_evidence_paths(service):
+    from elevenvt_studio.adapters.process import ProcessAdapter
+    service.config = replace(service.config, workspace=REPO / "Games",
+                             godot_executable=GODOT)
+    service.process = ProcessAdapter(service.config.workspace)
+    request = service.policy.request("godot.execute", "EXECUTE", "emberkeep/game",
+                                     "Unique evidence conformance")
+    service.policy.decide(request["id"], True, "test-reviewer")
+    first = service.invoke("godot.inspect_scene",
+                           {"project_path": "emberkeep/game", "approval_id": request["id"]})
+    second = service.invoke("godot.inspect_scene",
+                            {"project_path": "emberkeep/game", "approval_id": request["id"]})
+    assert first["report_path"] != second["report_path"]
+    assert Path(first["report_path"]).is_file()
+    assert Path(second["report_path"]).is_file()

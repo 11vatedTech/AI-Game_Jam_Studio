@@ -306,7 +306,9 @@ class StudioService:
         tool=project/"tools"/"inspect_scene.gd"
         if not tool.is_file(): raise ValidationError("Project has no tools/inspect_scene.gd inspector; add it before requesting native inspection")
         timeout=max(30,min(int(inputs.get("timeout_seconds",600)),3600))
-        out_path=self.config.evidence_root/"godot-inspect.json"
+        # Unique per invocation: the inspector opens with FileAccess.WRITE and
+        # would truncate a shared path, destroying earlier evidence.
+        out_path=self.config.evidence_root/f"godot-inspect-{uuid.uuid4().hex[:12]}.json"
         result=self.process.run(self.config.godot_executable,["--headless","--path",str(project),"--script","res://tools/inspect_scene.gd",
                                 "--",f"--scene={scene}",f"--out={out_path}"],cwd=self.config.workspace,timeout=timeout)
         if not result["success"] or not out_path.is_file():
