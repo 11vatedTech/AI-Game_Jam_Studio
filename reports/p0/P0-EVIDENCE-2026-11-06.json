@@ -1,0 +1,85 @@
+{
+  "report_id": "P0-EVIDENCE-2026-11-06",
+  "created_utc": "2026-11-06",
+  "base_commit": "4f9281db51ee8b46056874d634794f7b16b3f5af",
+  "repository_version": "0.2.0",
+  "scope": "Gate 0 workstation acceptance items that were previously open: P0-010 crash/restart, P0-011 backup/restore, and the SDK-over-stdio half of P0-005. Every drill ran against a disposable Studio home under .p0-drill/, never the configured workstation home or a game project.",
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "mcp_sdk": "mcp 2.3.0",
+    "protocol_revision_negotiated": "2026-07-28",
+    "host": "RTX 5070 Ti Laptop GPU 12 227 MiB, 24 CPUs, 33.7 GB RAM",
+    "studio_home_used": "disposable .p0-drill/*/studio-home",
+    "live_studio_home_untouched": true
+  },
+  "drills": {
+    "P0-010_crash_restart": {
+      "method": "A separate OS process created job kill-drill and began a workspace.write_text task, then blocked inside the capability call. The harness waited until the task row was already RUNNING and then sent an unconditional process kill, with no graceful shutdown, no checkpoint write and no chance to persist task success.",
+      "worker_exit_code_after_kill": 1,
+      "kill_was_real_process_termination": true,
+      "first_restart_status": "NEEDS_RECONCILIATION",
+      "task_status": "NEEDS_RECONCILIATION",
+      "task_attempt": 1,
+      "second_run_status": "NEEDS_RECONCILIATION",
+      "side_effect_replayed": false,
+      "target_file_created": false,
+      "verdict": "PASS",
+      "evidence_boundary": "Proves quarantine and non-replay for an interrupted task. Human reconciliation itself is CLI-only, requires an interactive TTY and was verified by unit tests (tests/test_recovery.py), not by this drill. The interactive confirmation path cannot be exercised from a non-interactive agent process, by design."
+    },
+    "P0-011_backup_restore": {
+      "method": "Ran a job to SUCCEEDED, inserted an extra decisions row, took an online SQLite backup through Database.backup, restored the backup into a second isolated database file, then compared per-table row counts, integrity and a specific record.",
+      "backup_integrity": "PASS",
+      "backup_sha256": "294d72746010966d2b62f3e9ab46949ca07e1bbabd861b92ca049ecc1104e81f",
+      "restored_integrity": "PASS",
+      "foreign_key_violations": 0,
+      "table_row_counts_match": true,
+      "tables_compared": {
+        "approvals": [0, 0],
+        "artifacts": [1, 1],
+        "critic_findings": [0, 0],
+        "decisions": [1, 1],
+        "events": [5, 5],
+        "jobs": [1, 1],
+        "operations": [0, 0],
+        "reviews": [0, 0],
+        "tasks": [1, 1]
+      },
+      "record_readback": "PASS",
+      "verdict": "PASS",
+      "evidence_boundary": "The drill used a freshly created database, so it does not exercise restore of a large production database or a partially written WAL. Backup rejected as a destination the live database path (covered by tests/test_runtime.py)."
+    },
+    "P0-005_mcp_sdk_stdio": {
+      "method": "Freebuff launched the production entry point (`python -m elevenvt_studio mcp serve`) as a child process over real stdio, with the official MCP Python SDK v2 client on the other side and a disposable STUDIO_HOME.",
+      "protocol_version": "2026-07-28",
+      "tools_listed": 20,
+      "required_tools_present": ["studio_status", "capabilities_list", "capability_invoke", "job_create", "job_run", "workspace_write_text"],
+      "studio_status_call": "PASS",
+      "studio_status_state": "FOUNDATION_OPERATIONAL",
+      "safe_create_call": "PASS",
+      "created_file_sha256": "b98335cd2220033a73ae23bfac6836e6535da3374cbc1d045a188c72113451cc",
+      "stdout_protocol_only": true,
+      "verdict": "PASS for the SDK transport; the Freebuff host handshake is a separate, still-open item",
+      "evidence_boundary": "This exercises the same entry point, arguments and environment a Freebuff MCP server entry would use, with the official SDK as the client. It does not prove that the installed Freebuff client has been configured or has negotiated with this server, and it is not a vision-capable readback."
+    }
+  },
+  "defects_found_and_repaired_on_this_branch": [
+    {
+      "id": "BOOTSTRAP-QUOTING",
+      "file": "scripts/windows/bootstrap.ps1",
+      "symptom": "Under Windows PowerShell 5.1 the inline Python version check received an unquoted f-string (`print(f{sys.version_info.major}.{sys.version_info.minor})`) and exited with SyntaxError, so $PyVersion was empty, .Split('.') failed, and bootstrap stopped before installing dependencies.",
+      "root_cause": "The double quotes inside the single-quoted -c argument are consumed by PowerShell's native-argument quoting rules, so Python received the f-string without its quotes.",
+      "repair": "Replaced the f-string with a quote-free expression that still prints a dotted version: print(sys.version_info.major, sys.version_info.minor, sep=chr(46)).",
+      "verification": "Bootstrap then completed: extras [test,monitoring,mcp,quality] installed, studio init and doctor returned CONNECTED, and the clean-machine path is now reproducible in Windows PowerShell 5.1.",
+      "ci_coverage_gap": "CI runs the same script on windows-latest, which resolves to PowerShell 7; PowerShell 7 accepts the original form, so hosted CI did not catch a defect that blocks the documented Windows 11 PowerShell 5.1 path."
+    }
+  ],
+  "not_yet_established": [
+    "A configured Freebuff host negotiating with this server (tools/list and studio_status from inside the client).",
+    "Vision-capable model readback; the perception probe still reports NOT ESTABLISHED.",
+    "A packaged Emberkeep build and packaged-launch acceptance (Gate 1).",
+    "Restore of a large or partially written production database under load.",
+    "FILE_MANIFEST.json regeneration: scripts/generate_manifest.py hashes the filesystem instead of the Git tree, so running it now would absorb .p0-drill scratch and 116 MB of gitignored local-only output (reports/evidence/_staging, reports/evidence/comfyui-output) into a repository manifest. Left unchanged deliberately."
+  ],
+  "release_verdict": "DEVELOPER_PREVIEW_FOUNDATION_ONLY"
+}
