@@ -348,6 +348,85 @@ def test_cancel_during_final_task_never_reports_succeeded(service):
     assert result["tasks"][0]["status"] == "SUCCEEDED"
 
 
+def test_cancel_in_startup_window_never_executes(service):
+    engine = service.jobs
+    job = engine.create({"name": "cancel-startup-race", "tasks": [
+        {"id": "t1", "capability": "studio.status", "inputs": {}}]})
+    entered = threading.Event()
+    release = threading.Event()
+    failures = []
+    original_claim = engine._claim_running
+
+    def pausing_claim(c, job_id):
+        entered.set()
+        assert release.wait(timeout=60)
+        return original_claim(c, job_id)
+
+    def guarded_run():
+        try:
+            engine.run(job["id"])
+        except Exception as exc:  # noqa: BLE001 -- surfaced below
+            failures.append(exc)
+
+    engine._claim_running = pausing_claim
+    runner = threading.Thread(target=guarded_run, daemon=True)
+    try:
+        runner.start()
+        assert entered.wait(timeout=60)
+        # Worker is paused after the entry read, before the claim write:
+        # the cancel lands exactly in the startup race window.
+        cancelled = engine.cancel(job["id"], reason="operator stop")
+        assert cancelled["status"] == "CANCELLED"
+        release.set()
+        runner.join(timeout=120)
+    finally:
+        engine._claim_running = original_claim
+    assert not failures
+    assert not runner.is_alive()
+    result = engine.status(job["id"])
+    assert result["status"] == "CANCELLED"
+    assert all(t["attempt"] == 0 for t in result["tasks"])
+
+
+def test_cancel_between_final_read_and_write_never_reports_succeeded(service):
+    engine = service.jobs
+    job = engine.create({"name": "cancel-completion-race", "tasks": [
+        {"id": "t1", "capability": "studio.status", "inputs": {}}]})
+    entered = threading.Event()
+    release = threading.Event()
+    failures = []
+    original_invoke = service.invoke
+
+    def blocking_invoke(capability_id, inputs, **kwargs):
+        entered.set()
+        assert release.wait(timeout=60)
+        return original_invoke(capability_id, inputs, **kwargs)
+
+    def guarded_run():
+        try:
+            engine.run(job["id"])
+        except Exception as exc:  # noqa: BLE001 -- surfaced below
+            failures.append(exc)
+
+    service.invoke = blocking_invoke
+    runner = threading.Thread(target=guarded_run, daemon=True)
+    try:
+        runner.start()
+        assert entered.wait(timeout=60)
+        # Worker is inside the final task, past its last job-status read:
+        # the cancel lands between that read and the aggregation write.
+        engine.cancel(job["id"], reason="operator stop")
+        release.set()
+        runner.join(timeout=120)
+    finally:
+        service.invoke = original_invoke
+    assert not failures
+    assert not runner.is_alive()
+    result = engine.status(job["id"])
+    assert result["status"] == "CANCELLED"
+    assert result["tasks"][0]["status"] == "SUCCEEDED"
+
+
 def test_media_extra_args_rejects_workspace_escape(service, tmp_path):
     from elevenvt_studio.adapters.media import MediaAdapter
     media = MediaAdapter(tmp_path)

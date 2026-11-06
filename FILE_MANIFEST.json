@@ -364,8 +364,8 @@
     },
     {
       "path": "PROJECT_STATUS.md",
-      "sha256": "0a45b8aebd89b70bbfdc8b04ba74b61697b3e60d05028977117eae1bcc900059",
-      "size_bytes": 23251
+      "sha256": "08c61a9bd27f0829a573870ab9f4a53e9b8488057c6cd95b70da0df3dcbca483",
+      "size_bytes": 23705
     },
     {
       "path": "PUSH_TO_GITHUB.md",
@@ -1274,8 +1274,8 @@
     },
     {
       "path": "reports/work-unit-2026-11-06.md",
-      "sha256": "b84ccb558e07be6ab22ac059f4527811a5cab7447b5cee154a69e52221df069d",
-      "size_bytes": 5331
+      "sha256": "600aa5236a8cad6eea100ffd5343a842f0835a6b60c7795fefc28f318a4d9c71",
+      "size_bytes": 7777
     },
     {
       "path": "requirements-dev.txt",
@@ -1544,8 +1544,8 @@
     },
     {
       "path": "src/elevenvt_studio/jobs.py",
-      "sha256": "a36eb35740cdebad8883beb5883f82f2aa5a0322c39caff10a3cc0f609c76af1",
-      "size_bytes": 19563
+      "sha256": "d990c9f95b614e24de3455c0ab01ce4f095ce985ae75eb7002bb660b9ba3c478",
+      "size_bytes": 23035
     },
     {
       "path": "src/elevenvt_studio/ledger.py",
@@ -1739,8 +1739,8 @@
     },
     {
       "path": "tests/test_gate2_adapters.py",
-      "sha256": "c7bcb1ccf17eaf40a4778b348d300770c2fadb1732dc072d45c764dc0d08f44f",
-      "size_bytes": 17339
+      "sha256": "0b3f2241d6103d820abe9402aca914ec74cd5b5aa3f6e981df0be090a8b8987b",
+      "size_bytes": 20140
     },
     {
       "path": "tests/test_ledger.py",

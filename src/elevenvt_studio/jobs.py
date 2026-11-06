@@ -74,26 +74,48 @@ class JobEngine:
         terminal CANCELLED and never starts; a RUNNING job enters non-terminal
         CANCELLING and stops at the next task boundary, where terminal
         CANCELLED is applied. The in-flight task is left for
-        crash-reconciliation rather than force-killed."""
+        crash-reconciliation rather than force-killed.
+
+        Both transitions are single-statement compare-and-swap UPDATEs: the
+        precondition is evaluated at write time, so a worker state change
+        that lands after any earlier read cannot be silently overwritten. A
+        lost race falls through to a fresh read that reports the true state."""
         now=utc_now()
         with self.db.connect() as c:
-            job=c.execute("SELECT status FROM jobs WHERE id=?",(job_id,)).fetchone()
-            if not job: raise NotFound(f"Unknown job: {job_id}")
-            if job["status"] in TERMINAL:
-                raise ValidationError(f"Job is already {job['status']}; cancellation is for live jobs")
-            if job["status"]==CANCELLING:
-                raise ValidationError("Job is already CANCELLING; it stops at the next task boundary")
-            if job["status"]=="RUNNING":
-                c.execute("UPDATE jobs SET status='CANCELLING',updated_at=? WHERE id=?",(now,job_id))
+            if c.execute("UPDATE jobs SET status='CANCELLING',updated_at=? WHERE id=? AND status='RUNNING'",
+                         (now,job_id)).rowcount:
                 self.db.event(c,"job",job_id,"JOB_CANCELLING",{"reason":reason},now)
-            else:
-                c.execute("UPDATE jobs SET status='CANCELLED',updated_at=?,finished_at=? WHERE id=?",(now,now,job_id))
+            elif c.execute("UPDATE jobs SET status='CANCELLED',updated_at=?,finished_at=? "
+                           "WHERE id=? AND status NOT IN ('CANCELLING','CANCELLED','SUCCEEDED','FAILED','NEEDS_RECONCILIATION')",
+                           (now,now,job_id)).rowcount:
                 self.db.event(c,"job",job_id,"JOB_CANCELLED",{"reason":reason},now)
+            else:
+                job=c.execute("SELECT status FROM jobs WHERE id=?",(job_id,)).fetchone()
+                if not job: raise NotFound(f"Unknown job: {job_id}")
+                if job["status"]==CANCELLING:
+                    raise ValidationError("Job is already CANCELLING; it stops at the next task boundary")
+                raise ValidationError(f"Job is already {job['status']}; cancellation is for live jobs")
+        # Read back on a fresh connection: the write above commits at
+        # context exit, and must be visible to this read.
         return self.status(job_id)
     def _is_cancelled(self, job_id: str) -> bool:
         with self.db.connect() as c:
             row=c.execute("SELECT status FROM jobs WHERE id=?",(job_id,)).fetchone()
             return bool(row) and row["status"] in CANCELLED_STATES
+    def _claim_running(self, c, job_id: str) -> str:
+        """Atomically claim the job for execution. This is a single
+        compare-and-swap UPDATE: the `NOT IN` guard is evaluated at write
+        time, so a cancel() that lands after the entry read — the exact
+        startup race window — cannot be overwritten; the write simply does
+        not apply. Returns the resulting job status: 'RUNNING' when the
+        claim applied, otherwise the fresh status left by the winner."""
+        now=utc_now()
+        if c.execute("UPDATE jobs SET status='RUNNING',started_at=COALESCE(started_at,?),"
+                     "updated_at=?,finished_at=NULL WHERE id=? AND status NOT IN ('CANCELLING','CANCELLED')",
+                     (now,now,job_id)).rowcount:
+            self.db.event(c,"job",job_id,"JOB_RUNNING",{},now)
+            return "RUNNING"
+        return c.execute("SELECT status FROM jobs WHERE id=?",(job_id,)).fetchone()["status"]
     def run(self, job_id: str, approval_id: str | None=None) -> dict:
         from .locking import ProcessFileLock
         lock_dir=self.service.config.home/"job-locks"
@@ -138,9 +160,15 @@ class JobEngine:
                             # the cancellation wins, never a SUCCEEDED overwrite.
                             c.execute("UPDATE jobs SET status='CANCELLED',updated_at=?,finished_at=? WHERE id=?",(now,now,job_id))
                             self.db.event(c,"job",job_id,"JOB_CANCELLED",{"reason":"cancel requested before completion check"},now)
-                        else:
-                            c.execute("UPDATE jobs SET status='SUCCEEDED',updated_at=?,finished_at=? WHERE id=?",(now,now,job_id))
+                        elif c.execute("UPDATE jobs SET status='SUCCEEDED',updated_at=?,finished_at=? "
+                                      "WHERE id=? AND status NOT IN ('CANCELLING','CANCELLED')",(now,now,job_id)).rowcount:
                             self.db.event(c,"job",job_id,"JOB_RECOVERED_AS_SUCCEEDED",{},now)
+                        else:
+                            # Cancel landed between the live read and this
+                            # write; the guarded UPDATE refused, so apply the
+                            # operator's cancellation instead of SUCCEEDED.
+                            c.execute("UPDATE jobs SET status='CANCELLED',updated_at=?,finished_at=? WHERE id=?",(now,now,job_id))
+                            self.db.event(c,"job",job_id,"JOB_CANCELLED",{"reason":"cancel won the completion race"},now)
                         early_return = True
                     elif live==CANCELLING:
                         # Cancel landed while no task was in flight (or after a
@@ -149,8 +177,16 @@ class JobEngine:
                         # executing anything further.
                         pass
                     else:
-                        c.execute("UPDATE jobs SET status='RUNNING',started_at=COALESCE(started_at,?),updated_at=?,finished_at=NULL WHERE id=?",(utc_now(),utc_now(),job_id))
-                        self.db.event(c,"job",job_id,"JOB_RUNNING",{},utc_now())
+                        claimed=self._claim_running(c,job_id)
+                        if claimed=="CANCELLED":
+                            # Lost the startup race: cancel() applied terminal
+                            # CANCELLED after the entry read and the guarded
+                            # claim refused to overwrite it. The job never
+                            # started; nothing has executed.
+                            return self.status(job_id)
+                        # Claimed RUNNING, or CANCELLING (guarded claim held
+                        # back and the run loop below converts it at the first
+                        # task boundary without executing anything).
         if early_return:
             return self.status(job_id)
         logging.getLogger("elevenvt_studio").info("job started",extra={"job_id":job_id})
@@ -163,8 +199,11 @@ class JobEngine:
         for task_id in order:
             if self._is_cancelled(job_id):
                 with self.db.connect() as c:
-                    c.execute("UPDATE jobs SET status='CANCELLED',updated_at=?,finished_at=? WHERE id=?",(utc_now(),utc_now(),job_id))
-                    self.db.event(c,"job",job_id,"JOB_CANCELLED_MID_RUN",{"stopped_before":task_id},utc_now())
+                    # Guarded: only this loop converts CANCELLING, and a lost
+                    # race here just means the cancellation was already applied.
+                    if c.execute("UPDATE jobs SET status='CANCELLED',updated_at=?,finished_at=? "
+                                 "WHERE id=? AND status='CANCELLING'",(utc_now(),utc_now(),job_id)).rowcount:
+                        self.db.event(c,"job",job_id,"JOB_CANCELLED_MID_RUN",{"stopped_before":task_id},utc_now())
                 return self.status(job_id)
             row=task_map[task_id]; deps=json.loads(row["depends_on_json"])
             failed=[d for d in deps if task_map[d]["status"]!="SUCCEEDED"]
@@ -196,17 +235,28 @@ class JobEngine:
                 # Do not blindly execute dependants or continue a production sequence after a failed task.
                 break
         with self.db.connect() as c:
+            # Only task states are read here; cancel() never touches tasks,
+            # so this read has no race. The job-status write below is a
+            # guarded single statement: a cancel landing after the last
+            # job-status read cannot be overwritten with SUCCEEDED.
             states=[r[0] for r in c.execute("SELECT status FROM tasks WHERE job_id=?",(job_id,)).fetchall()]
-            live=c.execute("SELECT status FROM jobs WHERE id=?",(job_id,)).fetchone()["status"]
-            # A cancel that landed during the final task wins over the
-            # task-state aggregation: never overwrite a cancellation with
-            # SUCCEEDED.
-            status=("CANCELLED" if live in CANCELLED_STATES else
-                    "SUCCEEDED" if states and all(s=="SUCCEEDED" for s in states) else
-                    "NEEDS_RECONCILIATION" if "NEEDS_RECONCILIATION" in states else
-                    "BLOCKED" if "BLOCKED" in states and "FAILED" not in states else "FAILED")
-            c.execute("UPDATE jobs SET status=?,updated_at=?,finished_at=? WHERE id=?",(status,utc_now(),utc_now(),job_id))
-            self.db.event(c,"job",job_id,"JOB_FINISHED",{"status":status,"errors":errors},utc_now())
+            now=utc_now()
+            if states and all(s=="SUCCEEDED" for s in states):
+                if c.execute("UPDATE jobs SET status='SUCCEEDED',updated_at=?,finished_at=? "
+                             "WHERE id=? AND status NOT IN ('CANCELLING','CANCELLED')",(now,now,job_id)).rowcount:
+                    status="SUCCEEDED"
+                else:
+                    # Cancel won the completion race: the guarded write
+                    # refused, so apply the operator's cancellation instead.
+                    c.execute("UPDATE jobs SET status='CANCELLED',updated_at=?,finished_at=? WHERE id=?",
+                              (now,now,job_id))
+                    self.db.event(c,"job",job_id,"JOB_CANCELLED",{"reason":"cancel requested during final task"},now)
+                    status="CANCELLED"
+            else:
+                status=("NEEDS_RECONCILIATION" if "NEEDS_RECONCILIATION" in states else
+                        "BLOCKED" if "BLOCKED" in states and "FAILED" not in states else "FAILED")
+                c.execute("UPDATE jobs SET status=?,updated_at=?,finished_at=? WHERE id=?",(status,now,now,job_id))
+            self.db.event(c,"job",job_id,"JOB_FINISHED",{"status":status,"errors":errors},now)
         logging.getLogger("elevenvt_studio").info("job finished",extra={"job_id":job_id})
         return self.status(job_id)
     def _set_task(self,jid,tid,status,*,attempt=None,outputs=None,error=None):

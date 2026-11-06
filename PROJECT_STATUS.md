@@ -1,13 +1,13 @@
 # Project Status — Executable Foundation 0.2.0, now proven on the workstation
 
-**Snapshot:** 2026-11-05. **Target:** `11vatedTech/AI-Game_Jam_Studio`. **Truth status:** Installed and running on the user's Windows workstation. The runtime suite passes there, ComfyUI is live and has manufactured assets, and Godot 4.7.2 has produced a playable slice. Adapters remain uncertified in the formal sense; see the workstation evidence below.
+**Snapshot:** 2026-11-06. **Target:** `11vatedTech/AI-Game_Jam_Studio`. **Truth status:** Installed and running on the user's Windows workstation. The runtime suite passes there, ComfyUI is live and has manufactured assets, and Godot 4.7.2 has produced a playable slice. Adapters remain uncertified in the formal sense; see the workstation evidence below.
 
-## Verified on this workstation (2026-11-05)
+## Verified on this workstation (2026-11-06)
 
 | Fact | Value | How it was measured |
 |---|---|---|
-| Runtime tests | 177 passed, 1 skipped, 67.3 s | `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q` — includes 15 new Gate 2 adapter conformance tests |
-| The skip | `tests/test_paths.py:19` — symlink creation unavailable | Windows lacks the privilege without developer mode; not a runtime defect |
+| Runtime tests | 184 passed, 3 skipped | `PYTHONPATH=src .venv/Scripts/python.exe -m pytest -q` — includes 24 Gate 2 adapter/cancellation conformance tests (22 pass, 2 live-ComfyUI-gated) plus 9 focused cancellation-race tests green |
+| The skips | `tests/test_paths.py:19` (Windows symlink privilege; not a runtime defect) + 2 live-ComfyUI-gated tests skipped when the app is down | environment-dependent skips, suite stays green with or without the live app |
 | Python | 3.12.10 in `.venv` | `studio doctor` |
 | Host | RTX 5070 Ti 12 227 MiB, 24 CPUs, 33.7 GB RAM | `studio doctor` |
 | ComfyUI | v0.34.0, 939 nodes, `127.0.0.1:8188` | live health + node inventory |
@@ -16,7 +16,7 @@
 | Manufactured assets | pylon 13 999 tris (2.831 × 2.736 × 3.600 m), lamplighter 2 159 tris, architecture kit 4 346 tris / 49 objects, lantern hero ≈4.6k tris | `Games/emberkeep/source/assets/*/*.ingest.json` |
 | Manufactured audio | `ambience.ogg` 48 s, `ignite.ogg`, `chime.ogg`, `dawn.ogg` | `Games/emberkeep/game/assets/audio/` |
 | Playable slice | headless smoke exits 0, `state=WON`, 4 screenshots | `reports/evidence/runs/emberkeep-smoke/runtime_report.json` |
-| Packaged build | **not yet produced** — export templates downloaded but never invoked | no `dist/` artifact exists |
+| Packaged build | **produced 2026-11-06** — Windows x86_64 exe + pck, clean-location launch 3/3 exit 0 `state=WON` | `reports/evidence/productions/emberkeep/03-package/PACKAGE_REPORT.json` |
 
 ## Verified in this build environment
 
@@ -26,7 +26,7 @@
 | Python runtime package | IMPLEMENTED | `src/elevenvt_studio`; Python 3.11+; core has no mandatory third-party dependencies |
 | CLI | IMPLEMENTED | `studio` commands: init/status/doctor/capabilities/job/artifacts/quality/approvals/mcp |
 | SQLite persistence | IMPLEMENTED / DRILLED | Jobs, tasks, events, artifacts, approvals and human reviews persisted; schema guard and forward migrations to v2 (`PRAGMA user_version`), integrity check and online backup implemented; **restore drill passed 2026-11-06** (all nine tables matched, zero FK violations) — `reports/p0/P0-EVIDENCE-2026-11-06.json`. Large/loaded-database restore and automated backup scheduling remain open |
-| DAG job executor | IMPLEMENTED / SEQUENTIAL | DAG validation, output refs, checkpoints, per-job cross-process lock, approval resume and crash/uncertain-side-effect quarantine; human-only `job reconcile` supports evidence-backed retry or mark-succeeded. **Real process-kill drill passed 2026-11-06**: restart quarantined the RUNNING task as `NEEDS_RECONCILIATION` and never replayed it. No parallel scheduler, project locks or cancellation yet |
+| DAG job executor | IMPLEMENTED / SEQUENTIAL | DAG validation, output refs, checkpoints, per-job cross-process lock, approval resume and crash/uncertain-side-effect quarantine; human-only `job reconcile` supports evidence-backed retry or mark-succeeded. **Real process-kill drill passed 2026-11-06**: restart quarantined the RUNNING task as `NEEDS_RECONCILIATION` and never replayed it. **Operator cancellation is implemented**: `RUNNING → CANCELLING → CANCELLED` at the task boundary via atomic compare-and-swap writes; crash-after-cancel quarantines instead of stranding tasks; guarded by barrier-tested race coverage. No parallel scheduler or project locks yet |
 | Policy/approvals | IMPLEMENTED / HARDENING REQUIRED | Versioned default-deny policy, exact scope/side-effect/target binding, expiry, pending-only decision, CLI-only human approval; audit hardening remains |
 | Workspace confinement | IMPLEMENTED / TESTED | Relative paths, traversal and symlink checks; no-overwrite file creation; OS-specific edge cases need Windows validation |
 | Artifact integrity | IMPLEMENTED | Sidecar manifest, streaming SHA-256 verify, explicit unknown-by-default rights, human artifact review CLI; domain validators still incomplete |
